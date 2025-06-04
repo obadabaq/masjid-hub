@@ -25,8 +25,10 @@ class TesbihProvider extends ChangeNotifier {
   int get getTotalTesbihCount => _totalinitialTesbihCount;
 
   void incrementTesbih() {
-    watchProvider.sendCommand(
-        "1A02D3${(getTesbihCount + 1).toRadixString(16).padLeft(4, '0').toUpperCase()}");
+    if (watchProvider.isConnected) {
+      watchProvider.sendCommand(
+          "1A02D3${(getTesbihCount + 1).toRadixString(16).padLeft(4, '0').toUpperCase()}");
+    }
     if (_initialTesbihCount != _maxTesbihCount) {
       _initialTesbihCount += 1;
     } else {
