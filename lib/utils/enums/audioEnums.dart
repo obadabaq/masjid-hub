@@ -1,0 +1,1 @@
+enum SurahListActionButtonState { playing, paused, preDownload, downloading }

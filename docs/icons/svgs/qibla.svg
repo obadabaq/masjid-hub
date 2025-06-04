@@ -1,0 +1,13 @@
+<svg id="Icons_Bottom-Bar_Qibla" data-name="Icons/Bottom-Bar/Qibla" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28">
+  <g id="Group_113" data-name="Group 113">
+    <path id="Path_265" data-name="Path 265" d="M887.963,277.507a14,14,0,1,1,9.9-4.1A13.908,13.908,0,0,1,887.963,277.507Zm0-26.8a12.8,12.8,0,1,0,9.049,3.748A12.713,12.713,0,0,0,887.963,250.71Z" transform="translate(-873.963 -249.507)" fill="none"/>
+  </g>
+  <circle id="Ellipse_246" data-name="Ellipse 246" cx="0.717" cy="0.717" r="0.717" transform="translate(13.335 24)" fill="none"/>
+  <circle id="Ellipse_247" data-name="Ellipse 247" cx="0.717" cy="0.717" r="0.717" transform="translate(24 13.231)" fill="none"/>
+  <circle id="Ellipse_248" data-name="Ellipse 248" cx="0.717" cy="0.717" r="0.717" transform="translate(2.565 13.335)" fill="none"/>
+  <g id="Group_114" data-name="Group 114" transform="translate(8.971 8.091)">
+    <path id="Path_266" data-name="Path 266" d="M904.588,295.914l4.629,2.633a.721.721,0,0,0,.721,0l4.6-2.693h-.023l.02,3.653a.721.721,0,0,1-.356.626l-4.236,2.482a.721.721,0,0,1-.721,0l-4.267-2.427a.721.721,0,0,1-.365-.622l-.02-3.652Z" transform="translate(-904.552 -290.849)" fill="none"/>
+    <path id="Path_267" data-name="Path 267" d="M914.465,280.183l0-.5a.455.455,0,0,0-.23-.393l-4.534-2.579a.455.455,0,0,0-.455,0l-4.5,2.637a.455.455,0,0,0-.225.4l0,.5h.032l4.763,2.709a.455.455,0,0,0,.455,0l4.727-2.77Z" transform="translate(-904.516 -276.656)" fill="none"/>
+  </g>
+  <path id="Path_268" data-name="Path 268" d="M916.34,259.375l-1.934,1.479c-.437.335-.176,1.2.35,1.033a4.4,4.4,0,0,1,1.934-.625,4.8,4.8,0,0,1,1.934.625c.528.155.787-.7.35-1.033l-1.934-1.479A.575.575,0,0,0,916.34,259.375Z" transform="translate(-902.69 -256.716)" fill="none"/>
+</svg>

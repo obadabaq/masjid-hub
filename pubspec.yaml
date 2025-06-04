@@ -1,0 +1,108 @@
+name: masjidhub
+description: A new Flutter project.
+
+publish_to: 'none'
+
+version: 1.0.4+12
+
+environment:
+  sdk: '>=2.12.0 <3.0.0'
+
+dependencies:
+  firebase_core: ^3.6.0
+  package_info_plus: 8.3.0
+  adhan: ^2.0.0-nullsafety.2
+  angles: ^2.1.1
+  arabic_numbers: ^1.0.0
+  firebase_storage: ^12.3.4
+  cloud_firestore: ^5.4.4
+  audioplayers: ^6.1.0
+  auto_size_text: ^3.0.0
+  awesome_notifications: ^0.8.2
+  cached_network_marker: ^0.1.1
+  card_swiper: ^1.0.4
+  cupertino_icons: ^1.0.3
+  dotted_border: ^2.0.0
+  easy_localization: ^3.0.7
+  flutter:
+    sdk: flutter
+  flutter_blue_plus: ^1.32.8
+  flutter_compass:
+    git: https://github.com/sinanhaci/flutter_compass.git
+  flutter_cupertino_date_picker_fork: ^1.0.6
+  flutter_downloader: ^1.10.2
+  vibration: ^2.0.1
+  geocoding: ^2.0.0
+  geolocator: ^13.0.2
+  protobuf: any
+  google_maps_flutter: ^2.1.8
+  http: ^0.13.1
+  internet_connection_checker: ^0.0.1+3
+  intl: ^0.19.0
+  location: any
+  path_provider: ^2.0.5
+  external_path: ^2.0.1
+  win32: ^5.6.0
+  percent_indicator: ^4.2.2
+  permission_handler: ^9.0.2
+  provider: ^6.0.3
+  scrollable_positioned_list: ^0.3.1
+  shared_preferences: ^2.0.5
+  snapping_sheet: ^3.1.0
+  share_plus: ^11.0.0
+  tuple: ^2.0.0
+  uuid: any
+  visibility_detector: ^0.3.3
+  week_of_year: ^2.0.0
+  csv: ^5.0.0
+  nordic_dfu: ^6.2.0
+  telephony: ^0.2.0
+  device_info_plus: ^11.2.0
+  file_picker: ^8.1.7
+  sizer: ^3.0.5
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+dependency_overrides:
+  platform: ^3.1.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
+    - assets/audios/adhans/adhan-madina.mp3
+    - assets/audios/adhans/adhan-makkah.mp3
+    - assets/audios/adhans/adhan-yusuf.mp3
+    - assets/quran/en.asad.json
+    - assets/quran/quran-uthmani.json
+    - assets/quran/tr.diyanet.json
+    - assets/quran/fr.hamidullah.json
+    - assets/quran/de.aburida.json
+    - assets/quran/timing/meshari.json
+    - assets/translations/trans.csv
+  fonts:
+    - family: AppIcons
+      fonts:
+        - asset: assets/fonts/AppIcons.ttf
+    - family: SFProText
+      fonts:
+        - asset: assets/fonts/SFProText-Light.ttf
+          weight: 300
+        - asset: assets/fonts/SFProText-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/SFProText-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/SFProText-Semibold.ttf
+          weight: 600
+        - asset: assets/fonts/SFProText-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/SFProText-Heavy.ttf
+          weight: 800
+    - family: Kitab
+      fonts:
+        - asset: assets/fonts/Kitab-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Kitab-Bold.ttf
+          weight: 700

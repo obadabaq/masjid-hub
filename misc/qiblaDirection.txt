@@ -1,0 +1,3 @@
+Some notes:
+- Location is a string
+- Bearing is an integer

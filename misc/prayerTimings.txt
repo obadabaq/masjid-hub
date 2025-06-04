@@ -1,0 +1,4 @@
+Some notes:
+- Each time is in unix timestamp as per users locale
+- Each array item inside the timings represents one Week in the calendar. We assume that in one week the prayer times remain constant
+- weekStartDate represents date of the start of the week in unix, which will be monday of each week

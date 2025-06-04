@@ -1,0 +1,150 @@
+import 'package:flutter/material.dart';
+import 'package:masjidhub/provider/wathc_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:snapping_sheet/snapping_sheet.dart';
+import 'bottomNavBar/SnappedbottomNavBar.dart';
+
+import 'package:masjidhub/common/dashboard/appBar.dart';
+import 'package:masjidhub/common/dashboard/bottomNavigation.dart';
+import 'package:masjidhub/common/dashboard/layout.dart';
+import 'package:masjidhub/screens/dashboard/quranMode/quranMode.dart';
+import 'package:masjidhub/screens/dashboard/prayerTime/prayerTime.dart';
+import 'package:masjidhub/screens/dashboard/qibla/qibla.dart';
+import 'package:masjidhub/screens/dashboard/tesbih/tesbih.dart';
+import 'package:masjidhub/provider/locationProvider.dart';
+import 'package:masjidhub/provider/setupProvider.dart';
+import 'package:masjidhub/provider/quranProvider.dart';
+import 'package:masjidhub/provider/audioProvider.dart';
+import 'package:masjidhub/provider/bleProvider.dart';
+import 'package:masjidhub/constants/bottomNav.dart';
+import 'package:masjidhub/common/errorPopups/errorPopup.dart';
+import 'package:masjidhub/common/popup/popup.dart';
+import 'package:masjidhub/constants/errors.dart';
+import 'package:masjidhub/utils/notificationUtils.dart';
+import 'package:masjidhub/utils/appBarUtils.dart';
+import 'package:masjidhub/utils/bottomNavBarUtils.dart';
+import 'package:masjidhub/utils/enums/appBarEnums.dart';
+
+class Dashboard extends StatefulWidget {
+  Dashboard({Key? key}) : super(key: key);
+
+  @override
+  _DashboardState createState() => _DashboardState();
+}
+
+class _DashboardState extends State<Dashboard>
+    with SingleTickerProviderStateMixin {
+  @override
+  void initState() {
+    super.initState();
+    // Notifications
+    NotificationUtils()
+        .init(onFailure: () => _showAllowNotificationsPopup(context));
+    Provider.of<LocationProvider>(context, listen: false)
+        .fetchAddress(onError: (err) {});
+    new Future.delayed(Duration.zero, () {
+      // Provider.of<WatchProvider>(context, listen: false).checkUpdate();
+      _initQuran(context);
+    });
+  }
+
+  @override
+  void dispose() {
+    NotificationUtils().dispose();
+    super.dispose();
+  }
+
+  _initQuran(BuildContext cntxt) async {
+    Provider.of<QuranProvider>(context, listen: false).initQuran(cntxt);
+    Provider.of<AudioProvider>(context, listen: false).initSurahTimings();
+  }
+
+  int _currentIndex = 0;
+  final List<Widget> _children = [PrayerTime(), Qibla(), QuranMode(), Tesbih()];
+
+  GlobalKey<ScaffoldState> _dashboardScaffoldKey = GlobalKey();
+
+  // Adding controller for 3 dots on bottom navbar, do refactor
+  late final AnimationController animationController =
+      AnimationController(duration: const Duration(seconds: 1), vsync: this);
+
+  void openDrawer() => _dashboardScaffoldKey.currentState!.openDrawer();
+
+  @override
+  Widget build(BuildContext context) {
+    // BACKLOG REFACTOR move animation logic in utils
+    final snappingSheetController =
+        Provider.of<QuranProvider>(context, listen: false)
+            .snappingSheetController;
+
+    void onTabTapped(int index) {
+      bool isQuranModule = index == 2;
+      if (isQuranModule) {
+        Future.delayed(Duration(seconds: 1)).then((value) {
+          snappingSheetController.snapToPosition(SnappingPosition.pixels(
+              positionPixels: bottomNavGrabHeightWhenAudioDisabled));
+        });
+
+        animationController.forward();
+      } else {
+        // This is case when tabs change while bottom audio player is active
+        Provider.of<QuranProvider>(context, listen: false)
+            .changeAudioItemVisibility(true);
+
+        if (snappingSheetController.isAttached &&
+            snappingSheetController.currentPosition == 0.0)
+          snappingSheetController
+              .snapToPosition(SnappingPosition.pixels(positionPixels: 150));
+        animationController.reverse();
+      }
+      setState(() {
+        _currentIndex = index;
+      });
+    }
+
+    return Consumer<BleProvider>(
+      builder: (ctx, ble, _) => Consumer<QuranProvider>(
+        builder: (ctx, quran, _) => Consumer<SetupProvider>(
+          builder: (ctx, setup, _) => Consumer<LocationProvider>(
+            builder: (ctx, locationProvider, _) {
+              AppBarState state = AppBarUtils().getAppBarState(
+                tabIndex: _currentIndex,
+                isRemote: ble.isRemoteOn,
+                isQuranSearchActive: quran.isSearchActive,
+                isLoading: locationProvider.locationLoading,
+              );
+
+              return Layout(
+                child: Scaffold(
+                    key: _dashboardScaffoldKey,
+                    appBar: PreferredSize(
+                      preferredSize: Size.fromHeight(80),
+                      child: CustomAppBar(
+                        openDrawer: openDrawer,
+                        state: state,
+                      ),
+                    ),
+                    body: SnappedbottomNavBar(
+                      isAudioPlayerEnabled: !quran.isAudioItemVisible,
+                      snappingSheetController: snappingSheetController,
+                      animationController: animationController,
+                      dashboardScreen: _children[_currentIndex],
+                      hideNavBar: BottomNavBarUtils().hideNavBar(state),
+                      audioState: quran.audioState,
+                      bottomNavBar: CustomBottonNavigation(
+                        onTabTapped: onTabTapped,
+                        currentIndex: _currentIndex,
+                      ),
+                    ),
+                    drawer: AppBarUtils().getSideBar(state)),
+              );
+            },
+          ),
+        ),
+      ),
+    );
+  }
+
+  _showAllowNotificationsPopup(BuildContext context) => Navigator.push(context,
+      PopupLayout(child: ErrorPopup(errorType: AppError.noNotifications)));
+}

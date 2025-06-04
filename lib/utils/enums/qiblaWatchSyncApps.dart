@@ -1,0 +1,1 @@
+enum QiblaWatchSyncApp {all, incoming_calls, messages, whatsapp, google_calender, icloud_calender  }
