@@ -20,24 +20,25 @@
 		A2733A1B274F759B004E7BEA /* res_adhan-makkah.aiff in Resources */ = {isa = PBXBuildFile; fileRef = A2733A18274F759A004E7BEA /* res_adhan-makkah.aiff */; };
 		A2733A1C274F759B004E7BEA /* res_adhan-madina.aiff in Resources */ = {isa = PBXBuildFile; fileRef = A2733A19274F759B004E7BEA /* res_adhan-madina.aiff */; };
 		A2733A1D274F759B004E7BEA /* res_adhan-yusuf.aiff in Resources */ = {isa = PBXBuildFile; fileRef = A2733A1A274F759B004E7BEA /* res_adhan-yusuf.aiff */; };
-		AF201DDC2D5DDC8800801A85 /* RTKLEFoundation.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF201DD12D5DDC7200801A85 /* RTKLEFoundation.xcframework */; };
-		AF201DDD2D5DDC8800801A85 /* RTKLEFoundation.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AF201DD12D5DDC7200801A85 /* RTKLEFoundation.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		AF201DDE2D5DDC8900801A85 /* RTKOTASDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF201DD22D5DDC7200801A85 /* RTKOTASDK.xcframework */; };
-		AF201DDF2D5DDC8900801A85 /* RTKOTASDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AF201DD22D5DDC7200801A85 /* RTKOTASDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		AF0C519B2DF43AF30054F095 /* RTKLEFoundation.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF0C51972DF43ABD0054F095 /* RTKLEFoundation.xcframework */; };
+		AF0C519C2DF43AF30054F095 /* RTKLEFoundation.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AF0C51972DF43ABD0054F095 /* RTKLEFoundation.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		AF0C519E2DF43AF40054F095 /* RTKOTASDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF0C51982DF43ABD0054F095 /* RTKOTASDK.xcframework */; };
+		AF0C519F2DF43AF40054F095 /* RTKOTASDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AF0C51982DF43ABD0054F095 /* RTKOTASDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		AF0C51A22DF453370054F095 /* RTKLEFoundation.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF0C51A02DF453370054F095 /* RTKLEFoundation.xcframework */; };
+		AF0C51A32DF453370054F095 /* RTKOTASDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF0C51A12DF453370054F095 /* RTKOTASDK.xcframework */; };
 		AF201DE32D5DDD6700801A85 /* RTKOTASDKHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF201DE22D5DDD6700801A85 /* RTKOTASDKHandler.swift */; };
-		AF382D4C2D6365AA00D51B66 /* RTKOTASDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF201DD22D5DDC7200801A85 /* RTKOTASDK.xcframework */; };
 		CD0812BBBEA2B105314C7883 /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FA85242EB303C4E0934908D /* Pods_Runner.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		9705A1C41CF9048500538489 /* Embed Frameworks */ = {
+		AF0C519D2DF43AF30054F095 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				AF201DDD2D5DDC8800801A85 /* RTKLEFoundation.xcframework in Embed Frameworks */,
-				AF201DDF2D5DDC8900801A85 /* RTKOTASDK.xcframework in Embed Frameworks */,
+				AF0C519C2DF43AF30054F095 /* RTKLEFoundation.xcframework in Embed Frameworks */,
+				AF0C519F2DF43AF40054F095 /* RTKOTASDK.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -68,6 +69,10 @@
 		A2733A18274F759A004E7BEA /* res_adhan-makkah.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "res_adhan-makkah.aiff"; sourceTree = "<group>"; };
 		A2733A19274F759B004E7BEA /* res_adhan-madina.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "res_adhan-madina.aiff"; sourceTree = "<group>"; };
 		A2733A1A274F759B004E7BEA /* res_adhan-yusuf.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "res_adhan-yusuf.aiff"; sourceTree = "<group>"; };
+		AF0C51972DF43ABD0054F095 /* RTKLEFoundation.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = RTKLEFoundation.xcframework; sourceTree = "<group>"; };
+		AF0C51982DF43ABD0054F095 /* RTKOTASDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = RTKOTASDK.xcframework; sourceTree = "<group>"; };
+		AF0C51A02DF453370054F095 /* RTKLEFoundation.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = RTKLEFoundation.xcframework; sourceTree = "<group>"; };
+		AF0C51A12DF453370054F095 /* RTKOTASDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = RTKOTASDK.xcframework; sourceTree = "<group>"; };
 		AF201DD12D5DDC7200801A85 /* RTKLEFoundation.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = RTKLEFoundation.xcframework; path = ../../../../../../Downloads/638664603159137913/RealTek_BT_iOS_OTA_SDK_V1.11.0/RTKLEFoundation.xcframework; sourceTree = "<group>"; };
 		AF201DD22D5DDC7200801A85 /* RTKOTASDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = RTKOTASDK.xcframework; path = ../../../../../../Downloads/638664603159137913/RealTek_BT_iOS_OTA_SDK_V1.11.0/RTKOTASDK.xcframework; sourceTree = "<group>"; };
 		AF201DE22D5DDD6700801A85 /* RTKOTASDKHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RTKOTASDKHandler.swift; sourceTree = "<group>"; };
@@ -81,9 +86,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AF201DDC2D5DDC8800801A85 /* RTKLEFoundation.xcframework in Frameworks */,
-				AF201DDE2D5DDC8900801A85 /* RTKOTASDK.xcframework in Frameworks */,
-				AF382D4C2D6365AA00D51B66 /* RTKOTASDK.xcframework in Frameworks */,
+				AF0C519E2DF43AF40054F095 /* RTKOTASDK.xcframework in Frameworks */,
+				AF0C519B2DF43AF30054F095 /* RTKLEFoundation.xcframework in Frameworks */,
+				AF0C51A22DF453370054F095 /* RTKLEFoundation.xcframework in Frameworks */,
+				AF0C51A32DF453370054F095 /* RTKOTASDK.xcframework in Frameworks */,
 				CD0812BBBEA2B105314C7883 /* Pods_Runner.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -115,6 +121,8 @@
 		97C146E51CF9000F007C117D = {
 			isa = PBXGroup;
 			children = (
+				AF0C51A02DF453370054F095 /* RTKLEFoundation.xcframework */,
+				AF0C51A12DF453370054F095 /* RTKOTASDK.xcframework */,
 				A22E681A2642294500F30ABB /* GoogleService-Info.plist */,
 				9740EEB11CF90186004384FC /* Flutter */,
 				97C146F01CF9000F007C117D /* Runner */,
@@ -160,6 +168,8 @@
 		E4CA7871C472C932139D279D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AF0C51972DF43ABD0054F095 /* RTKLEFoundation.xcframework */,
+				AF0C51982DF43ABD0054F095 /* RTKOTASDK.xcframework */,
 				A25995D627F2E10000390755 /* libsqlite3.tbd */,
 				4FA85242EB303C4E0934908D /* Pods_Runner.framework */,
 			);
@@ -178,7 +188,7 @@
 				97C146EA1CF9000F007C117D /* Sources */,
 				97C146EB1CF9000F007C117D /* Frameworks */,
 				97C146EC1CF9000F007C117D /* Resources */,
-				9705A1C41CF9048500538489 /* Embed Frameworks */,
+				AF0C519D2DF43AF30054F095 /* Embed Frameworks */,
 				3B06AD1E1E4923F5004D2608 /* Thin Binary */,
 				AAA8D326F07CEB1097F63898 /* [CP] Embed Pods Frameworks */,
 				1C1055776A3FCA1B34AD12FE /* [CP] Copy Pods Resources */,
@@ -438,6 +448,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Frameworks",
 				);
 				GCC_OPTIMIZATION_LEVEL = fast;
 				INFOPLIST_FILE = Runner/Info.plist;
@@ -586,6 +597,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Frameworks",
 				);
 				GCC_OPTIMIZATION_LEVEL = fast;
 				INFOPLIST_FILE = Runner/Info.plist;
@@ -623,6 +635,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Frameworks",
 				);
 				GCC_OPTIMIZATION_LEVEL = fast;
 				INFOPLIST_FILE = Runner/Info.plist;
