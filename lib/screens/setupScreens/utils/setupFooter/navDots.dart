@@ -46,7 +46,7 @@ class _NavDotsState extends State<NavDots> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          for (var i = 0; i < 5; i++)
+          for (var i = 0; i < 6; i++)
             Dot(
               isActive: currentPage == i,
             ),
