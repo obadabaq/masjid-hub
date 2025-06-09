@@ -6,6 +6,7 @@ import 'package:masjidhub/screens/setupScreens/chooseDevice/chooseDevice.dart';
 import 'package:masjidhub/screens/setupScreens/chooseLocation/chooseLocation.dart';
 import 'package:masjidhub/screens/setupScreens/choosePrayerTime/choosePrayerTime.dart';
 import 'package:masjidhub/screens/setupScreens/chooseTesbih/chooseTesbih.dart';
+import 'package:masjidhub/screens/setupScreens/utils/custom_pageview_physics.dart';
 
 class Setup extends StatefulWidget {
   Setup({Key? key}) : super(key: key);
@@ -14,7 +15,7 @@ class Setup extends StatefulWidget {
   _SetupState createState() => _SetupState();
 }
 
-class _SetupState extends State<Setup> {
+class _SetupState extends State<Setup> with AutomaticKeepAliveClientMixin {
   final PageController setupController =
       PageController(initialPage: 0, keepPage: true);
 
@@ -26,8 +27,9 @@ class _SetupState extends State<Setup> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return PageView(
-      physics: new NeverScrollableScrollPhysics(),
+      physics: CustomScrollPhysics(),
       controller: setupController,
       children: [
         ChooseLocation(pageController: setupController),
@@ -39,4 +41,7 @@ class _SetupState extends State<Setup> {
       ],
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

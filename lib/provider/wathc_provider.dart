@@ -629,11 +629,12 @@ class WatchProvider with ChangeNotifier {
       });
     } else {
       final connectedDevices = await FlutterBluePlus.connectedDevices;
-      final target = connectedDevices.firstWhere(
-        (d) => d.name == _targetDeviceName,
-      );
-
-      await _establishConnection(target);
+      if (connectedDevices.isNotEmpty) {
+        final target = connectedDevices.firstWhere(
+          (d) => d.name == _targetDeviceName,
+        );
+        await _establishConnection(target);
+      }
     }
   }
 
