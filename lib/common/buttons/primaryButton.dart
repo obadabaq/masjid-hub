@@ -4,7 +4,7 @@ import 'package:masjidhub/constants/shadows.dart';
 import 'package:masjidhub/theme/colors.dart';
 import 'package:masjidhub/theme/customTheme.dart';
 
-class PrimaryButton extends StatelessWidget {
+class PrimaryButton extends StatefulWidget {
   final Function onPressed;
   final String text;
   final EdgeInsetsGeometry margin;
@@ -39,14 +39,21 @@ class PrimaryButton extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<PrimaryButton> createState() => _PrimaryButtonState();
+}
+
+class _PrimaryButtonState extends State<PrimaryButton> {
+  bool isPressed = false;
+
+  @override
   Widget build(BuildContext context) {
     return Container(
-      margin: margin,
-      width: width,
+      margin: widget.margin,
+      width: widget.width,
       child: AnimatedContainer(
         duration: Duration(milliseconds: 200),
         curve: Curves.fastOutSlowIn,
-        decoration: isDisabled
+        decoration: widget.isDisabled
             ? BoxDecoration(
                 color: CustomTheme.lightTheme.colorScheme.background,
                 boxShadow: shadowNeuPressed,
@@ -55,16 +62,27 @@ class PrimaryButton extends StatelessWidget {
               )
             : BoxDecoration(
                 color: CustomTheme.lightTheme.colorScheme.background,
-                boxShadow: isSelected ? shadowNeuPressed : shadowNeu,
+                boxShadow: isPressed ? shadowNeuPressed : shadowNeu,
                 shape: BoxShape.rectangle,
                 borderRadius: BorderRadius.circular(20),
-                gradient: isSelected ? CustomColors.primary180 : null,
+                gradient: widget.isSelected
+                    ? isPressed
+                        ? CustomColors.primary180Pressed
+                        : CustomColors.primary180
+                    : null,
               ),
         child: AbsorbPointer(
-          absorbing: isDisabled,
+          absorbing: widget.isDisabled,
           child: GestureDetector(
             behavior: HitTestBehavior.translucent,
-            onTap: () => id != null ? onPressed(id) : onPressed(),
+            onTapDown: (_) => setState(() => isPressed = true),
+            onTapUp: (_) {
+              setState(() => isPressed = false);
+              widget.id != null
+                  ? widget.onPressed(widget.id)
+                  : widget.onPressed();
+            },
+            onTapCancel: () => setState(() => isPressed = false),
             child: Row(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -74,31 +92,33 @@ class PrimaryButton extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
-                        width: width,
-                        padding: padding,
-                        child: isLoading
+                        width: widget.width,
+                        padding: widget.padding,
+                        child: widget.isLoading
                             ? Center(
                                 child: CircularProgressIndicator(
                                   valueColor: AlwaysStoppedAnimation<Color>(
-                                    loadingIndicatorColor,
+                                    widget.loadingIndicatorColor,
                                   ),
                                 ),
                               )
                             : Text(
-                                upperCase ? text.toUpperCase() : text,
-                                textAlign: textAlign,
-                                style: isDisabled
+                                widget.upperCase
+                                    ? widget.text.toUpperCase()
+                                    : widget.text,
+                                textAlign: widget.textAlign,
+                                style: widget.isDisabled
                                     ? TextStyle(
-                                        fontSize: fontSize,
-                                        fontWeight: fontWeight,
+                                        fontSize: widget.fontSize,
+                                        fontWeight: widget.fontWeight,
                                         height: 1.3,
                                         color: CustomColors.mischka,
                                       )
                                     : TextStyle(
-                                        fontSize: fontSize,
-                                        fontWeight: fontWeight,
+                                        fontSize: widget.fontSize,
+                                        fontWeight: widget.fontWeight,
                                         height: 1.3,
-                                        color: isSelected
+                                        color: widget.isSelected
                                             ? Colors.white
                                             : CustomColors.blackPearl,
                                       ),

@@ -17,6 +17,8 @@ class CustomColors {
   // Names derived from https://www.color-blindness.com/color-name-hue/
   static const Color solitude = const Color(0xFFECF0F3);
   static const Color turquoise = const Color(0xFF33DBD6);
+  static const Color turquoise1 = const Color(0xFF1BC9CF);
+  static const Color turquoise2 = const Color(0xFF00B4C7);
   static const Color irisBlue = const Color(0xFF01B5C7);
   static const Color zircon = const Color(0xFFDEE3E6);
   static const Color periwinkle = const Color(0xFFD1D9E6);
@@ -33,7 +35,13 @@ class CustomColors {
 
   // Gradients
   static const LinearGradient primary180 =
-      const LinearGradient(colors: [turquoise, irisBlue]);
+      const LinearGradient(colors: [turquoise, turquoise2]);
+  // Gradients
+  static const LinearGradient primary180Pressed = const LinearGradient(colors: [
+    turquoise,
+    turquoise1,
+    turquoise2,
+  ]);
 
   static const LinearGradient primary90 = const LinearGradient(
       begin: Alignment.topCenter,
