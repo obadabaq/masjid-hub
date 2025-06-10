@@ -16,6 +16,9 @@ import io.flutter.plugin.common.EventChannel
 import com.realsil.sdk.dfu.model.ConnectionParameters
 import com.realsil.sdk.dfu.utils.ConnectParams
 import com.realsil.sdk.dfu.DfuConstants
+import android.content.ComponentName
+import android.provider.Settings
+
 
 public class MainActivity : FlutterActivity() {
     private val CHANNEL = "dfu_channel"
@@ -50,6 +53,11 @@ public class MainActivity : FlutterActivity() {
             when (call.method) {
                 "initialize" -> initializeDfu(call.arguments, result)
                 "startDfu" -> startDfuProcedure(call.arguments, result)
+                "checkNotificationPermission" -> {
+                    val granted = isNotificationServiceEnabled(applicationContext)
+                    result.success(granted)
+                }
+
                 else -> result.notImplemented()
             }
         }
@@ -66,12 +74,20 @@ public class MainActivity : FlutterActivity() {
                 eventSink = null
             }
         })
+
+        val notificationChannel = MethodChannel(
+            flutterEngine.dartExecutor.binaryMessenger,
+            "co.takva.masjidhub/notifications"
+        )
+        MyNotificationListener.notificationChannel = notificationChannel
     }
 
     private fun initializeDfu(arguments: Any?, result: MethodChannel.Result) {
         try {
-            val args = arguments as? Map<*, *> ?: throw IllegalArgumentException("Arguments are not a Map")
-            val isDebug = args["isDebug"] as? Boolean ?: throw IllegalArgumentException("isDebug is missing or not a Boolean")
+            val args =
+                arguments as? Map<*, *> ?: throw IllegalArgumentException("Arguments are not a Map")
+            val isDebug = args["isDebug"] as? Boolean
+                ?: throw IllegalArgumentException("isDebug is missing or not a Boolean")
 
             val configure = RtkConfigure.Builder()
                 .debugEnabled(isDebug)
@@ -91,7 +107,8 @@ public class MainActivity : FlutterActivity() {
 
     private fun startDfuProcedure(arguments: Any?, result: MethodChannel.Result) {
         try {
-            val args = arguments as? Map<*, *> ?: throw IllegalArgumentException("Invalid arguments")
+            val args =
+                arguments as? Map<*, *> ?: throw IllegalArgumentException("Invalid arguments")
             val deviceAddress = args["deviceAddress"] as String
             val filePath = args["filePath"] as String
 
@@ -130,6 +147,7 @@ public class MainActivity : FlutterActivity() {
                                 .build()
                             dfuAdapter.connectDevice(connectParams)
                         }
+
                         DfuAdapter.STATE_PREPARED -> {
                             val deviceInfo = dfuAdapter.otaDeviceInfo
                             dfuAdapter.startOtaProcedure(deviceInfo, dfuConfig)
@@ -137,6 +155,7 @@ public class MainActivity : FlutterActivity() {
                                 result.success(null)
                             }
                         }
+
                         DfuAdapter.STATE_DISCONNECTED -> {
                             runOnUiThread {
                                 eventSink?.error("DFU_ERROR", "Device disconnected", null)
@@ -179,5 +198,12 @@ public class MainActivity : FlutterActivity() {
         dfuAdapter.close()
         eventSink?.endOfStream()
         eventSink = null
+    }
+
+    private fun isNotificationServiceEnabled(context: Context): Boolean {
+        val cn = ComponentName(context, MyNotificationListener::class.java)
+        val flat =
+            Settings.Secure.getString(context.contentResolver, "enabled_notification_listeners")
+        return flat != null && flat.contains(cn.flattenToString())
     }
 }

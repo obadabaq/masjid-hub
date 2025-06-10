@@ -1,8 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:android_intent_plus/android_intent.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:masjidhub/provider/locationProvider.dart';
-import 'package:masjidhub/provider/wathc_provider.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:masjidhub/provider/providerList.dart';
@@ -16,16 +15,28 @@ import 'package:masjidhub/utils/localizationUtils.dart';
 import 'package:masjidhub/utils/tesbihUtils.dart';
 import 'package:sizer/sizer.dart';
 
+const MethodChannel _dfuChannel = MethodChannel('dfu_channel');
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  openNotificationAccessSettings();
   await Firebase.initializeApp();
   await LocalizationUtils().init();
   await SharedPrefs().init();
   await DownloaderUtils().init();
   await TesbihUtils().init();
   runApp(LocalizationUtils().initApp(MyApp()));
+}
+
+void openNotificationAccessSettings() async {
+  final result = await _dfuChannel.invokeMethod<bool>('checkNotificationPermission');
+  if(!result!){
+    const AndroidIntent intent = AndroidIntent(
+      action: 'android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS',
+    );
+    intent.launch();
+  }
 }
 
 class MyApp extends StatefulWidget {

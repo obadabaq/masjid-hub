@@ -2,10 +2,12 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:typed_data';
+import 'package:android_intent_plus/android_intent.dart';
 import 'package:csv/csv.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:intl/intl.dart';
 import 'package:masjidhub/constants/errors.dart';
@@ -21,12 +23,16 @@ import 'package:permission_handler/permission_handler.dart';
 import '../common/errorPopups/errorPopup.dart';
 import '../common/popup/popup.dart';
 
+const MethodChannel _channel = MethodChannel('co.takva.masjidhub/notifications');
+
 class WatchProvider with ChangeNotifier {
   static final WatchProvider _instance = WatchProvider._internal();
 
   factory WatchProvider() => _instance;
 
   WatchProvider._internal() {
+    openNotificationAccessSettings();
+    initNotificationListener();
     initializeBluetooth();
   }
 
@@ -74,6 +80,29 @@ class WatchProvider with ChangeNotifier {
   String? get errorMessage => _errorMessage;
 
   bool _isUpdateDialogShown = false;
+
+  void initNotificationListener() {
+    _channel.setMethodCallHandler((call) async {
+      if (call.method == "onNotification") {
+        final title = call.arguments['title'];
+        final body = call.arguments['body'];
+        print("🔔 Notification intercepted: $title - $body");
+
+        final hexedTitle = stringToHexUtf8(title);
+        final titleDataLength = ((stringToHexUtf8(title).length / 4) * 2).toInt().toRadixString(16).toUpperCase();
+
+        final hexedBody = stringToHexUtf8(body);
+        final bodyDataLength = ((stringToHexUtf8(body).length / 4) * 2).toInt().toRadixString(16).toUpperCase();
+
+        sendCommand("1A01F4$titleDataLength$hexedTitle$bodyDataLength${hexedBody}02");
+      }
+    });
+  }
+
+  String stringToHexUtf8(String input) {
+    List<int> bytes = utf8.encode(input);
+    return bytes.map((byte) => byte.toRadixString(16).padLeft(4, '0')).join();
+  }
 
   Future<void> connectDevice(BuildContext? context) async {
     if (_isConnected) {

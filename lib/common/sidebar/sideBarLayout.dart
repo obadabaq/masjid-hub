@@ -27,6 +27,8 @@ class SideBarLayout extends StatelessWidget {
             preferredSize: Size.fromHeight(80),
             child: InkWell(
               onTap: () {
+                // watchProvider.sendCommand("1A01F304599959880700963941343998");
+                // watchProvider.sendCommand("1A01F40862117684723872382E0050006C0073002000680065006C00700020006D006500200066006900780020007400680065002000630061007202");
                 if (numOfPresses < 3) {
                   numOfPresses += 1;
                 }
