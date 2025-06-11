@@ -106,7 +106,7 @@ class WatchProvider with ChangeNotifier {
 
   Future<void> connectDevice(BuildContext? context) async {
     if (_isConnected) {
-      _updateError("Already connected to $_targetDeviceName");
+      // _updateError("Already connected to $_targetDeviceName");
       return;
     }
 
@@ -659,7 +659,7 @@ class WatchProvider with ChangeNotifier {
 
   Future<void> startConnectionProcess(BuildContext? context) async {
     if (_isConnected) {
-      _updateError("Already connected to $_targetDeviceName");
+      // _updateError("Already connected to $_targetDeviceName");
       return;
     }
 

@@ -54,7 +54,9 @@ class _QiblaWatchSyncAppsState extends State<QiblaWatchSyncApps> {
       child: Consumer<WatchProvider>(
         builder: (context, watchProvider, child) {
           return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: watchProvider.isScanning
+                ? CrossAxisAlignment.center
+                : CrossAxisAlignment.start,
             children: [
               (watchProvider.isScanning)
                   ? CircularProgressIndicator(
