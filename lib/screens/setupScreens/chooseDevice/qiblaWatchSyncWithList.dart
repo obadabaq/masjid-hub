@@ -257,7 +257,8 @@ class _QiblaWatchSyncAppsState extends State<QiblaWatchSyncApps> {
               SizedBox(
                 height: 30,
               ),
-              if (watchProvider.errorMessage != null)
+              if (watchProvider.errorMessage != null &&
+                  !watchProvider.isConnected)
                 Text(
                   watchProvider.errorMessage!,
                   style: TextStyle(color: Colors.red),

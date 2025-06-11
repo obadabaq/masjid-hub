@@ -31,7 +31,8 @@ class QiblaCompass extends StatefulWidget {
   _QiblaCompassState createState() => _QiblaCompassState();
 }
 
-class _QiblaCompassState extends State<QiblaCompass> with WidgetsBindingObserver {
+class _QiblaCompassState extends State<QiblaCompass>
+    with WidgetsBindingObserver {
   double _heading = 0;
   bool _isInForeground = true;
 
@@ -82,8 +83,9 @@ class _QiblaCompassState extends State<QiblaCompass> with WidgetsBindingObserver
   _getLocation() async {
     Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
-     if (Provider.of<WatchProvider>(context, listen: false).isConnected){
-      QiblaHelper.sendQiblaCommand(position.latitude, position.longitude,WatchProvider());
+    if (Provider.of<WatchProvider>(context, listen: false).isConnected) {
+      QiblaHelper.sendQiblaCommand(
+          position.latitude, position.longitude, WatchProvider());
     }
   }
 
@@ -103,7 +105,6 @@ class _QiblaCompassState extends State<QiblaCompass> with WidgetsBindingObserver
                   double bearing = provider.getBearing;
                   double adjustedHeading =
                       LocationUtils().adjustHeading(_heading, bearing);
-                  // print("halo $adjustedHeading");
                   bool _headingLessThan180 = adjustedHeading < 180;
                   double _readout = _headingLessThan180
                       ? adjustedHeading

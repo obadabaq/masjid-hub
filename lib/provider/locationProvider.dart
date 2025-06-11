@@ -71,114 +71,164 @@ class LocationProvider extends ChangeNotifier {
 
   Future<void> getPlacesCords(String placeId) async {
     final sessionToken = Uuid().v4();
-    final client = http.Client();
     final headers = LocationUtils().gMapsHeaders;
     final Uri request = Uri.parse(
-        'https://maps.googleapis.com/maps/api/place/details/json?input=bar&placeid=$placeId&key=$apiKey&sessiontoken=$sessionToken&adr_address');
-    final response = await client.get(request, headers: headers);
+      'https://maps.googleapis.com/maps/api/place/details/json'
+      '?placeid=$placeId&key=$apiKey&sessiontoken=$sessionToken',
+    );
 
-    if (response.statusCode == 200) {
+    try {
+      final response = await http.get(request, headers: headers);
+
+      if (response.statusCode != 200) {
+        setErrorText(tr('error coordinates'));
+        return Future.error(tr('error coordinates'));
+      }
+
       final responseBody = json.decode(response.body);
-      final cords = responseBody['result']['geometry']['location'];
-      String cityName =
-          responseBody['result']['address_components'][0]['short_name'].length <
-                  12
-              ? responseBody['result']['address_components'][0]['short_name']
-              : responseBody['result']['address_components'][1]['short_name'];
-      String addrAddress =
-          "$cityName, ${responseBody['result']['address_components'].last['short_name']}";
-      String addressMobile =
-          "$cityName, ${responseBody['result']['address_components'].last['short_name']}";
-      if (addrAddress.contains("tanbul")) {
-        addrAddress = "I" + addrAddress.substring(1);
+      final result = responseBody['result'];
+
+      final location = result['geometry']['location'];
+      final addressComponents = result['address_components'];
+
+      final city = addressComponents.firstWhere(
+        (comp) => comp['types'].toString().contains('[locality'),
+        orElse: () => null,
+      );
+      final country = addressComponents.firstWhere(
+        (comp) => comp['types'].toString().contains('country'),
+        orElse: () => null,
+      );
+
+      if (city == null || country == null) {
+        setErrorText(tr('error coordinates'));
+        return Future.error(tr('error coordinates'));
       }
-      if (addrAddress.length > 15) {
-        addrAddress = addrAddress.split(',')[0];
+
+      String address = "${city['short_name']}, ${country['short_name']}";
+      String addressMobile = address;
+
+      if (address.contains("tanbul")) {
+        address = "I" + address.substring(1);
       }
-      final userCords = Cords(lat: cords['lat'], lon: cords['lng']);
+      if (address.length >= 15) {
+        address = address.split(',')[0];
+      }
+
+      final userCords = Cords(lat: location['lat'], lon: location['lng']);
       setupProvider.setUserCords(userCords);
       SharedPrefs().setLocation(
-          userCords.lat, userCords.lon, addrAddress, addressMobile);
+        userCords.lat,
+        userCords.lon,
+        address,
+        addressMobile,
+      );
+
       PrayerUtils().getAltitude();
-      await fetchAddressAndSaveOrgId(userCords.lat, userCords.lon,
-          saveAddress: false);
+      await fetchAddressAndSaveOrgId(
+        userCords.lat,
+        userCords.lon,
+        saveAddress: false,
+      );
       getBearingFromMecca(userCords);
+
+      // Watch device integration
       try {
         final watchProvider = WatchProvider();
+
         if (watchProvider.isConnected) {
-          try {
-            QiblaHelper.sendQiblaCommand(
-                userCords.lat, userCords.lon, WatchProvider());
-            watchProvider.updateDateTime();
+          QiblaHelper.sendQiblaCommand(
+            userCords.lat,
+            userCords.lon,
+            watchProvider,
+          );
+
+          watchProvider.updateDateTime();
+          watchProvider.updateLocation(await SharedPrefs().getAddress);
+
+          Future.delayed(Duration(seconds: 4), () async {
             watchProvider.updateLocation(await SharedPrefs().getAddress);
-            Future.delayed(Duration(seconds: 4), () async {
-              watchProvider.updateLocation(SharedPrefs().getAddress);
-              PrayerTimingsProvider prayerTimingsProvider =
-                  PrayerTimingsProvider();
-              try {
-                List<Map<String, dynamic>> next30DaysPrayerTimes =
-                    await prayerTimingsProvider.getNext30DaysPrayerTimes();
-                // Ensure the data structure is correct
-                next30DaysPrayerTimes.forEach((element) {
-                  DateTime date = element['date'];
-                  List<DateTime> prayers = (element['prayers'] as List)
-                      .map((p) => p as DateTime)
-                      .toList();
-                  print('Date: $date, Prayers: $prayers');
-                });
-                // Send the prayer times to the device
-                watchProvider.updatePrayerTimes(next30DaysPrayerTimes);
-              } catch (e) {
-                print('Error fetching or sending prayer times: $e');
-              }
-            });
-          } catch (e) {
-            log(e.toString());
-          }
+
+            final prayerProvider = PrayerTimingsProvider();
+            try {
+              final next30DaysPrayerTimes =
+                  await prayerProvider.getNext30DaysPrayerTimes();
+
+              next30DaysPrayerTimes.forEach((element) {
+                final date = element['date'];
+                final prayers = (element['prayers'] as List)
+                    .map((p) => p as DateTime)
+                    .toList();
+                print('Date: $date, Prayers: $prayers');
+              });
+
+              watchProvider.updatePrayerTimes(next30DaysPrayerTimes);
+            } catch (e) {
+              print('Error fetching or sending prayer times: $e');
+            }
+          });
         }
       } catch (e) {
-        log(e.toString());
+        log('WatchProvider error: $e');
       }
-    } else {
+
+      notifyListeners();
+    } catch (e) {
       setErrorText(tr('error coordinates'));
       return Future.error(tr('error coordinates'));
     }
-    notifyListeners();
   }
 
-  /// Fetch place information based on latitude and longitude
   Future<List<String>> getPlaceFromCoordinates(double lat, double lng) async {
-    final String url =
-        "https://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$lng&key=$apiKey";
+    final url = Uri.parse(
+      "https://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$lng&key=$apiKey",
+    );
+
     try {
-      final response = await http.get(Uri.parse(url));
-      if (response.statusCode == 200) {
-        final data = json.decode(response.body);
-        if (data["status"] == "OK") {
-          final results = data["results"][0];
-          if (results.isNotEmpty) {
-            String address =
-                "${results['address_components'][results['address_components'].length - 2]['short_name']}, ${results['address_components'].last['short_name']}";
-            String addressMobile =
-                "${results['address_components'][results['address_components'].length - 2]['short_name']}, ${results['address_components'].last['short_name']}";
-            if (address.contains("tanbul")) {
-              address = "I" + address.substring(1);
-            }
-            if (address.length > 15) {
-              address =
-                  "${results['address_components'][results['address_components'].length - 3]['short_name']}, ${results['address_components'].last['short_name']}";
-            }
-            return [address, addressMobile];
-            return results[1]["formatted_address"].split(",").last;
-          } else {
-            return ["No results found"];
-          }
-        } else {
-          return ["Error: ${data["status"]}"];
-        }
-      } else {
+      final response = await http.get(url);
+
+      if (response.statusCode != 200) {
         return ["HTTP Error: ${response.statusCode}"];
       }
+
+      final data = json.decode(response.body);
+      if (data["status"] != "OK") {
+        return ["Error: ${data["status"]}"];
+      }
+
+      final results = data["results"];
+      if (results.isEmpty) {
+        return ["No results found"];
+      }
+
+      final components = results[0]['address_components'];
+
+      final city = components.firstWhere(
+        (comp) => comp['types'].toString().contains('[locality'),
+        orElse: () => null,
+      );
+
+      final country = components.firstWhere(
+        (comp) => comp['types'].toString().contains('country'),
+        orElse: () => null,
+      );
+
+      if (city == null || country == null) {
+        return ["Missing city or country information"];
+      }
+
+      String address = "${city['short_name']}, ${country['short_name']}";
+      String addressMobile = address;
+
+      if (address.contains("tanbul")) {
+        address = "I" + address.substring(1);
+      }
+
+      if (address.length >= 15) {
+        address = address.split(',')[0];
+      }
+
+      return [address, addressMobile];
     } catch (e) {
       return ["Error: $e"];
     }
