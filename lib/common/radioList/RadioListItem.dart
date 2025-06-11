@@ -68,7 +68,7 @@ class RadioListItem extends StatelessWidget {
                   ],
                 ),
               ),
-              if (!isLastItem) Divider(),
+              if (!isLastItem) Divider(color: Colors.black12,),
             ],
           );
         },

@@ -18,6 +18,7 @@ import 'package:masjidhub/common/snackBar/AppSnackBar.dart';
 import 'package:masjidhub/common/errorPopups/errorPopup.dart';
 import 'package:masjidhub/common/popup/popup.dart';
 import 'package:masjidhub/constants/images.dart';
+import 'package:sizer/sizer.dart';
 
 class ChooseLocation extends StatefulWidget {
   final PageController pageController;
@@ -72,7 +73,7 @@ class _ChooseLocationState extends State<ChooseLocation> {
                   child: SetupHeaderImage(image: mapSetupImage),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(top: 30),
+                  padding: EdgeInsets.only(top: 5.h),
                   child: Text(
                     tr('set your location'),
                     textAlign: TextAlign.center,
@@ -84,7 +85,7 @@ class _ChooseLocationState extends State<ChooseLocation> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(top: 20),
+                  padding: EdgeInsets.only(top: 3.h),
                   child: Text(
                     tr('enterLocationText'),
                     style: TextStyle(
@@ -95,9 +96,13 @@ class _ChooseLocationState extends State<ChooseLocation> {
                     textAlign: TextAlign.center,
                   ),
                 ),
-                ChooseLocationField(buttonWidth: 350, controller: _controller),
                 Padding(
-                  padding: EdgeInsets.only(top: 35.0),
+                  padding: EdgeInsets.only(top: 1.h),
+                  child: ChooseLocationField(
+                      buttonWidth: 350, controller: _controller),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 5.h),
                   child: Consumer<LocationProvider>(
                     builder: (ctx, locationProvider, _) => NeuButton(
                       onClick: () => _locateUser(),
@@ -110,7 +115,8 @@ class _ChooseLocationState extends State<ChooseLocation> {
                             child: Icon(
                               AppIcons.locationIcon,
                               size: 20,
-                              color: CustomColors.mischka,
+                              color:
+                                  _isAuto ? Colors.white : CustomColors.mischka,
                             ),
                           ),
                           Padding(
@@ -120,7 +126,7 @@ class _ChooseLocationState extends State<ChooseLocation> {
                                 maxWidth: 250,
                               ),
                               child: AutoSizeText(
-                                'Automatically Detect Location',
+                                'Auto Detect Location',
                                 style: TextStyle(
                                   fontSize: 22,
                                   height: 1.3,
