@@ -4,12 +4,12 @@ import 'package:masjidhub/models/madhabModel.dart';
 final List<MadhabModel> madhabList = [
   MadhabModel(
     id: 0,
-    title: 'shafi',
+    title: 'Shafi, Maliki, Hanbali',
     param: Madhab.shafi,
   ),
   MadhabModel(
     id: 1,
-    title: 'hanafi',
+    title: 'Hanafi',
     param: Madhab.hanafi,
   ),
 ];

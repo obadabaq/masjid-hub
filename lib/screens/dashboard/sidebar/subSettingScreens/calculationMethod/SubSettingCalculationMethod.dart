@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 import 'package:masjidhub/common/buttons/primaryButton.dart';
-import 'package:masjidhub/common/popup/popup.dart';
 import 'package:masjidhub/common/radioList/RadioList.dart';
 import 'package:masjidhub/constants/madhabs.dart';
+import 'package:masjidhub/constants/organisations.dart';
 import 'package:masjidhub/provider/prayerTimingsProvider.dart';
-import 'package:masjidhub/screens/setupScreens/choosePrayerTime/searchOrganisation.dart';
 import 'package:masjidhub/theme/colors.dart';
 import 'package:masjidhub/utils/prayerUtils.dart';
 import 'package:provider/provider.dart';
@@ -23,22 +22,16 @@ class SubSettingCalculationMethod extends StatefulWidget {
 
 class _SubSettingCalculationMethodState
     extends State<SubSettingCalculationMethod> {
+  bool _showOrgDropdown = false;
   static int? selectedOrgId;
 
   Future<void> _setOrgId(id) async {
     setState(() {
-      if (selectedOrgId == id) return selectedOrgId = null;
       selectedOrgId = id;
+      _showOrgDropdown = false;
     });
-  }
-
-  void openOrgSelectPopup() {
-    return _showPopup(
-      context,
-      SearchOrganisation(
-        onOrgSelect: (id) => _setOrgId(id),
-      ),
-    );
+    final provider = Provider.of<PrayerTimingsProvider>(context, listen: false);
+    provider.setOrgId(id);
   }
 
   @override
@@ -50,7 +43,7 @@ class _SubSettingCalculationMethodState
             children: [
               Padding(
                 padding:
-                    EdgeInsets.only(top: 0, left: 10, right: 10, bottom: 25),
+                EdgeInsets.only(top: 0, left: 10, right: 10, bottom: 25),
                 child: Text(
                   tr('select your madzhab.'),
                   style: TextStyle(
@@ -72,7 +65,7 @@ class _SubSettingCalculationMethodState
               ),
               Padding(
                 padding:
-                    EdgeInsets.only(top: 40, left: 10, right: 10, bottom: 20),
+                EdgeInsets.only(top: 40, left: 10, right: 10, bottom: 20),
                 child: Text(
                   tr('select organisation'),
                   style: TextStyle(
@@ -83,35 +76,64 @@ class _SubSettingCalculationMethodState
                   textAlign: TextAlign.center,
                 ),
               ),
-              PrimaryButton(
-                text: PrayerUtils().getOrgNameFromId(provider.getOrgId),
-                width: constraints.maxWidth,
-                margin:
-                    EdgeInsets.only(top: 0, left: 35, right: 35, bottom: 10),
-                padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
-                onPressed: () => openOrgSelectPopup(),
-                textAlign: TextAlign.center,
-                isSelected: true,
-                isDisabled: false,
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
+              GestureDetector(
+                onTap: () {
+                  setState(() {
+                    _showOrgDropdown = !_showOrgDropdown;
+                  });
+                },
+                child: Container(
+                  width: constraints.maxWidth,
+                  margin: EdgeInsets.only(top: 0, left: 35, right: 35, bottom: 10),
+                  padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
+                  decoration: BoxDecoration(
+                    color: CustomColors.irisBlue,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Text(
+                    PrayerUtils().getOrgNameFromId(provider.getOrgId),
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
               ),
+              if (_showOrgDropdown)
+                Container(
+                  width: constraints.maxWidth * 0.8,
+                  margin: EdgeInsets.only(bottom: 20),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black12,
+                        blurRadius: 10,
+                        spreadRadius: 2,
+                      ),
+                    ],
+                  ),
+                  constraints: BoxConstraints(
+                    maxHeight: 200,
+                  ),
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: organisationList.length,
+                    itemBuilder: (_, index) {
+                      return ListTile(
+                        title: Text(PrayerUtils().getOrgNameFromId(index)),
+                        onTap: () => _setOrgId(index),
+                      );
+                    },
+                  ),
+                ),
             ],
           ),
         );
       },
-    );
-  }
-
-  _showPopup(
-    BuildContext context,
-    Widget widget,
-  ) {
-    Navigator.push(
-      context,
-      PopupLayout(
-        child: widget,
-      ),
     );
   }
 }
