@@ -232,7 +232,7 @@ class SharedPrefs {
   Future<void> setSelectedMadhabId(int? madhabId) async =>
       _sharedPrefs?.setInt(keyMadhabId, madhabId ?? defaultMadhabId);
 
-  final int defaultOrgId = 0;
+  final int defaultOrgId = -1;
   int? _selectedOrgId = _sharedPrefs?.getInt(keyOrgId);
 
   int get getSelectedOrgId => _selectedOrgId ?? defaultOrgId;

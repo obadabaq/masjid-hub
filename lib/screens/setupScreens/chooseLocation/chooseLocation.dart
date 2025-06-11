@@ -33,6 +33,7 @@ class ChooseLocation extends StatefulWidget {
 
 class _ChooseLocationState extends State<ChooseLocation> {
   final _controller = TextEditingController();
+  bool _isAuto = false;
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +44,9 @@ class _ChooseLocationState extends State<ChooseLocation> {
           Provider.of<LocationProvider>(context, listen: false);
       try {
         await locationProvider.locateUser();
+        setState(() {
+          _isAuto = true;
+        });
         _controller.text =
             locationProvider.getAddress ?? tr('could not fetch location');
       } catch (e) {
@@ -116,11 +120,13 @@ class _ChooseLocationState extends State<ChooseLocation> {
                                 maxWidth: 250,
                               ),
                               child: AutoSizeText(
-                                tr('auto detect location'),
+                                'Automatically Detect Location',
                                 style: TextStyle(
                                   fontSize: 22,
                                   height: 1.3,
-                                  color: CustomColors.mischka,
+                                  color: _isAuto
+                                      ? Colors.white
+                                      : CustomColors.mischka,
                                 ),
                                 minFontSize: 12,
                                 maxLines: 1,
@@ -131,6 +137,7 @@ class _ChooseLocationState extends State<ChooseLocation> {
                           ),
                         ],
                       ),
+                      isSelected: _isAuto,
                     ),
                   ),
                 ),

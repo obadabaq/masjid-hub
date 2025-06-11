@@ -7,6 +7,7 @@ import 'package:masjidhub/common/buttons/primaryButton.dart';
 import 'package:masjidhub/common/snackBar/AppSnackBar.dart';
 import 'package:masjidhub/provider/setupProvider.dart';
 import 'package:masjidhub/screens/setupScreens/utils/setupFooter/navDots.dart';
+import 'package:sizer/sizer.dart';
 
 class SetupFooter extends StatelessWidget {
   final int currentPage;
@@ -66,12 +67,16 @@ class SetupFooter extends StatelessWidget {
             onPressed: () => isLastStep ? _completeSetup() : _nextPage(),
           ),
           if (!isLastStep)
-            CustomFlatButton(
-              padding: EdgeInsets.all(15),
-              onPressed: () => _nextPage(),
-              text: tr('skip this step'),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 3.h),
+              child: InkWell(
+                onTap: () => _nextPage(),
+                child: Text(
+                  tr('skip this step'),
+                  style: TextStyle(color: Colors.grey, fontSize: 18.sp),
+                ),
+              ),
             ),
-          if (isFirstPage) SizedBox(height: 40),
           NavDots(
             controller: controller,
           )

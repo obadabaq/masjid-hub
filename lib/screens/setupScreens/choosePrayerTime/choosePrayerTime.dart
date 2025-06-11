@@ -10,6 +10,7 @@ import 'package:masjidhub/screens/setupScreens/utils/setupFooter/setupFooter.dar
 import 'package:masjidhub/theme/colors.dart';
 import 'package:masjidhub/utils/prayerUtils.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 
 class ChoosePrayerTime extends StatefulWidget {
   final PageController pageController;
@@ -86,10 +87,10 @@ class _ChoosePrayerTimeState extends State<ChoosePrayerTime> {
                     Consumer<PrayerTimingsProvider>(
                       builder: (ctx, provider, _) => GridView.builder(
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
+                            crossAxisCount: 1,
                             crossAxisSpacing: 20.0,
                             mainAxisSpacing: 25.0,
-                            mainAxisExtent: 71),
+                            mainAxisExtent: 66),
                         physics: const NeverScrollableScrollPhysics(),
                         padding: EdgeInsets.fromLTRB(30, 20, 30, 30),
                         shrinkWrap: true,
@@ -98,7 +99,7 @@ class _ChoosePrayerTimeState extends State<ChoosePrayerTime> {
                           return PrimaryButton(
                             id: madhabList[index].id,
                             text: tr(madhabList[index].title),
-                            width: 150,
+                            width: double.infinity,
                             padding: buttonPadding,
                             onPressed: (id) => provider.setMadhabId(id),
                             isSelected: provider.getMadhabId == index,
@@ -111,7 +112,7 @@ class _ChoosePrayerTimeState extends State<ChoosePrayerTime> {
                       padding: EdgeInsets.only(
                           top: 20, left: 10, right: 10, bottom: 20),
                       child: Text(
-                        tr('select organisation'),
+                        '... or select an organisation',
                         style: TextStyle(
                           fontSize: 16.0,
                           height: 1.3,
@@ -135,18 +136,31 @@ class _ChoosePrayerTimeState extends State<ChoosePrayerTime> {
                                   top: 0, left: 35, right: 35, bottom: 10),
                               padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
                               decoration: BoxDecoration(
-                                color: CustomColors.irisBlue,
-                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.black.withOpacity(0.1),
+                                borderRadius: BorderRadius.circular(20),
                               ),
-                              child: Text(
-                                PrayerUtils()
-                                    .getOrgNameFromId(provider.getOrgId),
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.white,
-                                ),
-                                textAlign: TextAlign.center,
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    Icons.search,
+                                    color: Colors.grey,
+                                  ),
+                                  SizedBox(
+                                    width: 5.w,
+                                  ),
+                                  Text(
+                                    provider.getOrgId == -1
+                                        ? tr('select organisation')
+                                        : PrayerUtils().getOrgNameFromId(
+                                            provider.getOrgId),
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.grey,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  )
+                                ],
                               ),
                             ),
                           ),
