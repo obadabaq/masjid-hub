@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:masjidhub/common/buttons/primaryButton.dart';
-import 'package:masjidhub/common/popup/popup.dart';
 import 'package:masjidhub/common/setup/setupHeaderImage.dart';
 import 'package:masjidhub/constants/images.dart';
 import 'package:masjidhub/constants/madhabs.dart';
+import 'package:masjidhub/constants/organisations.dart';
 import 'package:masjidhub/provider/prayerTimingsProvider.dart';
-import 'package:masjidhub/screens/setupScreens/choosePrayerTime/searchOrganisation.dart';
 import 'package:masjidhub/screens/setupScreens/utils/setupFooter/setupFooter.dart';
 import 'package:masjidhub/theme/colors.dart';
 import 'package:masjidhub/utils/prayerUtils.dart';
@@ -25,6 +24,7 @@ class ChoosePrayerTime extends StatefulWidget {
 }
 
 class _ChoosePrayerTimeState extends State<ChoosePrayerTime> {
+  bool _showOrgDropdown = false;
   static int? selectedMadhabId;
   static int? selectedOrgId;
 
@@ -32,26 +32,12 @@ class _ChoosePrayerTimeState extends State<ChoosePrayerTime> {
       const EdgeInsets.fromLTRB(0, 20, 0, 20);
 
   Future<void> _setOrgId(id) async {
-    if (selectedMadhabId != null) {
-      setState(() {
-        selectedMadhabId = null;
-
-      });
-    }
+    final provider = Provider.of<PrayerTimingsProvider>(context, listen: false);
     setState(() {
-      if (selectedOrgId == id) return selectedOrgId = null;
       selectedOrgId = id;
+      _showOrgDropdown = false;
     });
-
-  }
-
-  void openOrgSelectPopup() {
-    return _showPopup(
-      context,
-      SearchOrganisation(
-        onOrgSelect: (id) => _setOrgId(id),
-      ),
-    );
+    provider.setOrgId(id);
   }
 
   @override
@@ -70,7 +56,6 @@ class _ChoosePrayerTimeState extends State<ChoosePrayerTime> {
                     Padding(
                       padding: EdgeInsets.only(top: _topPadding),
                       child: SetupHeaderImage(image: calculatorSetupImage),
-
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 50, left: 20, right: 20),
@@ -136,16 +121,66 @@ class _ChoosePrayerTimeState extends State<ChoosePrayerTime> {
                       ),
                     ),
                     Consumer<PrayerTimingsProvider>(
-                      builder: (ctx, provider, _) => PrimaryButton(
-                        text: PrayerUtils().getOrgNameFromId(provider.getOrgId),
-                        width: constraints.maxWidth,
-                        margin: EdgeInsets.only(
-                            top: 0, left: 35, right: 35, bottom: 10),
-                        padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
-                        onPressed: () => openOrgSelectPopup(),
-                        textAlign: TextAlign.center,
-                        isSelected: true,
-                        isDisabled: false,
+                      builder: (ctx, provider, _) => Column(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                _showOrgDropdown = !_showOrgDropdown;
+                              });
+                            },
+                            child: Container(
+                              width: constraints.maxWidth,
+                              margin: EdgeInsets.only(
+                                  top: 0, left: 35, right: 35, bottom: 10),
+                              padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
+                              decoration: BoxDecoration(
+                                color: CustomColors.irisBlue,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Text(
+                                PrayerUtils()
+                                    .getOrgNameFromId(provider.getOrgId),
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.white,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ),
+                          if (_showOrgDropdown)
+                            Container(
+                              width: constraints.maxWidth * 0.8,
+                              margin: EdgeInsets.only(bottom: 20),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black12,
+                                    blurRadius: 10,
+                                    spreadRadius: 2,
+                                  ),
+                                ],
+                              ),
+                              constraints: BoxConstraints(
+                                maxHeight: 200,
+                              ),
+                              child: ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: organisationList.length,
+                                itemBuilder: (_, index) {
+                                  return ListTile(
+                                    title: Text(
+                                        PrayerUtils().getOrgNameFromId(index)),
+                                    onTap: () => _setOrgId(index),
+                                  );
+                                },
+                              ),
+                            ),
+                        ],
                       ),
                     ),
                     SetupFooter(
@@ -160,18 +195,6 @@ class _ChoosePrayerTimeState extends State<ChoosePrayerTime> {
             },
           ),
         ),
-      ),
-    );
-  }
-
-  _showPopup(
-    BuildContext context,
-    Widget widget,
-  ) {
-    Navigator.push(
-      context,
-      PopupLayout(
-        child: widget,
       ),
     );
   }
