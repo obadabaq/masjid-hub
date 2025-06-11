@@ -48,19 +48,19 @@ class _ChooseDeviceState extends State<ChooseDevice> {
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                          top: 20, left: 29, right: 29, bottom: 30),
-                      child: Text(
-                        tr('connectDeviceText'),
-                        style: TextStyle(
-                          fontSize: 16.0,
-                          height: 1.3,
-                          color: CustomColors.blackPearl.withOpacity(0.7),
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
+                    // Padding(
+                    //   padding: EdgeInsets.only(
+                    //       top: 20, left: 29, right: 29, bottom: 30),
+                    //   child: Text(
+                    //     tr('connectDeviceText'),
+                    //     style: TextStyle(
+                    //       fontSize: 16.0,
+                    //       height: 1.3,
+                    //       color: CustomColors.blackPearl.withOpacity(0.7),
+                    //     ),
+                    //     textAlign: TextAlign.center,
+                    //   ),
+                    // ),
                     ChooseDeviceComponent(),
                     SetupFooter(
                       currentPage: 5,

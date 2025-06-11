@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:masjidhub/constants/shadows.dart';
 import 'package:masjidhub/theme/colors.dart';
 import 'package:masjidhub/theme/customTheme.dart';
+import 'package:sizer/sizer.dart';
 
 class DevicesButton extends StatefulWidget {
   DevicesButton({
@@ -63,38 +64,33 @@ class _DevicesButtonState extends State<DevicesButton> {
           child: Row(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Padding(
-                padding: EdgeInsets.fromLTRB(5, 5, 5, 15),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(5, 5, 5, 25),
-                      child: Icon(
-                        widget.icon,
-                        size: 40,
-                        color: widget.buttonSelected
-                            ? Colors.white
-                            : CustomColors.blackPearl,
-                      ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    widget.icon,
+                    size: 33.sp,
+                    color: widget.buttonSelected
+                        ? Colors.white
+                        : CustomColors.blackPearl,
+                  ),
+                  SizedBox(
+                    height: 2.h,
+                  ),
+                  Text(
+                    widget.text,
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      height: 1.3,
+                      color: widget.buttonSelected
+                          ? Colors.white
+                          : CustomColors.blackPearl,
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 5),
-                      child: Text(
-                        widget.text,
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          height: 1.3,
-                          color: widget.buttonSelected
-                              ? Colors.white
-                              : CustomColors.blackPearl,
-                        ),
-                      ),
-                    )
-                  ],
-                ),
+                  )
+                ],
               ),
             ],
           ),

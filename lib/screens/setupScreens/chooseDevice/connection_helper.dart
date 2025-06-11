@@ -5,27 +5,25 @@ import '../../../provider/wathc_provider.dart';
 import '../../../utils/sharedPrefs.dart';
 
 mixin connectionHelper {
-
   late WatchProvider watchProvider;
-  initMixin(BuildContext context){
+
+  initMixin(BuildContext context) {
     watchProvider = Provider.of<WatchProvider>(context, listen: false);
-
   }
-  void syncDate(BuildContext context) {
 
-    watchProvider.syncDateTime(true);
+  void syncDate(BuildContext context) {
+    // watchProvider.syncDateTime(true);
     watchProvider.updateDateTime();
-}
+  }
 
   void syncLocation(BuildContext context) {
-    watchProvider.syncDateLocation(true);
+    // watchProvider.syncDateLocation(true);
     watchProvider.updateLocation(SharedPrefs().getAddress);
   }
 
   Future<void> syncPrayerTimes(BuildContext context) async {
-    watchProvider.syncPrayerTime(true);
-    PrayerTimingsProvider prayerTimingsProvider =
-    PrayerTimingsProvider();
+    // watchProvider.syncPrayerTime(true);
+    PrayerTimingsProvider prayerTimingsProvider = PrayerTimingsProvider();
     watchProvider.updatePrayerTimes([
       {
         'date': DateTime.now(),
@@ -41,14 +39,12 @@ mixin connectionHelper {
     ]);
     try {
       List<Map<String, dynamic>> next30DaysPrayerTimes =
-          await prayerTimingsProvider
-          .getNext30DaysPrayerTimes();
+          await prayerTimingsProvider.getNext30DaysPrayerTimes();
       // Ensure the data structure is correct
       next30DaysPrayerTimes.forEach((element) {
         DateTime date = element['date'];
-        List<DateTime> prayers = (element['prayers'] as List)
-            .map((p) => p as DateTime)
-            .toList();
+        List<DateTime> prayers =
+            (element['prayers'] as List).map((p) => p as DateTime).toList();
 
         print('Date: $date, Prayers: $prayers');
       });
@@ -58,13 +54,9 @@ mixin connectionHelper {
     } catch (e) {
       print('Error fetching or sending prayer times: $e');
     }
-  watchProvider.syncDateLocation(true);
-  watchProvider.updateLocation(SharedPrefs().getAddress);
-
-}
-
-  void updateQeble() {
-
+    // watchProvider.syncDateLocation(true);
+    watchProvider.updateLocation(SharedPrefs().getAddress);
   }
 
+  void updateQeble() {}
 }

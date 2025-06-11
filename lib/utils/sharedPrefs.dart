@@ -90,16 +90,72 @@ class SharedPrefs {
 
   bool? _automaticLocation = _sharedPrefs?.getBool(keyAutomaticLocation);
 
+  bool? _syncAllApps = _sharedPrefs?.getBool(keySyncAllApps);
+
+  bool? _syncCalls = _sharedPrefs?.getBool(keySyncCalls);
+
+  bool? _syncMessages = _sharedPrefs?.getBool(keySyncMessages);
+
+  bool? _syncWhatsapp = _sharedPrefs?.getBool(keySyncWhatsapp);
+
+  bool? _syncTime = _sharedPrefs?.getBool(keySyncTime);
+
+  bool? _syncCalender = _sharedPrefs?.getBool(keySyncCalender);
+
   String get getAddress =>
       _address ?? 'Unable to locate, Please refresh location';
 
   bool get getAutomatic => _automaticLocation ?? false;
+
+  bool get getSyncAllApps => _syncAllApps ?? false;
+
+  bool get getSyncCalls => _syncCalls ?? false;
+
+  bool get getSyncMessages => _syncMessages ?? false;
+
+  bool get getSyncWhatsapp => _syncWhatsapp ?? false;
+
+  bool get getSyncTime => _syncTime ?? false;
+
+  bool get getSyncCalender => _syncCalender ?? false;
 
   String get getAddressMobile =>
       _addressMobile ?? 'Unable to locate, Please refresh location';
 
   Future<void> setAddress(String address) async {
     _sharedPrefs?.setString(keyAddress, address);
+  }
+
+  Future<void> setSyncAllApps(bool value, bool turnAll) async {
+    _sharedPrefs?.setBool(keySyncAllApps, value);
+
+    if (turnAll) {
+      _sharedPrefs?.setBool(keySyncCalls, value);
+      _sharedPrefs?.setBool(keySyncMessages, value);
+      _sharedPrefs?.setBool(keySyncWhatsapp, value);
+      _sharedPrefs?.setBool(keySyncTime, value);
+      _sharedPrefs?.setBool(keySyncCalender, value);
+    }
+  }
+
+  Future<void> setSyncCalls(bool value) async {
+    _sharedPrefs?.setBool(keySyncCalls, value);
+  }
+
+  Future<void> setSyncMessages(bool value) async {
+    _sharedPrefs?.setBool(keySyncMessages, value);
+  }
+
+  Future<void> setSyncTime(bool value) async {
+    _sharedPrefs?.setBool(keySyncTime, value);
+  }
+
+  Future<void> setSyncWhatsapp(bool value) async {
+    _sharedPrefs?.setBool(keySyncWhatsapp, value);
+  }
+
+  Future<void> setSyncCalender(bool value) async {
+    _sharedPrefs?.setBool(keySyncCalender, value);
   }
 
   Future<void> setAutomatic(bool automaticLocation) async {

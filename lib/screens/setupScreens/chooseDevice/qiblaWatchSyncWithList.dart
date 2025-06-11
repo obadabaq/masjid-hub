@@ -21,11 +21,12 @@ class QiblaWatchSyncApps extends StatefulWidget {
 }
 
 class _QiblaWatchSyncAppsState extends State<QiblaWatchSyncApps> {
-
   bool isAllOn = false;
   bool calls = false;
   bool messages = false;
   bool time = false;
+  bool whatsApp = false;
+  bool calender = false;
 
   @override
   void initState() {
@@ -33,6 +34,14 @@ class _QiblaWatchSyncAppsState extends State<QiblaWatchSyncApps> {
       final watchProvider = Provider.of<WatchProvider>(context, listen: false);
       watchProvider.startConnectionProcess(context).whenComplete(() async {
         watchProvider.updateLocation(SharedPrefs().getAddress);
+      });
+      setState(() {
+        isAllOn = SharedPrefs().getSyncAllApps;
+        calls = SharedPrefs().getSyncCalls;
+        messages = SharedPrefs().getSyncMessages;
+        whatsApp = SharedPrefs().getSyncWhatsapp;
+        time = SharedPrefs().getSyncTime;
+        calender = SharedPrefs().getSyncCalender;
       });
     });
     super.initState();
@@ -45,6 +54,7 @@ class _QiblaWatchSyncAppsState extends State<QiblaWatchSyncApps> {
       child: Consumer<WatchProvider>(
         builder: (context, watchProvider, child) {
           return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               (watchProvider.isScanning)
                   ? CircularProgressIndicator(
@@ -80,52 +90,26 @@ class _QiblaWatchSyncAppsState extends State<QiblaWatchSyncApps> {
                     title: 'All apps',
                     isLastItem: isAllOn,
                     onSwitchOn: () {
-                      setState(() async {
+                      setState(() {
                         messages = true;
                         calls = true;
                         time = true;
+                        whatsApp = true;
+                        calender = true;
                         isAllOn = !isAllOn;
-                        watchProvider.syncWatch();
-
-                        PrayerTimingsProvider prayerTimingsProvider =
-                            PrayerTimingsProvider();
-                        try {
-                          List<Map<String, dynamic>> next30DaysPrayerTimes =
-                              await prayerTimingsProvider
-                                  .getNext30DaysPrayerTimes();
-                          // Ensure the data structure is correct
-                          next30DaysPrayerTimes.forEach((element) {
-                            DateTime date = element['date'];
-                            List<DateTime> prayers =
-                                (element['prayers'] as List)
-                                    .map((p) => p as DateTime)
-                                    .toList();
-                            print('Date: $date, Prayers: $prayers');
-                          });
-
-                          // Send the prayer times to the device
-                          watchProvider
-                              .updatePrayerTimes(next30DaysPrayerTimes);
-                        } catch (e) {
-                          print('Error fetching or sending prayer times: $e');
-                        }
                       });
+                      watchProvider.syncWatch(true, true);
                     },
                     onSwitchOff: () {
-                      messages = false;
-                      calls = false;
-                      time = false;
-                      watchProvider.syncDateTime(false);
-                      watchProvider.syncPrayerTime(false);
-                      watchProvider.syncDateLocation(false);
-                      watchProvider.syncDateTime(false);
-                      watchProvider.syncPrayerTime(false);
-                      watchProvider.syncDateLocation(false);
-                      watchProvider.syncTsbeeh(false);
-                      watchProvider.syncqibla(false);
                       setState(() {
+                        messages = false;
+                        calls = false;
+                        time = false;
+                        whatsApp = false;
+                        calender = false;
                         isAllOn = !isAllOn;
                       });
+                      watchProvider.syncWatch(false, true);
                     },
                     tileValue: isAllOn,
                   ),
@@ -148,144 +132,6 @@ class _QiblaWatchSyncAppsState extends State<QiblaWatchSyncApps> {
                   ),
                   child: Column(
                     children: [
-                      // ListTileItem(
-                      //   title: 'Time App',
-                      //   isLastItem: false,
-                      //   onSwitchOn: () {
-                      //     watchProvider.syncDateTime(true);
-                      //     watchProvider.updateDateTime();
-                      //   },
-                      //   onSwitchOff: () {
-                      //     watchProvider.syncDateTime(false);
-                      //   },
-                      //   tileValue: watchProvider.syncDate,
-                      // ),
-                      // Padding(
-                      //   padding: EdgeInsets.only(top: 4),
-                      //   child: Container(
-                      //     height: 1,
-                      //     color: Colors.grey.withOpacity(0.2),
-                      //   ),
-                      // ),
-                      // ListTileItem(
-                      //   title: 'Tasbih App',
-                      //   isLastItem: false,
-                      //   onSwitchOn: () {
-                      //     watchProvider.syncTsbeeh(true);
-                      //   },
-                      //   onSwitchOff: () {
-                      //     watchProvider.syncTsbeeh(false);
-                      //   },
-                      //   tileValue: watchProvider.syncTasbeeh,
-                      // ),
-                      // Padding(
-                      //   padding: EdgeInsets.only(top: 4),
-                      //   child: Container(
-                      //     height: 1,
-                      //     color: Colors.grey.withOpacity(0.2),
-                      //   ),
-                      // ),
-                      // ListTileItem(
-                      //   title: 'Prayer App',
-                      //   isLastItem: false,
-                      //   onSwitchOn: () async {
-                      //     watchProvider.syncPrayerTime(true);
-                      //     PrayerTimingsProvider prayerTimingsProvider =
-                      //         PrayerTimingsProvider();
-                      //     try {
-                      //       List<Map<String, dynamic>> next30DaysPrayerTimes =
-                      //           await prayerTimingsProvider
-                      //               .getNext30DaysPrayerTimes();
-                      //       // Ensure the data structure is correct
-                      //       next30DaysPrayerTimes.forEach((element) {
-                      //         DateTime date = element['date'];
-                      //         List<DateTime> prayers =
-                      //             (element['prayers'] as List)
-                      //                 .map((p) => p as DateTime)
-                      //                 .toList();
-                      //         print('Date: $date, Prayers: $prayers');
-                      //       });
-                      //
-                      //       // Send the prayer times to the device
-                      //       watchProvider
-                      //           .updatePrayerTimes(next30DaysPrayerTimes);
-                      //     } catch (e) {
-                      //       print('Error fetching or sending prayer times: $e');
-                      //     }
-                      //   },
-                      //   onSwitchOff: () {
-                      //     watchProvider.syncPrayerTime(false);
-                      //   },
-                      //   tileValue: watchProvider.syncPrayer,
-                      // ),
-                      // Padding(
-                      //   padding: EdgeInsets.only(top: 4),
-                      //   child: Container(
-                      //     height: 1,
-                      //     color: Colors.grey.withOpacity(0.2),
-                      //   ),
-                      // ),
-                      // ListTileItem(
-                      //   title: 'Location App',
-                      //   isLastItem: false,
-                      //   onSwitchOn: () {
-                      //     watchProvider.syncDateLocation(true);
-                      //     log(SharedPrefs().getAddress.toString());
-                      //     watchProvider
-                      //         .updateLocation(SharedPrefs().getAddress);
-                      //   },
-                      //   onSwitchOff: () {
-                      //     watchProvider.syncDateLocation(false);
-                      //   },
-                      //   tileValue: watchProvider.syncLocation,
-                      // ),
-                      // Padding(
-                      //   padding: EdgeInsets.only(top: 4),
-                      //   child: Container(
-                      //     height: 1,
-                      //     color: Colors.grey.withOpacity(0.2),
-                      //   ),
-                      // ),
-                      // ListTileItem(
-                      //   title: 'Qibla App',
-                      //   isLastItem: false,
-                      //   onSwitchOn: () {
-                      //     watchProvider.syncqibla(true);
-                      //     double bearing = SharedPrefs().getBearing;
-                      //     double adjustedHeading =
-                      //         LocationUtils().adjustHeading(0, bearing);
-                      //
-                      //     String hexAC = bearing
-                      //         .toInt()
-                      //         .sign
-                      //         .abs()
-                      //         .toRadixString(16)
-                      //         .padLeft(2, '0')
-                      //         .toUpperCase();
-                      //     String hex1D = adjustedHeading
-                      //         .toInt()
-                      //         .sign
-                      //         .abs()
-                      //         .toRadixString(16)
-                      //         .padLeft(2, '0')
-                      //         .toUpperCase();
-                      //
-                      //     String command = '1A01F6${hexAC}${hex1D}0';
-                      //     log(command);
-                      //     watchProvider.sendCommand(command);
-                      //   },
-                      //   onSwitchOff: () {
-                      //     watchProvider.syncqibla(false);
-                      //   },
-                      //   tileValue: watchProvider.syncqibla1,
-                      // ),
-                      // Padding(
-                      //   padding: EdgeInsets.only(top: 4),
-                      //   child: Container(
-                      //     height: 1,
-                      //     color: Colors.grey.withOpacity(0.2),
-                      //   ),
-                      // ),
                       ListTileItem(
                         title: 'Incoming Calls',
                         isLastItem: false,
@@ -293,11 +139,15 @@ class _QiblaWatchSyncAppsState extends State<QiblaWatchSyncApps> {
                           setState(() {
                             calls = true;
                           });
+                          watchProvider.syncCalls(true);
                         },
                         onSwitchOff: () {
                           setState(() {
                             calls = false;
+                            isAllOn = false;
                           });
+                          watchProvider.syncWatch(false, false);
+                          watchProvider.syncCalls(false);
                         },
                         tileValue: calls,
                       ),
@@ -315,13 +165,41 @@ class _QiblaWatchSyncAppsState extends State<QiblaWatchSyncApps> {
                           setState(() {
                             messages = true;
                           });
+                          watchProvider.syncMessages(true);
                         },
                         onSwitchOff: () {
                           setState(() {
                             messages = false;
                           });
+                          watchProvider.syncWatch(false, false);
+                          watchProvider.syncMessages(false);
                         },
                         tileValue: messages,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 4),
+                        child: Container(
+                          height: 1,
+                          color: Colors.grey.withOpacity(0.2),
+                        ),
+                      ),
+                      ListTileItem(
+                        title: 'WhatsApp',
+                        isLastItem: false,
+                        onSwitchOn: () {
+                          setState(() {
+                            whatsApp = true;
+                          });
+                          watchProvider.syncWhatsApp(true);
+                        },
+                        onSwitchOff: () {
+                          setState(() {
+                            whatsApp = false;
+                          });
+                          watchProvider.syncWatch(false, false);
+                          watchProvider.syncWhatsApp(false);
+                        },
+                        tileValue: whatsApp,
                       ),
                       Padding(
                         padding: EdgeInsets.only(top: 4),
@@ -337,15 +215,17 @@ class _QiblaWatchSyncAppsState extends State<QiblaWatchSyncApps> {
                           setState(() {
                             time = true;
                           });
+                          watchProvider.syncTime(true);
                         },
                         onSwitchOff: () {
                           setState(() {
                             time = false;
                           });
+                          watchProvider.syncWatch(false, false);
+                          watchProvider.syncTime(false);
                         },
                         tileValue: time,
                       ),
-                      // ListTile(
                       Container(
                         height: 1,
                         color: Colors.black12.withOpacity(0.08),
@@ -354,51 +234,20 @@ class _QiblaWatchSyncAppsState extends State<QiblaWatchSyncApps> {
                         title: 'Google Calendar',
                         isLastItem: false,
                         onSwitchOn: () {
-                          watchProvider.syncTsbeeh(true);
+                          setState(() {
+                            calender = true;
+                          });
+                          watchProvider.syncCalender(true);
                         },
                         onSwitchOff: () {
-                          watchProvider.syncTsbeeh(false);
+                          setState(() {
+                            calender = false;
+                          });
+                          watchProvider.syncWatch(false, false);
+                          watchProvider.syncCalender(false);
                         },
-                        tileValue: watchProvider.syncTasbeeh,
+                        tileValue: calender,
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 4),
-                        child: Container(
-                          height: 1,
-                          color: Colors.grey.withOpacity(0.2),
-                        ),
-                      ),
-                      //   title: Text("Open Quran Screen"),
-                      //   onTap: () {
-                      //     watchProvider.sendCommand('1A01C101010000');
-                      //     showAudioPlayerDialog(watchProvider);
-                      //   },
-                      //   trailing: Icon(
-                      //     Icons.mosque_rounded,
-                      //     color: Color(0xFF33DBD6),
-                      //     size: 40,
-                      //   ),
-                      // ),
-                      // Container(
-                      //   height: 1,
-                      //   color: Colors.black12,
-                      // ),
-                      // SizedBox(
-                      //   height: 20,
-                      // ),
-                      // ListTile(
-                      //   onTap: () {
-                      //     watchProvider.checkAndUpdateFirmware();
-                      //   },
-                      //   title: Text("Check for new update"),
-                      // ),
-                      // SizedBox(
-                      //   height: 20,
-                      // ),
-                      // Container(
-                      //   height: 1,
-                      //   color: Colors.black12,
-                      // ),
                     ],
                   ),
                 )

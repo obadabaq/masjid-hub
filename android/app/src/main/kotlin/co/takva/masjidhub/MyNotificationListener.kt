@@ -12,15 +12,21 @@ public class MyNotificationListener : NotificationListenerService() {
     }
 
     public override fun onNotificationPosted(sbn: StatusBarNotification) {
+        val packageName = sbn.packageName
+        if (packageName != "com.whatsapp") {
+            return
+        }
+
         val extras = sbn.notification.extras
         val title = extras.getString("android.title") ?: ""
         val text = extras.getCharSequence("android.text")?.toString() ?: ""
 
-        Log.d("MyNotificationListener", "Notification received: $title - $text")
+        Log.d("MyNotificationListener", "WhatsApp Notification received: $title - $text")
 
         notificationChannel?.invokeMethod(
             "onNotification",
             mapOf("title" to title, "body" to text)
         )
     }
+
 }

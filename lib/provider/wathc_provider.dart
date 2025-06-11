@@ -12,6 +12,7 @@ import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:intl/intl.dart';
 import 'package:masjidhub/constants/errors.dart';
 import 'package:masjidhub/main.dart';
+import 'package:masjidhub/provider/prayerTimingsProvider.dart';
 import 'package:masjidhub/screens/dashboard/sidebar/sidebarBody.dart';
 import 'package:masjidhub/utils/otaUtils.dart';
 import 'package:masjidhub/utils/sharedPrefs.dart';
@@ -23,7 +24,8 @@ import 'package:permission_handler/permission_handler.dart';
 import '../common/errorPopups/errorPopup.dart';
 import '../common/popup/popup.dart';
 
-const MethodChannel _channel = MethodChannel('co.takva.masjidhub/notifications');
+const MethodChannel _channel =
+    MethodChannel('co.takva.masjidhub/notifications');
 
 class WatchProvider with ChangeNotifier {
   static final WatchProvider _instance = WatchProvider._internal();
@@ -56,19 +58,6 @@ class WatchProvider with ChangeNotifier {
   final StreamController<String> _eventStreamController =
       StreamController<String>.broadcast();
 
-  bool syncDate = false;
-  bool syncPrayer = false;
-  bool syncLocation = false;
-  bool syncNotification11 = false;
-  bool syncNotification22 = false;
-  bool syncNotification33 = false;
-  bool syncAlarms1 = false;
-  bool syncSchedule1 = false;
-  bool syncTasbeeh = false;
-  bool syncQuran = false;
-  bool syncqibla1 = false;
-  bool syncWeather1 = false;
-
   Stream<String> get eventStream => _eventStreamController.stream;
 
   bool get isScanning => _isScanning;
@@ -84,17 +73,28 @@ class WatchProvider with ChangeNotifier {
   void initNotificationListener() {
     _channel.setMethodCallHandler((call) async {
       if (call.method == "onNotification") {
-        final title = call.arguments['title'];
-        final body = call.arguments['body'];
-        print("🔔 Notification intercepted: $title - $body");
+        if (SharedPrefs().getSyncWhatsapp == true) {
+          final title = call.arguments['title'];
+          final body = call.arguments['body'];
+          print("🔔 Notification intercepted: $title - $body");
 
-        final hexedTitle = stringToHexUtf8(title);
-        final titleDataLength = ((stringToHexUtf8(title).length / 4) * 2).toInt().toRadixString(16).toUpperCase();
+          final hexedTitle = stringToHexUtf8(title);
+          final titleDataLength = ((hexedTitle.length / 4) * 2)
+              .toInt()
+              .toRadixString(16)
+              .toUpperCase();
 
-        final hexedBody = stringToHexUtf8(body);
-        final bodyDataLength = ((stringToHexUtf8(body).length / 4) * 2).toInt().toRadixString(16).toUpperCase();
+          final hexedBody = stringToHexUtf8(body);
+          final bodyDataLength = ((hexedBody.length / 4) * 2)
+              .toInt()
+              .toRadixString(16)
+              .toUpperCase();
 
-        sendCommand("1A01F4$titleDataLength$hexedTitle$bodyDataLength${hexedBody}02");
+          sendCommand(
+              "1A01F4$titleDataLength$hexedTitle$bodyDataLength${hexedBody}02");
+        } else {
+          print("🔕 SyncWhatsapp is OFF, ignoring notification.");
+        }
       }
     });
   }
@@ -544,48 +544,28 @@ class WatchProvider with ChangeNotifier {
     }
   }
 
-  void syncDateTime(bool value) => _updateFlag(() => syncDate = value);
-
-  void syncTsbeeh(bool value) => _updateFlag(() => syncTasbeeh = value);
-
-  void syncDateLocation(bool value) => _updateFlag(() => syncLocation = value);
-
-  void syncPrayerTime(bool value) => _updateFlag(() => syncPrayer = value);
-
-  void syncNotification1(bool value) =>
-      _updateFlag(() => syncNotification11 = value);
-
-  void syncNotification2(bool value) =>
-      _updateFlag(() => syncNotification22 = value);
-
-  void syncNotification3(bool value) =>
-      _updateFlag(() => syncNotification33 = value);
-
-  void syncAlarms(bool value) => _updateFlag(() => syncAlarms1 = value);
-
-  void syncSchedules(bool value) => _updateFlag(() => syncSchedule1 = value);
-
-  void syncQuran1(bool value) => _updateFlag(() => syncQuran = value);
-
-  void syncqibla(bool value) => _updateFlag(() => syncqibla1 = value);
-
-  void syncWeather(bool value) => _updateFlag(() => syncWeather1 = value);
-
-  void syncWatch() {
-    syncDateTime(true);
-    updateDateTime();
-    syncPrayerTime(true);
-    syncDateLocation(true);
-    syncDateTime(true);
-    syncPrayerTime(true);
-    syncDateLocation(true);
-    syncTsbeeh(true);
-    syncqibla(true);
+  void syncWatch(bool value, bool turnAll) {
+    SharedPrefs().setSyncAllApps(value, turnAll);
   }
 
-  void _updateFlag(void Function() updater) {
-    updater();
-    notifyListeners();
+  void syncCalls(bool value) {
+    SharedPrefs().setSyncCalls(value);
+  }
+
+  void syncMessages(bool value) {
+    SharedPrefs().setSyncMessages(value);
+  }
+
+  void syncWhatsApp(bool value) {
+    SharedPrefs().setSyncWhatsapp(value);
+  }
+
+  void syncTime(bool value) {
+    SharedPrefs().setSyncTime(value);
+  }
+
+  void syncCalender(bool value) {
+    SharedPrefs().setSyncCalender(value);
   }
 
   @override
@@ -651,7 +631,6 @@ class WatchProvider with ChangeNotifier {
       _isConnected = true;
       Future.delayed(Duration(milliseconds: 1500), () async {
         await _discoverDeviceServices(device);
-        syncWatch();
         _enableNotifications();
         _setupConnectionMonitoring(device);
         updateLocation(SharedPrefs().getAddress);
@@ -724,15 +703,34 @@ class WatchProvider with ChangeNotifier {
       await _discoverDeviceServices(device);
 
       _isConnected = true;
-      syncWatch();
       _isConnecting = false;
       _setupConnectionMonitoring(device);
       _enableNotifications();
+      updateDateTime();
+      _getNext300DaysPrayerTimes();
 
       notifyListeners();
     } catch (e) {
       _isConnecting = false;
       _updateError("Connection failed: ${e.toString()}");
+    }
+  }
+
+  _getNext300DaysPrayerTimes() async {
+    PrayerTimingsProvider prayerTimingsProvider = PrayerTimingsProvider();
+    try {
+      List<Map<String, dynamic>> next30DaysPrayerTimes =
+          await prayerTimingsProvider.getNext30DaysPrayerTimes();
+      next30DaysPrayerTimes.forEach((element) {
+        DateTime date = element['date'];
+        List<DateTime> prayers =
+            (element['prayers'] as List).map((p) => p as DateTime).toList();
+        print('Date: $date, Prayers: $prayers');
+      });
+
+      updatePrayerTimes(next30DaysPrayerTimes);
+    } catch (e) {
+      print('Error fetching or sending prayer times: $e');
     }
   }
 
