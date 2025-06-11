@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:typed_data';
-import 'package:android_intent_plus/android_intent.dart';
 import 'package:csv/csv.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/cupertino.dart';
@@ -33,7 +32,6 @@ class WatchProvider with ChangeNotifier {
   factory WatchProvider() => _instance;
 
   WatchProvider._internal() {
-    openNotificationAccessSettings();
     initNotificationListener();
     initializeBluetooth();
   }

@@ -1,7 +1,9 @@
 import 'dart:developer';
 import 'dart:ffi';
+import 'package:android_intent_plus/android_intent.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:masjidhub/frimware_update.dart';
 import 'package:masjidhub/provider/locationProvider.dart';
 import 'package:masjidhub/theme/customTheme.dart';
@@ -12,6 +14,8 @@ import '../../../provider/prayerTimingsProvider.dart';
 import '../../../provider/wathc_provider.dart';
 import '../../../utils/locationUtils.dart';
 import '../../../utils/tasbeeh_helper.dart';
+
+const MethodChannel _dfuChannel = MethodChannel('dfu_channel');
 
 class QiblaWatchSyncApps extends StatefulWidget {
   const QiblaWatchSyncApps({Key? key}) : super(key: key);
@@ -92,6 +96,7 @@ class _QiblaWatchSyncAppsState extends State<QiblaWatchSyncApps> {
                     title: 'All apps',
                     isLastItem: isAllOn,
                     onSwitchOn: () {
+                      openNotificationAccessSettings(context);
                       setState(() {
                         messages = true;
                         calls = true;
@@ -189,6 +194,7 @@ class _QiblaWatchSyncAppsState extends State<QiblaWatchSyncApps> {
                         title: 'WhatsApp',
                         isLastItem: false,
                         onSwitchOn: () {
+                          openNotificationAccessSettings(context);
                           setState(() {
                             whatsApp = true;
                           });
@@ -369,5 +375,43 @@ class _QiblaWatchSyncAppsState extends State<QiblaWatchSyncApps> {
         );
       },
     );
+  }
+
+  Future<void> openNotificationAccessSettings(BuildContext context) async {
+    final result =
+        await _dfuChannel.invokeMethod<bool>('checkNotificationPermission');
+
+    if (!result!) {
+      await showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Permission Required'),
+            content: const Text(
+              'This app requires notification access permission to function properly. '
+              'Please enable it in the settings that will open next.',
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('Cancel'),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+              TextButton(
+                child: const Text('Open Settings'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  const AndroidIntent intent = AndroidIntent(
+                    action:
+                        'android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS',
+                  );
+                  intent.launch();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
   }
 }

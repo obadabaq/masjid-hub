@@ -65,7 +65,7 @@ class SetupFooter extends StatelessWidget {
             isDisabled: isPrimaryButtonDisabled,
             onPressed: () => isLastStep ? _completeSetup() : _nextPage(),
           ),
-          if (!isLastStep && !isFirstPage)
+          if (!isLastStep)
             CustomFlatButton(
               padding: EdgeInsets.all(15),
               onPressed: () => _nextPage(),

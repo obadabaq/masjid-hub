@@ -15,28 +15,16 @@ import 'package:masjidhub/utils/localizationUtils.dart';
 import 'package:masjidhub/utils/tesbihUtils.dart';
 import 'package:sizer/sizer.dart';
 
-const MethodChannel _dfuChannel = MethodChannel('dfu_channel');
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  openNotificationAccessSettings();
   await Firebase.initializeApp();
   await LocalizationUtils().init();
   await SharedPrefs().init();
   await DownloaderUtils().init();
   await TesbihUtils().init();
   runApp(LocalizationUtils().initApp(MyApp()));
-}
-
-void openNotificationAccessSettings() async {
-  final result = await _dfuChannel.invokeMethod<bool>('checkNotificationPermission');
-  if(!result!){
-    const AndroidIntent intent = AndroidIntent(
-      action: 'android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS',
-    );
-    intent.launch();
-  }
 }
 
 class MyApp extends StatefulWidget {

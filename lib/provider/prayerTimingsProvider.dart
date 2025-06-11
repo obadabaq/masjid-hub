@@ -269,7 +269,7 @@ class PrayerTimingsProvider extends ChangeNotifier {
         )
     ];
     _prayerTimesList = tempPrayerTimesList;
-    updateNotification();
+    // updateNotification();
     return tempPrayerTimesList;
   }
 
