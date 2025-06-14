@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:masjidhub/common/scrollable_main_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'package:masjidhub/utils/prayerUtils.dart';
@@ -46,7 +47,6 @@ class _AdhanTimeListState extends State<AdhanTimeList> {
     await Provider.of<PrayerTimingsProvider>(context, listen: false)
         .setAlarmForAdhan(prayerId);
     setState(() {});
-
   }
 
   @override
@@ -58,43 +58,46 @@ class _AdhanTimeListState extends State<AdhanTimeList> {
         constraints: BoxConstraints(maxWidth: 350, maxHeight: maxHeight),
         child: Consumer<PrayerTimingsProvider>(
           builder: (ctx, prayerTimeProvider, _) => SizedBox(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  FutureBuilder(
-                    future: _fetchPrayerTimes(),
-                    builder: (BuildContext context,
-                        AsyncSnapshot<List<AdhanTimeModel>> snapshot) {
-                      if (snapshot.hasData)
-                        return ListView.builder(
-                          padding: EdgeInsets.only(top: 10, bottom: 150),
-                          physics: NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: 6,
-                          itemBuilder: (BuildContext context, int i) {
-                            final filterPrayerTitle = PrayerUtils()
-                                .filterPrayerTitle(adhanIconsList[i].title);
-                            return AdhanTimeListItem(
-                              id: snapshot.data![i].id,
-                              title: filterPrayerTitle,
-                              icon: adhanIconsList[i].icon,
-                              time: snapshot.data![i].time,
-                              isCurrentPrayer:
-                                  snapshot.data![i].isCurrentPrayer,
-                              isAlarmDisabled:
-                                  snapshot.data![i].isAlarmDisabled,
-                              onAlarmButtonClick: (id) =>
-                                  onAlarmButtonToggle(id),
-                            );
-                          },
+            child: ScrollableMainScreen(
+              child: SingleChildScrollView(
+                physics: ClampingScrollPhysics(),
+                child: Column(
+                  children: [
+                    FutureBuilder(
+                      future: _fetchPrayerTimes(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<List<AdhanTimeModel>> snapshot) {
+                        if (snapshot.hasData)
+                          return ListView.builder(
+                            padding: EdgeInsets.only(top: 10, bottom: 150),
+                            physics: NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: 6,
+                            itemBuilder: (BuildContext context, int i) {
+                              final filterPrayerTitle = PrayerUtils()
+                                  .filterPrayerTitle(adhanIconsList[i].title);
+                              return AdhanTimeListItem(
+                                id: snapshot.data![i].id,
+                                title: filterPrayerTitle,
+                                icon: adhanIconsList[i].icon,
+                                time: snapshot.data![i].time,
+                                isCurrentPrayer:
+                                    snapshot.data![i].isCurrentPrayer,
+                                isAlarmDisabled:
+                                    snapshot.data![i].isAlarmDisabled,
+                                onAlarmButtonClick: (id) =>
+                                    onAlarmButtonToggle(id),
+                              );
+                            },
+                          );
+                        return Container(
+                          margin: EdgeInsets.only(top: 50),
+                          child: CircularProgressIndicator(),
                         );
-                      return Container(
-                        margin: EdgeInsets.only(top: 50),
-                        child: CircularProgressIndicator(),
-                      );
-                    },
-                  ),
-                ],
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

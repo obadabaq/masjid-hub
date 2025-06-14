@@ -3,17 +3,6 @@ import 'package:masjidhub/utils/enums/appBarEnums.dart';
 import 'package:masjidhub/utils/sharedPrefs.dart';
 
 class BottomNavBarUtils {
-  bool hideNavBar(AppBarState state) {
-    switch (state) {
-      case AppBarState.quranSearch:
-      case AppBarState.remote:
-      case AppBarState.quran:
-        return true;
-      default:
-        return false;
-    }
-  }
-
   Future<void> scrollToNewFeature(
     ScrollController bottomNavScrollController,
   ) async {

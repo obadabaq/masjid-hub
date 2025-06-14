@@ -4,7 +4,6 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 import 'package:masjidhub/constants/quran.dart';
@@ -18,7 +17,6 @@ import 'package:masjidhub/models/quranChapterModel.dart';
 import 'package:masjidhub/utils/enums/playlistMode.dart';
 import 'package:masjidhub/utils/quranUtils.dart';
 import 'package:masjidhub/utils/sharedPrefs.dart';
-import 'package:snapping_sheet/snapping_sheet.dart';
 
 class QuranProvider extends ChangeNotifier {
   late String _quranText;
@@ -193,54 +191,12 @@ class QuranProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void slideInAudioPlayer() async {
-    await Future.delayed(Duration(seconds: 0)).then((value) {
-      snappingSheetController.snapToPosition(SnappingPosition.pixels(
-          positionPixels: -100, snappingDuration: Duration(seconds: 1)));
-    });
-
-    await Future.delayed(Duration(seconds: 1)).then((value) {
-      notifyListeners();
-      snappingSheetController.snapToPosition(
-        SnappingPosition.pixels(
-            positionPixels: 60, snappingDuration: Duration(seconds: 1)),
-      );
-    });
-  }
-
-  void slideOutAudioPlayer({bool isAudioPlayerMode = false}) async {
-    await Future.delayed(Duration(seconds: 0)).then((value) {
-      snappingSheetController.snapToPosition(SnappingPosition.pixels(
-          positionPixels: -100, snappingDuration: Duration(seconds: 1)));
-    });
-
-    await Future.delayed(Duration(seconds: 1)).then((value) {
-      if (!isAudioPlayerMode) {
-        notifyListeners();
-      }
-      snappingSheetController.snapToPosition(
-        SnappingPosition.pixels(
-            positionPixels: 10, snappingDuration: Duration(seconds: 1)),
-      );
-    });
-  }
-
-  SnappingSheetController snappingSheetController = SnappingSheetController();
   bool _isAudioItemVisible = true;
   bool get isAudioItemVisible => _isAudioItemVisible;
   // ignore: todo
   // TODO remove redundant equation
   void changeAudioItemVisibility(bool visibility) {
     _isAudioItemVisible = visibility;
-  }
-
-  void setAudioItemVisibility(bool visibility) {
-    _isAudioItemVisible = visibility;
-    if (visibility) {
-      slideOutAudioPlayer();
-    } else {
-      slideInAudioPlayer();
-    }
   }
 
   static AudioPlayerStateModel _audioState = AudioPlayerStateModel();
@@ -271,7 +227,8 @@ class QuranProvider extends ChangeNotifier {
     final EditionModel audioDetails = quranRecitations.elementAt(quranReciter);
     final recitor = audioDetails.identifier;
     final bitrate = audioDetails.bitrate;
-    audioPlayer.play(AssetSource('$quranAudioApiBaseUrl/$bitrate/$recitor/$currentAyahPlaying.mp3'));
+    audioPlayer.play(AssetSource(
+        '$quranAudioApiBaseUrl/$bitrate/$recitor/$currentAyahPlaying.mp3'));
   }
 
   Future<void> onAudioPlayButtonPressed(
@@ -311,7 +268,6 @@ class QuranProvider extends ChangeNotifier {
         if (isLastAyah) {
           currentAyahPlaying = nextAyah;
           setSurahCompleted();
-
         } else {
           currentAyahPlaying = nextAyah;
           playAudio(currentAyahPlaying);
@@ -319,46 +275,6 @@ class QuranProvider extends ChangeNotifier {
 
         notifyListeners();
       });
-    }
-  }
-
-  Future<void> pullDownAndPauseAudio(
-    int surahNumber,
-    int startAyahNumber,
-    int totalAyahs,
-  ) async {
-    slideOutAudioPlayer(isAudioPlayerMode: true);
-    await Future.delayed(Duration(seconds: 1)).then((value) {
-      _isAudioItemVisible = true;
-      onAudioPlayButtonPressed(
-        surahNumber,
-        startAyahNumber,
-        totalAyahs,
-        isAudioPlayerMode: true,
-      );
-    });
-  }
-
-  Future<void> onPlayPress(
-    int surahNumber,
-    int startAyahNumber,
-    int totalAyahs,
-  ) async {
-    bool isOnline = await InternetConnectionChecker().hasConnection;
-    if (!isOnline) return Future.error(tr('no internet'));
-
-    if (isAudioItemVisible) {
-      onAudioPlayButtonPressed(
-        surahNumber,
-        startAyahNumber,
-        totalAyahs,
-      );
-    } else {
-      pullDownAndPauseAudio(
-        surahNumber,
-        startAyahNumber,
-        totalAyahs,
-      );
     }
   }
 

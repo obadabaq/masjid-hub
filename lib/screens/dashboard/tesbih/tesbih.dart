@@ -8,6 +8,7 @@ import 'package:masjidhub/utils/sharedPrefs.dart';
 import 'package:masjidhub/utils/tesbihUtils.dart';
 import 'package:provider/provider.dart';
 
+import '../../../common/scrollable_main_screen.dart';
 import '../../../provider/tesbihProvider.dart';
 import '../../../provider/wathc_provider.dart';
 
@@ -44,17 +45,21 @@ class _TesbihState extends State<Tesbih> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      controller: tesbihScrollController,
-      addAutomaticKeepAlives: true,
-      children: [
-        const TesbihDial(),
-        const TesbihCountView(),
-        // ScrollButton(icon: Icons.expand_more, onPressed: onIconDownClick),
-        const SizedBox(height: 100),
-        const TesbihAnalytics(),
-        const SizedBox(height: 150),
-      ],
+    return ScrollableMainScreen(
+      scrollController: tesbihScrollController,
+      child: ListView(
+        controller: tesbihScrollController,
+        addAutomaticKeepAlives: true,
+        physics: ClampingScrollPhysics(),
+        children: [
+          const TesbihDial(),
+          const TesbihCountView(),
+          // ScrollButton(icon: Icons.expand_more, onPressed: onIconDownClick),
+          const SizedBox(height: 100),
+          const TesbihAnalytics(),
+          const SizedBox(height: 150),
+        ],
+      ),
     );
   }
 

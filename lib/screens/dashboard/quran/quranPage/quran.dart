@@ -8,6 +8,7 @@ import 'package:masjidhub/screens/dashboard/quran/quranPage/recentSurah/recentSu
 import 'package:masjidhub/theme/colors.dart';
 import 'package:masjidhub/provider/quranProvider.dart';
 
+import '../../../../common/scrollable_main_screen.dart';
 import '../../../../provider/wathc_provider.dart';
 
 class Quran extends StatefulWidget {
@@ -117,6 +118,14 @@ class _QuranState extends State<Quran> {
     );
   }
 
+  late ScrollController scrollController;
+
+  @override
+  void initState() {
+    scrollController = ScrollController();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
@@ -138,51 +147,59 @@ class _QuranState extends State<Quran> {
                   height:
                       quran.isSearchActive ? _maxHeightWithSearch : _maxheight,
                   width: constraints.maxWidth,
-                  child: SingleChildScrollView(
-                    child: Padding(
-                      padding:
-                          EdgeInsets.only(top: quran.isSearchActive ? 80 : 30),
-                      child: Column(
-                        children: [
-                          Consumer<WatchProvider>(
-                            builder: (context, watchProvider, child) {
-                              if (watchProvider.isConnected) {
-                                return TextButton(
-                                    onPressed: () {
-                                      watchProvider.sendCommand('1A01C101010000');
-                                      showAudioPlayerDialog(watchProvider);
-                                    },
-                                    child: Text(
-                                        "Open Quran Screen On Qibla Watch",style: TextStyle(fontSize: 18),));
-                              } else {
-                                return SizedBox();
-                              }
-                            },
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          RecentSurah(
-                              isSearchActive: quran.isSearchActive,
-                              maxWidth: constraints.maxWidth),
-                          Row(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(left: 40),
-                                child: Text(
-                                  tr('surahs'),
-                                  textAlign: TextAlign.start,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 25.0,
-                                    color: CustomColors.mischka,
+                  child: ScrollableMainScreen(
+                    scrollController: scrollController,
+                    child: SingleChildScrollView(
+                      controller: scrollController,
+                      physics: ClampingScrollPhysics(),
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                            top: quran.isSearchActive ? 80 : 30),
+                        child: Column(
+                          children: [
+                            Consumer<WatchProvider>(
+                              builder: (context, watchProvider, child) {
+                                if (watchProvider.isConnected) {
+                                  return TextButton(
+                                      onPressed: () {
+                                        watchProvider
+                                            .sendCommand('1A01C101010000');
+                                        showAudioPlayerDialog(watchProvider);
+                                      },
+                                      child: Text(
+                                        "Open Quran Screen On Qibla Watch",
+                                        style: TextStyle(fontSize: 18),
+                                      ));
+                                } else {
+                                  return SizedBox();
+                                }
+                              },
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            RecentSurah(
+                                isSearchActive: quran.isSearchActive,
+                                maxWidth: constraints.maxWidth),
+                            Row(
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(left: 40),
+                                  child: Text(
+                                    tr('surahs'),
+                                    textAlign: TextAlign.start,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 25.0,
+                                      color: CustomColors.mischka,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          SurahListWrapper()
-                        ],
+                              ],
+                            ),
+                            SurahListWrapper()
+                          ],
+                        ),
                       ),
                     ),
                   ),

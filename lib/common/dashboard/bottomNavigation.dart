@@ -5,6 +5,11 @@ import 'package:masjidhub/common/dashboard/bottomNavigationItem.dart';
 import 'package:masjidhub/common/icons/app_icons.dart';
 import 'package:masjidhub/utils/bottomNavBarUtils.dart';
 import 'package:masjidhub/utils/sharedPrefs.dart';
+import 'package:provider/provider.dart';
+
+import '../../constants/shadows.dart';
+import '../../provider/bottom_bar_provider.dart';
+import '../bottomNav/bottomNavGrab.dart';
 
 class CustomBottonNavigation extends StatefulWidget {
   final Function(int) onTabTapped;
@@ -36,51 +41,75 @@ class _CustomBottonNavigationState extends State<CustomBottonNavigation> {
         BottomNavBarUtils().scrollToNewFeature(bottomNavScrollController);
       });
     });
-
-    return Container(
-      color: Theme.of(context).colorScheme.background,
-      height: 120,
+    final state = Provider.of<BottomBarProvider>(context, listen: true);
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 500),
+      height: state.isNavBarVisible ? 122 : 50,
       padding: EdgeInsets.only(top: 15, bottom: 5),
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        physics: new ClampingScrollPhysics(),
-        controller: bottomNavScrollController,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(width: 40),
-            BottomNavigationItem(
-              index: 0,
-              onItemPressed: widget.onTabTapped,
-              label: 'prayer time'.tr(),
-              icon: AppIcons.prayertimeIcon,
-              currentIndex: widget.currentIndex,
-            ),
-            BottomNavigationItem(
-              index: 1,
-              onItemPressed: widget.onTabTapped,
-              label: 'qibla'.tr(),
-              icon: AppIcons.qiblaIcon,
-              currentIndex: widget.currentIndex,
-            ),
-            BottomNavigationItem(
-              index: 2,
-              onItemPressed: widget.onTabTapped,
-              label: 'quran'.tr(),
-              icon: AppIcons.quranIcon,
-              currentIndex: widget.currentIndex,
-            ),
-            BottomNavigationItem(
-              index: 3,
-              onItemPressed: widget.onTabTapped,
-              label: 'tesbih'.tr(),
-              icon: AppIcons.tesbih,
-              currentIndex: widget.currentIndex,
-              isNewFeature: !SharedPrefs().getNewFeatureViewed,
-            ),
-            SizedBox(width: 40),
-          ],
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.background,
+        boxShadow: !state.isNavBarVisible
+            ? bottomNavShadow(Theme.of(context).colorScheme.surface)
+            : null,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
         ),
+      ),
+      child: Column(
+        children: [
+          if (!state.isNavBarVisible)
+            GestureDetector(
+              behavior: HitTestBehavior.translucent,
+              onVerticalDragStart: (s) {
+                state.displayTheBottomNavBar();
+              },
+              child: BottomNavGrab(),
+            ),
+          Expanded(
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              physics: new ClampingScrollPhysics(),
+              controller: bottomNavScrollController,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(width: 40),
+                  BottomNavigationItem(
+                    index: 0,
+                    onItemPressed: widget.onTabTapped,
+                    label: 'prayer time'.tr(),
+                    icon: AppIcons.prayertimeIcon,
+                    currentIndex: widget.currentIndex,
+                  ),
+                  BottomNavigationItem(
+                    index: 1,
+                    onItemPressed: widget.onTabTapped,
+                    label: 'qibla'.tr(),
+                    icon: AppIcons.qiblaIcon,
+                    currentIndex: widget.currentIndex,
+                  ),
+                  BottomNavigationItem(
+                    index: 2,
+                    onItemPressed: widget.onTabTapped,
+                    label: 'quran'.tr(),
+                    icon: AppIcons.quranIcon,
+                    currentIndex: widget.currentIndex,
+                  ),
+                  BottomNavigationItem(
+                    index: 3,
+                    onItemPressed: widget.onTabTapped,
+                    label: 'tesbih'.tr(),
+                    icon: AppIcons.tesbih,
+                    currentIndex: widget.currentIndex,
+                    isNewFeature: !SharedPrefs().getNewFeatureViewed,
+                  ),
+                  SizedBox(width: 40),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

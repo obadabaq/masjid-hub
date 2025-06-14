@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:masjidhub/provider/wathc_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:snapping_sheet/snapping_sheet.dart';
-import 'bottomNavBar/SnappedbottomNavBar.dart';
 
 import 'package:masjidhub/common/dashboard/appBar.dart';
 import 'package:masjidhub/common/dashboard/bottomNavigation.dart';
@@ -16,13 +13,11 @@ import 'package:masjidhub/provider/setupProvider.dart';
 import 'package:masjidhub/provider/quranProvider.dart';
 import 'package:masjidhub/provider/audioProvider.dart';
 import 'package:masjidhub/provider/bleProvider.dart';
-import 'package:masjidhub/constants/bottomNav.dart';
 import 'package:masjidhub/common/errorPopups/errorPopup.dart';
 import 'package:masjidhub/common/popup/popup.dart';
 import 'package:masjidhub/constants/errors.dart';
 import 'package:masjidhub/utils/notificationUtils.dart';
 import 'package:masjidhub/utils/appBarUtils.dart';
-import 'package:masjidhub/utils/bottomNavBarUtils.dart';
 import 'package:masjidhub/utils/enums/appBarEnums.dart';
 
 class Dashboard extends StatefulWidget {
@@ -32,11 +27,14 @@ class Dashboard extends StatefulWidget {
   _DashboardState createState() => _DashboardState();
 }
 
-class _DashboardState extends State<Dashboard>
-    with SingleTickerProviderStateMixin {
+class _DashboardState extends State<Dashboard> {
   @override
   void initState() {
     super.initState();
+    _pageController = PageController(
+      initialPage: _currentIndex,
+      keepPage: true,
+    );
     // Notifications
     NotificationUtils()
         .init(onFailure: () => _showAllowNotificationsPopup(context));
@@ -60,48 +58,23 @@ class _DashboardState extends State<Dashboard>
   }
 
   int _currentIndex = 0;
+  late PageController _pageController;
   final List<Widget> _children = [PrayerTime(), Qibla(), QuranMode(), Tesbih()];
 
   GlobalKey<ScaffoldState> _dashboardScaffoldKey = GlobalKey();
 
-  // Adding controller for 3 dots on bottom navbar, do refactor
-  late final AnimationController animationController =
-      AnimationController(duration: const Duration(seconds: 1), vsync: this);
-
   void openDrawer() => _dashboardScaffoldKey.currentState!.openDrawer();
+  void onTabTapped(int index) {
+    _pageController.jumpToPage(
+      index,
+    );
+    setState(() {
+      _currentIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    // BACKLOG REFACTOR move animation logic in utils
-    final snappingSheetController =
-        Provider.of<QuranProvider>(context, listen: false)
-            .snappingSheetController;
-
-    void onTabTapped(int index) {
-      bool isQuranModule = index == 2;
-      if (isQuranModule) {
-        Future.delayed(Duration(seconds: 1)).then((value) {
-          snappingSheetController.snapToPosition(SnappingPosition.pixels(
-              positionPixels: bottomNavGrabHeightWhenAudioDisabled));
-        });
-
-        animationController.forward();
-      } else {
-        // This is case when tabs change while bottom audio player is active
-        Provider.of<QuranProvider>(context, listen: false)
-            .changeAudioItemVisibility(true);
-
-        if (snappingSheetController.isAttached &&
-            snappingSheetController.currentPosition == 0.0)
-          snappingSheetController
-              .snapToPosition(SnappingPosition.pixels(positionPixels: 150));
-        animationController.reverse();
-      }
-      setState(() {
-        _currentIndex = index;
-      });
-    }
-
     return Consumer<BleProvider>(
       builder: (ctx, ble, _) => Consumer<QuranProvider>(
         builder: (ctx, quran, _) => Consumer<SetupProvider>(
@@ -116,27 +89,31 @@ class _DashboardState extends State<Dashboard>
 
               return Layout(
                 child: Scaffold(
-                    key: _dashboardScaffoldKey,
-                    appBar: PreferredSize(
-                      preferredSize: Size.fromHeight(80),
-                      child: CustomAppBar(
-                        openDrawer: openDrawer,
-                        state: state,
-                      ),
+                  key: _dashboardScaffoldKey,
+                  appBar: PreferredSize(
+                    preferredSize: Size.fromHeight(80),
+                    child: CustomAppBar(
+                      openDrawer: openDrawer,
+                      state: state,
                     ),
-                    body: SnappedbottomNavBar(
-                      isAudioPlayerEnabled: !quran.isAudioItemVisible,
-                      snappingSheetController: snappingSheetController,
-                      animationController: animationController,
-                      dashboardScreen: _children[_currentIndex],
-                      hideNavBar: BottomNavBarUtils().hideNavBar(state),
-                      audioState: quran.audioState,
-                      bottomNavBar: CustomBottonNavigation(
-                        onTabTapped: onTabTapped,
-                        currentIndex: _currentIndex,
-                      ),
-                    ),
-                    drawer: AppBarUtils().getSideBar(state)),
+                  ),
+                  body: PageView(
+                    controller: _pageController,
+                    scrollDirection: Axis.horizontal,
+                    physics: ScrollPhysics(),
+                    onPageChanged: (index) {
+                      setState(() {
+                        _currentIndex = index;
+                      });
+                    },
+                    children: _children,
+                  ),
+                  bottomNavigationBar: CustomBottonNavigation(
+                    onTabTapped: onTabTapped,
+                    currentIndex: _currentIndex,
+                  ),
+                  drawer: AppBarUtils().getSideBar(state),
+                ),
               );
             },
           ),

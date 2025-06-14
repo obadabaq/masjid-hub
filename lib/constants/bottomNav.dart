@@ -1,2 +1,1 @@
-double bottomNavGrabHeightWhenAudioEnabled = 126;
-double bottomNavGrabHeightWhenAudioDisabled = 25;
+double bottomNavGrabHeight = 25;

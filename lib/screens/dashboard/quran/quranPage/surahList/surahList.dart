@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:masjidhub/common/scrollable_main_screen.dart';
 import 'package:masjidhub/provider/audioProvider.dart';
+import 'package:masjidhub/provider/bottom_bar_provider.dart';
 import 'package:masjidhub/utils/audioUtils.dart';
 import 'package:provider/provider.dart';
 import 'package:tuple/tuple.dart';
@@ -42,14 +44,6 @@ class _SurahListState extends State<SurahList> {
         AudioUtils().shouldTriggerVisibilityChange(oldVisibility, visbility) &&
         mounted) {
       setState(() => oldVisibility = visbility);
-      bool isVisible = visbility > 0;
-      QuranProvider quranProvider =
-          Provider.of<QuranProvider>(context, listen: false);
-      if (!isVisible) {
-        quranProvider.setAudioItemVisibility(isVisible);
-      } else {
-        quranProvider.setAudioItemVisibility(isVisible);
-      }
     }
   }
 
@@ -68,7 +62,7 @@ class _SurahListState extends State<SurahList> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+      padding: EdgeInsets.symmetric(vertical: 10),
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       itemCount: widget.list.length,

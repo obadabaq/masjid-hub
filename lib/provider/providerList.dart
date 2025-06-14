@@ -1,4 +1,4 @@
-import 'package:masjidhub/provider/qiblaWatchAppsSyncProvider.dart';
+import 'package:masjidhub/provider/bottom_bar_provider.dart';
 import 'package:masjidhub/provider/wathc_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
@@ -13,7 +13,6 @@ import 'package:masjidhub/provider/quranFontProvider.dart';
 import 'package:masjidhub/provider/tesbihProvider.dart';
 import '../services/bluetooth_mananger.dart';
 
-
 final watchProvider = WatchProvider(); // Create WatchProvider instance
 
 final List<SingleChildWidget> providerList = [
@@ -25,7 +24,9 @@ final List<SingleChildWidget> providerList = [
   ),
   ChangeNotifierProxyProvider<SetupProvider, LocationProvider>(
     create: (_) => LocationProvider(),
-    update: (_, setupProvider, myNotifier) => LocationProvider(setupProvider: setupProvider),),
+    update: (_, setupProvider, myNotifier) =>
+        LocationProvider(setupProvider: setupProvider),
+  ),
   ChangeNotifierProvider.value(value: QuranProvider()),
 
   // Provide WatchProvider as a single instance throughout the app
@@ -33,13 +34,15 @@ final List<SingleChildWidget> providerList = [
 
   ChangeNotifierProvider.value(value: AudioProvider()),
   ChangeNotifierProvider.value(value: QuranFontProvider()),
+  ChangeNotifierProvider.value(value: BottomBarProvider()),
   ChangeNotifierProxyProvider<AudioProvider, AyahListProvider>(
     create: (_) => AyahListProvider(),
     update: (_, audioProvider, myNotifier) =>
-    myNotifier!..setAyahAudioState(audioProvider.audioState),
+        myNotifier!..setAyahAudioState(audioProvider.audioState),
   ),
   ChangeNotifierProvider.value(value: BleProvider()),
   // Pass WatchProvider instance to TesbihProvider
-  ChangeNotifierProvider.value(value: TesbihProvider(watchProvider: watchProvider)),
+  ChangeNotifierProvider.value(
+      value: TesbihProvider(watchProvider: watchProvider)),
   ChangeNotifierProvider.value(value: BluetoothManager()),
 ];

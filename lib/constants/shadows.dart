@@ -179,17 +179,17 @@ final List<Color> tabBarInnerShadow = ([
   CustomColors.irisBlue,
 ]);
 
-final List<BoxShadow> bottomNavShadow = ([
-  BoxShadow(
-    color: Colors.white.withOpacity(0.75),
-    blurRadius: 10.0,
-    spreadRadius: 5.0,
-    offset: Offset(
-      -3.0,
-      -3.0,
-    ),
-  ),
-]);
+List<BoxShadow> bottomNavShadow(Color color) => ([
+      BoxShadow(
+        color: color.withOpacity(0.75),
+        blurRadius: 20.0,
+        spreadRadius: 1.0,
+        offset: Offset(
+          -3.0,
+          -10.0,
+        ),
+      )
+    ]);
 
 final List<BoxShadow> shadowTesbihDot = ([
   BoxShadow(

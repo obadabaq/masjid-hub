@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:masjidhub/constants/shadows.dart';
 import 'package:masjidhub/theme/colors.dart';
 import 'package:masjidhub/utils/concaveDecoration.dart';
+import 'package:provider/provider.dart';
+
+import '../../provider/bottom_bar_provider.dart';
 
 class BottomNavigationItem extends StatelessWidget {
   final int index;
@@ -27,53 +30,58 @@ class BottomNavigationItem extends StatelessWidget {
     bool _isSelected = index == currentIndex;
     bool _isQiblaIcon = index == 1;
     double _iconContainerLength = 70;
+    final state = Provider.of<BottomBarProvider>(context, listen: true);
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () => onItemPressed(index),
       child: Stack(
         children: [
           Container(
-            margin: EdgeInsets.symmetric(horizontal: 0),
             width: 120,
-            child: Column(children: [
-              Container(
-                width: _iconContainerLength,
-                height: _iconContainerLength,
-                margin: EdgeInsets.only(bottom: 10),
-                decoration: _isSelected
-                    ? ConcaveDecoration(
-                        depth: 9,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)),
-                        colors: innerConcaveShadow,
-                        size: Size(_iconContainerLength, _iconContainerLength),
-                      )
-                    : BoxDecoration(
-                        boxShadow: tertiaryShadow,
-                        color: CustomColors.solitude,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                child: Icon(
-                  icon,
-                  size: _isQiblaIcon ? 40 : 30,
-                  color: _isSelected
-                      ? Theme.of(context).colorScheme.secondary
-                      : CustomColors.mischka,
+            height: state.isNavBarVisible ? _iconContainerLength + 20 : 0,
+            child: Column(
+              children: [
+                Expanded(
+                  child: Container(
+                    width: _iconContainerLength,
+                    height: _iconContainerLength,
+                    margin: EdgeInsets.only(bottom: 10),
+                    decoration: _isSelected
+                        ? ConcaveDecoration(
+                            depth: 9,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20)),
+                            colors: innerConcaveShadow,
+                            size: Size(
+                                _iconContainerLength, _iconContainerLength),
+                          )
+                        : BoxDecoration(
+                            boxShadow: tertiaryShadow,
+                            color: CustomColors.solitude,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                    child: Icon(
+                      icon,
+                      size: _isQiblaIcon ? 40 : 30,
+                      color: _isSelected
+                          ? Theme.of(context).colorScheme.secondary
+                          : CustomColors.mischka,
+                    ),
+                  ),
                 ),
-              ),
-              Text(
-                label.toUpperCase(),
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  letterSpacing: 1.3,
-                  fontSize: 14.0,
-                  height: 1.3,
-                  color: _isSelected
-                      ? Theme.of(context).colorScheme.secondary
-                      : CustomColors.mischka,
+                Text(
+                  label.toUpperCase(),
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    letterSpacing: 1.3,
+                    fontSize: 14.0,
+                    color: _isSelected
+                        ? Theme.of(context).colorScheme.secondary
+                        : CustomColors.mischka,
+                  ),
                 ),
-              ),
-            ]),
+              ],
+            ),
           ),
           Visibility(
             visible: isNewFeature,
@@ -88,7 +96,7 @@ class BottomNavigationItem extends StatelessWidget {
                 gradient: CustomColors.primary180,
               ),
             ),
-          )
+          ),
         ],
       ),
     );
