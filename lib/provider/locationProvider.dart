@@ -46,6 +46,8 @@ class LocationProvider extends ChangeNotifier {
 
   set setAddress(String addr) => _address = addr;
 
+  bool isLoadingLocation = false;
+
   bool? _isAutomatic;
 
   bool? get getAutomatic {
@@ -92,7 +94,7 @@ class LocationProvider extends ChangeNotifier {
       final addressComponents = result['address_components'];
 
       final city = addressComponents.firstWhere(
-        (comp) => comp['types'].toString().contains('[locality'),
+        (comp) => comp['types'].toString().contains('locality'),
         orElse: () => null,
       );
       final country = addressComponents.firstWhere(
@@ -203,8 +205,8 @@ class LocationProvider extends ChangeNotifier {
 
       final components = results[0]['address_components'];
 
-      final city = components.firstWhere(
-        (comp) => comp['types'].toString().contains('[locality'),
+      final city = components.lastWhere(
+        (comp) => comp['types'].toString().contains('locality'),
         orElse: () => null,
       );
 
@@ -236,10 +238,13 @@ class LocationProvider extends ChangeNotifier {
 
   Future<void> locateUser() async {
     try {
+      isLoadingLocation = true;
+      notifyListeners();
       // final locationCords = await checkLocationPermissionAndLocate();
       await Geolocator.requestPermission();
-      Position position = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.low);
+      Position position = await Geolocator.getCurrentPosition();
+      isLoadingLocation = false;
+      notifyListeners();
       log(position.toString());
       final double lat = position.latitude;
       final double lon = position.longitude;

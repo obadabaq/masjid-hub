@@ -39,10 +39,9 @@ class _ChooseLocationState extends State<ChooseLocation> {
   @override
   Widget build(BuildContext context) {
     Future<void> _locateUser() async {
-      bool isOnline = await InternetConnectionChecker().hasConnection;
-      if (!isOnline) return _showOfflinePopup(context);
       var locationProvider =
           Provider.of<LocationProvider>(context, listen: false);
+      locationProvider.setAutomatic(true);
       try {
         await locationProvider.locateUser();
         setState(() {

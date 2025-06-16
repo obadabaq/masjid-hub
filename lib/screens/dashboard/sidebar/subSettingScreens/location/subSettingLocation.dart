@@ -4,7 +4,7 @@ import 'package:masjidhub/common/elevatedSwitch/ElevatedSwitch.dart';
 import 'package:masjidhub/provider/locationProvider.dart';
 import 'package:masjidhub/screens/setupScreens/chooseLocation/chooseLocationField.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sizer/sizer.dart';
 
 class SubSettingLocation extends StatefulWidget {
   SubSettingLocation({Key? key}) : super(key: key);
@@ -37,26 +37,42 @@ class _SubSettingLocationState extends State<SubSettingLocation> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 30),
-      child: Column(
-        children: [
-          ElevatedSwitch(
-            text: tr('automatically detect'),
-            icon: Icons.settings,
-            onClick: () => {},
-            defaultValue: initialValue,
-            onValueChanged: (value) => onValueChanged(value),
-          ),
-          Visibility(
-            visible: !initialValue,
-            child: ChooseLocationField(
-              buttonWidth: 350,
-              controller: controller,
+    return Consumer<LocationProvider>(
+      builder: (context, locationProvider, _) {
+        return Stack(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: Column(
+                children: [
+                  ElevatedSwitch(
+                    text: tr('automatically detect'),
+                    icon: Icons.settings,
+                    onClick: () {},
+                    defaultValue: initialValue,
+                    onValueChanged: (value) => onValueChanged(value),
+                  ),
+                  Visibility(
+                    visible: !initialValue,
+                    child: ChooseLocationField(
+                      buttonWidth: 350,
+                      controller: controller,
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
-      ),
+            if (locationProvider.isLoadingLocation)
+              Container(
+                width: 100.w,
+                height: 100.h,
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              ),
+          ],
+        );
+      },
     );
   }
 }

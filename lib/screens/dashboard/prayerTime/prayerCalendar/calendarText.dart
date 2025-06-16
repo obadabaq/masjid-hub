@@ -24,6 +24,13 @@ class CalendarText extends StatefulWidget {
 class _CalendarTextState extends State<CalendarText> {
   DateTime date = DateTime.now();
 
+  String _hijriDate = "";
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     var _dateFormat = DateFormat("EEEE, d MMM y");
@@ -34,80 +41,94 @@ class _CalendarTextState extends State<CalendarText> {
     final double calendarSubTitleFontSize =
         LayoutUtils().getCalendarTextFontSize(widget.scale, 16);
 
-    void showCalendar(onDateChange) {
-      return DatePicker.showDatePicker(context,
-          minDateTime: DateTime.now().subtract(Duration(days: 15)),
-          maxDateTime: DateTime.now().add(Duration(days: 15)),
-          initialDateTime: date,
-          dateFormat: 'dd',
-          locale: DateTimePickerLocale.en_us,
-          pickerMode: DateTimePickerMode.datetime,
-          pickerTheme: DateTimePickerTheme(
-            showTitle: true,
-            title: Container(
-              padding: EdgeInsets.only(top: 20, bottom: 10),
-              color: CustomTheme.lightTheme.colorScheme.background,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Select Day',
-                    style: TextStyle(
-                      fontSize: 25,
-                      color: CustomColors.blackPearl,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            titleHeight: 80,
-            itemTextStyle: TextStyle(
-              fontSize: 40,
-              color: CustomTheme.lightTheme.colorScheme.secondary,
-            ),
-            itemHeight: 55,
-            backgroundColor: CustomTheme.lightTheme.colorScheme.background,
-          ),
-          onCancel: () {},
-          onChange: (dateTime, List<int> index) => setState(() {
-                date = dateTime;
-              }),
-          onClose: () => onDateChange(date));
-    }
-
     return Consumer<PrayerTimingsProvider>(
-      builder: (ctx, dateProvider, _) => GestureDetector(
-        onTap: () => showCalendar((date) => dateProvider.setSelectedDate(date)),
-        behavior: HitTestBehavior.translucent,
-        child: Container(
-          child: Column(
-            children: [
-              Text(
-                _dateFormat.format(dateProvider.getSelectedDate),
-                style: TextStyle(
-                  color: CustomColors.blackPearl,
-                  fontSize: calendarTitleFontSize,
-                  fontWeight: FontWeight.w600,
+      builder: (ctx, dateProvider, _) {
+        Future.microtask(() async {
+          _hijriDate = await dateProvider.geoorgianToHijri();
+        });
+        return GestureDetector(
+          onTap: () =>
+              showCalendar((date) => dateProvider.setSelectedDate(date)),
+          behavior: HitTestBehavior.translucent,
+          child: Container(
+            child: Column(
+              children: [
+                Text(
+                  _dateFormat.format(dateProvider.getSelectedDate),
+                  style: TextStyle(
+                    color: CustomColors.blackPearl,
+                    fontSize: calendarTitleFontSize,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-              ),
-              SizedBox(height: titlePadding),
-              FutureBuilder(
-                future: dateProvider.geoorgianToHijri(),
-                initialData: '',
-                builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  return Text(
-                    snapshot.hasData ? snapshot.data : '',
-                    style: TextStyle(
-                      color: CustomColors.blackPearl,
-                      fontSize: calendarSubTitleFontSize,
-                    ),
-                  );
-                },
-              ),
-            ],
+                SizedBox(height: titlePadding),
+                Text(
+                  _hijriDate,
+                  style: TextStyle(
+                    color: CustomColors.blackPearl,
+                    fontSize: calendarSubTitleFontSize,
+                  ),
+                ),
+                // FutureBuilder(
+                //   future: dateProvider.geoorgianToHijri(),
+                //   initialData: '',
+                //   builder: (BuildContext context, AsyncSnapshot snapshot) {
+                //     print("wtf1");
+                //     return Text(
+                //       snapshot.hasData ? snapshot.data : '',
+                //       style: TextStyle(
+                //         color: CustomColors.blackPearl,
+                //         fontSize: calendarSubTitleFontSize,
+                //       ),
+                //     );
+                //   },
+                // ),
+              ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
+  }
+
+  void showCalendar(onDateChange) {
+    return DatePicker.showDatePicker(context,
+        minDateTime: DateTime.now().subtract(Duration(days: 15)),
+        maxDateTime: DateTime.now().add(Duration(days: 15)),
+        initialDateTime: date,
+        dateFormat: 'dd',
+        locale: DateTimePickerLocale.en_us,
+        pickerMode: DateTimePickerMode.datetime,
+        pickerTheme: DateTimePickerTheme(
+          showTitle: true,
+          title: Container(
+            padding: EdgeInsets.only(top: 20, bottom: 10),
+            color: CustomTheme.lightTheme.colorScheme.background,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Select Day',
+                  style: TextStyle(
+                    fontSize: 25,
+                    color: CustomColors.blackPearl,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          titleHeight: 80,
+          itemTextStyle: TextStyle(
+            fontSize: 40,
+            color: CustomTheme.lightTheme.colorScheme.secondary,
+          ),
+          itemHeight: 55,
+          backgroundColor: CustomTheme.lightTheme.colorScheme.background,
+        ),
+        onCancel: () {},
+        onChange: (dateTime, List<int> index) => setState(() {
+              date = dateTime;
+            }),
+        onClose: () => onDateChange(date));
   }
 }

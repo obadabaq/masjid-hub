@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:masjidhub/common/sidebar/sideAppBar.dart';
+import 'package:masjidhub/provider/locationProvider.dart';
 import 'package:masjidhub/screens/dashboard/sidebar/subSettingScreens/countdown/countdownSubSettings.dart';
 import 'package:masjidhub/screens/dashboard/sidebar/subSettingScreens/remote/SubSettingsRemote.dart';
 import 'package:masjidhub/screens/dashboard/sidebar/subSettingScreens/subSettingDevices/SubSettingDevices.dart';
@@ -11,6 +12,7 @@ import 'package:masjidhub/screens/dashboard/sidebar/subSettingScreens/quranRecit
 import 'package:masjidhub/screens/dashboard/sidebar/subSettingScreens/quranReciter/SubSettingsQuranReciter.dart';
 import 'package:masjidhub/screens/dashboard/sidebar/subSettingScreens/subSettingsAdhan/subSettingsAdhan.dart';
 import 'package:masjidhub/screens/dashboard/sidebar/subSettingScreens/tesbih/tesbihSubSettings.dart';
+import 'package:provider/provider.dart';
 
 class SubSettingLayout extends StatelessWidget {
   final BuildContext contxt;
@@ -51,19 +53,27 @@ class SubSettingLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(80),
-        child: SideAppBar(title: title, contxt: contxt),
-      ),
-      body: Container(
-        padding: EdgeInsets.symmetric(vertical: 20),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [switchLocationWidget()],
+    return Consumer<LocationProvider>(
+      builder: (context, location, _) {
+        return AbsorbPointer(
+          absorbing: Provider.of<LocationProvider>(context, listen: false)
+              .isLoadingLocation,
+          child: Scaffold(
+            appBar: PreferredSize(
+              preferredSize: Size.fromHeight(80),
+              child: SideAppBar(title: title, contxt: contxt),
+            ),
+            body: Container(
+              padding: EdgeInsets.symmetric(vertical: 20),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [switchLocationWidget()],
+                ),
+              ),
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

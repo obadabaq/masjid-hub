@@ -16,6 +16,7 @@ import 'package:masjidhub/utils/sharedPrefs.dart';
 
 class PrayerTimingsProvider extends ChangeNotifier {
   PrayerTimingsProvider({this.setupProvider});
+
   final setupProvider;
 
   DateTime _selectedDate = DateTime.now();
@@ -23,11 +24,14 @@ class PrayerTimingsProvider extends ChangeNotifier {
 
   // Alarms and Prayer times //
   List<AdhanTimeModel>? _prayerTimesList;
+
   List<AdhanTimeModel>? get prayerTimesList => _prayerTimesList;
 
   int? _alertTimeInMins = SharedPrefs().getCountdownTimer;
+
   int? get countdownTimer => _alertTimeInMins;
   int defaultAlertTimeInMins = 20;
+
   Future<void> setCountdownTimer(int? time) async {
     _alertTimeInMins = time;
     SharedPrefs().setCountdownTimer(time);
@@ -36,7 +40,9 @@ class PrayerTimingsProvider extends ChangeNotifier {
   }
 
   int _madhabId = SharedPrefs().getSelectedMadhabId;
+
   int get getMadhabId => _madhabId;
+
   Future<void> setMadhabId(int id) async {
     _madhabId = id;
     SharedPrefs().setSelectedMadhabId(id);
@@ -45,7 +51,9 @@ class PrayerTimingsProvider extends ChangeNotifier {
   }
 
   int _orgId = SharedPrefs().getSelectedOrgId;
+
   int get getOrgId => _orgId;
+
   Future<void> setOrgId(int id) async {
     _orgId = id;
     SharedPrefs().setSelectedOrgId(id);
@@ -74,6 +82,7 @@ class PrayerTimingsProvider extends ChangeNotifier {
   var dateFormat = DateFormat("dd-MM-y");
 
   DateTime get getSelectedDate => _selectedDate;
+
   String get getSelectedHijriDate => _selectedHijriDate;
 
   void setSelectedDate(DateTime date) {
@@ -82,7 +91,6 @@ class PrayerTimingsProvider extends ChangeNotifier {
     getPrayerTimes();
     notifyListeners();
   }
-
 
   Future<List<Map<String, dynamic>>> getNext30DaysPrayerTimes() async {
     List<Map<String, dynamic>> prayerTimesList = [];
@@ -93,7 +101,8 @@ class PrayerTimingsProvider extends ChangeNotifier {
 
       List<DateTime> prayerTimes = prayers.map((prayer) {
         DateTime dateTime = DateFormat.jm().parse(prayer.time);
-        return DateTime(currentDate.year, currentDate.month, currentDate.day, dateTime.hour, dateTime.minute);
+        return DateTime(currentDate.year, currentDate.month, currentDate.day,
+            dateTime.hour, dateTime.minute);
       }).toList();
       prayerTimes.removeAt(1);
       prayerTimesList.add({
@@ -104,6 +113,7 @@ class PrayerTimingsProvider extends ChangeNotifier {
 
     return prayerTimesList;
   }
+
   Future<String> geoorgianToHijri() async {
     bool isOnline = await InternetConnectionChecker().hasConnection;
     if (!isOnline) {
@@ -136,7 +146,6 @@ class PrayerTimingsProvider extends ChangeNotifier {
       return Future.error('Error fetching Hijri date');
     }
   }
-
 
   Future<void> initDates() async {
     geoorgianToHijri();
@@ -222,6 +231,7 @@ class PrayerTimingsProvider extends ChangeNotifier {
   Future<PrayerConfigModel> getPrayerConfig() async {
     final cords = SharedPrefs().getUserCords;
     final userCords = Coordinates(cords!.lat, cords.lon);
+    if (getOrgId == -1) setOrgId(1);
     final prayerParams =
         PrayerUtils().getMethodFromId(getOrgId).getParameters();
     prayerParams.madhab = PrayerUtils().getMadhabFromId(getMadhabId);
@@ -265,7 +275,6 @@ class PrayerTimingsProvider extends ChangeNotifier {
               : true,
           isCurrentPrayer: isSelectedDateToday &&
               await getCurrentPrayerId(prayerTimesData) == i,
-
         )
     ];
     _prayerTimesList = tempPrayerTimesList;
