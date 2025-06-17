@@ -12,6 +12,7 @@ import 'package:masjidhub/theme/colors.dart';
 import 'package:masjidhub/models/adhanTimeModel.dart';
 import 'package:masjidhub/utils/sharedPrefs.dart';
 import 'package:masjidhub/utils/prayerUtils.dart';
+import 'package:sizer/sizer.dart';
 
 class ChooseAdhanComponent extends StatefulWidget {
   const ChooseAdhanComponent({Key? key}) : super(key: key);
@@ -89,67 +90,52 @@ class _ChooseAdhanComponentState extends State<ChooseAdhanComponent> {
               builder: (BuildContext context,
                   AsyncSnapshot<List<AdhanTimeModel>> snapshot) {
                 if (snapshot.hasData)
-                  return Column(
+                  return Wrap(
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          AdhanButton(
-                            id: 0,
-                            isSelected: !snapshot.data![0].isAlarmDisabled,
-                            onClick: (id) => _onAdhanButtonClick(id),
-                            height: 70,
-                            width: buttonWidth,
-                            text: tr('fajr'),
-                            icon: AppIcons.fajrIcon,
-                          ),
-                          AdhanButton(
-                            id: 1,
-                            isSelected: !snapshot.data![1].isAlarmDisabled,
-                            onClick: (id) => _onAdhanButtonClick(id),
-                            height: 70,
-                            width: buttonWidth,
-                            text: tr('dhuhr'),
-                            icon: AppIcons.duhrIcon,
-                          ),
-                        ],
+                      AdhanButton(
+                        id: 0,
+                        isSelected: !snapshot.data![0].isAlarmDisabled,
+                        onClick: (id) => _onAdhanButtonClick(id),
+                        height: 70,
+                        width: buttonWidth,
+                        text: tr('fajr'),
+                        icon: AppIcons.fajrIcon,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          AdhanButton(
-                            id: 2,
-                            isSelected: !snapshot.data![2].isAlarmDisabled,
-                            onClick: (id) => _onAdhanButtonClick(id),
-                            height: 70,
-                            width: buttonWidth,
-                            text: tr('asr'),
-                            icon: AppIcons.asrIcon,
-                          ),
-                          AdhanButton(
-                            id: 3,
-                            isSelected: !snapshot.data![3].isAlarmDisabled,
-                            onClick: (id) => _onAdhanButtonClick(id),
-                            height: 70,
-                            width: buttonWidth,
-                            text: tr('maghrib'),
-                            icon: AppIcons.maghribIcon,
-                          ),
-                        ],
+                      AdhanButton(
+                        id: 1,
+                        isSelected: !snapshot.data![1].isAlarmDisabled,
+                        onClick: (id) => _onAdhanButtonClick(id),
+                        height: 70,
+                        width: buttonWidth,
+                        text: tr('dhuhr'),
+                        icon: AppIcons.duhrIcon,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          AdhanButton(
-                            id: 4,
-                            isSelected: !snapshot.data![4].isAlarmDisabled,
-                            onClick: (id) => _onAdhanButtonClick(id),
-                            height: 70,
-                            width: buttonWidth,
-                            text: tr('isha'),
-                            icon: AppIcons.ishaIcon,
-                          ),
-                        ],
+                      AdhanButton(
+                        id: 2,
+                        isSelected: !snapshot.data![2].isAlarmDisabled,
+                        onClick: (id) => _onAdhanButtonClick(id),
+                        height: 70,
+                        width: buttonWidth,
+                        text: tr('asr'),
+                        icon: AppIcons.asrIcon,
+                      ),
+                      AdhanButton(
+                        id: 3,
+                        isSelected: !snapshot.data![3].isAlarmDisabled,
+                        onClick: (id) => _onAdhanButtonClick(id),
+                        height: 70,
+                        width: buttonWidth,
+                        text: tr('maghrib'),
+                        icon: AppIcons.maghribIcon,
+                      ),
+                      AdhanButton(
+                        id: 4,
+                        isSelected: !snapshot.data![4].isAlarmDisabled,
+                        onClick: (id) => _onAdhanButtonClick(id),
+                        height: 70,
+                        width: buttonWidth,
+                        text: tr('isha'),
+                        icon: AppIcons.ishaIcon,
                       ),
                     ],
                   );
@@ -162,13 +148,13 @@ class _ChooseAdhanComponentState extends State<ChooseAdhanComponent> {
             Row(
               children: [
                 Padding(
-                  padding: EdgeInsets.only(top: 10, left: 40),
+                  padding: EdgeInsets.only(top: 1.h),
                   child: Text(
                     tr('choose adhan'),
                     textAlign: TextAlign.start,
                     style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 25.0,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 22.0,
                       color: CustomColors.mischka,
                     ),
                   ),
@@ -177,7 +163,7 @@ class _ChooseAdhanComponentState extends State<ChooseAdhanComponent> {
             ),
             ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
-              padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+              padding: EdgeInsets.only(top: 1.h),
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
               itemCount: adhanList.length,

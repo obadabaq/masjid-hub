@@ -6,6 +6,7 @@ import 'package:masjidhub/constants/images.dart';
 import 'package:masjidhub/screens/setupScreens/chooseAdhan/chooseAdhanComponent.dart';
 import 'package:masjidhub/screens/setupScreens/utils/setupFooter/setupFooter.dart';
 import 'package:masjidhub/theme/colors.dart';
+import 'package:sizer/sizer.dart';
 
 class ChooseAdhan extends StatefulWidget {
   final PageController pageController;
@@ -26,31 +27,29 @@ class _ChooseAdhanState extends State<ChooseAdhan> {
       body: Align(
         alignment: Alignment.topCenter,
         child: SafeArea(
-          minimum: EdgeInsets.symmetric(horizontal: 0, vertical: 16),
+          minimum: EdgeInsets.symmetric(vertical: 16),
           child: LayoutBuilder(
             builder: (BuildContext context, BoxConstraints constraints) {
-              final _topPadding = constraints.maxHeight * 0.05;
               return SingleChildScrollView(
                 child: Column(
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(top: _topPadding),
+                      padding: EdgeInsets.only(top: 4.h),
                       child: SetupHeaderImage(image: adhanSetupImage),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(top: 30),
+                      padding: EdgeInsets.only(top: 4.5.h),
                       child: Text(
                         tr('choose adhan'),
                         style: TextStyle(
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w500,
                           fontSize: 30.0,
                           color: CustomColors.blackPearl,
                         ),
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(
-                          top: 20, left: 36, right: 36, bottom: 30),
+                      padding: EdgeInsets.only(top: 1.5.h, left: 30, right: 30),
                       child: Text(
                         tr('selectPrayersForAlarms'),
                         style: TextStyle(
@@ -62,17 +61,14 @@ class _ChooseAdhanState extends State<ChooseAdhan> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      padding: EdgeInsets.only(top: 3.h, left: 30, right: 30),
                       child: ChooseAdhanComponent(),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: SetupFooter(
-                        currentPage: 1,
-                        margin: EdgeInsets.only(bottom: 30),
-                        buttonText: tr('next'),
-                        controller: widget.pageController,
-                      ),
+                    SetupFooter(
+                      currentPage: 1,
+                      margin: EdgeInsets.only(bottom: 30),
+                      buttonText: tr('next'),
+                      controller: widget.pageController,
                     ),
                   ],
                 ),
