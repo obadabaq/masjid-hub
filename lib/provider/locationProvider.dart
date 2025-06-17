@@ -48,16 +48,16 @@ class LocationProvider extends ChangeNotifier {
 
   bool isLoadingLocation = false;
 
-  bool? _isAutomatic;
+  bool isAutomatic = false;
 
-  bool? get getAutomatic {
-    _isAutomatic = SharedPrefs().getAutomatic;
-    return _isAutomatic;
+  bool get getAutomatic {
+    isAutomatic = SharedPrefs().getAutomatic;
+    return isAutomatic;
   }
 
   void setAutomatic(bool value) {
     SharedPrefs().setAutomatic(value);
-    _isAutomatic = value;
+    isAutomatic = value;
     notifyListeners();
   }
 
@@ -243,8 +243,6 @@ class LocationProvider extends ChangeNotifier {
       // final locationCords = await checkLocationPermissionAndLocate();
       await Geolocator.requestPermission();
       Position position = await Geolocator.getCurrentPosition();
-      isLoadingLocation = false;
-      notifyListeners();
       log(position.toString());
       final double lat = position.latitude;
       final double lon = position.longitude;
@@ -287,6 +285,7 @@ class LocationProvider extends ChangeNotifier {
           log(e.toString());
         }
       }
+      isLoadingLocation = false;
     } catch (e) {
       print(e.toString());
       setErrorText(tr('error location'));

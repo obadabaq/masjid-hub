@@ -8,14 +8,14 @@ import 'package:masjidhub/theme/customTheme.dart';
 class NeuButton extends StatefulWidget {
   NeuButton({
     Key? key,
-    required this.onClick,
+    this.onClick,
     required this.child,
     required this.height,
     required this.width,
     this.isSelected = false,
   }) : super(key: key);
 
-  final Function onClick;
+  final Function? onClick;
   final Widget child;
   final double height;
   final double width;
@@ -41,16 +41,17 @@ class _NeuButtonState extends State<NeuButton> {
     });
   }
 
-  Future<void> _onButtonTap() async {
+  Future<void>? _onButtonTap() async {
+    if (widget.onClick == null) return null;
     _setShadow(shadowNeuPressed);
-    widget.onClick();
+    widget.onClick!();
     return Future.delayed(
         Duration(milliseconds: 300), () => _setShadow(shadowNeuSecondary));
   }
 
   Future<void> _onButtonLongTap() async {
     _setShadow(shadowNeuPressed);
-    widget.onClick();
+    widget.onClick!();
   }
 
   Future<void> _onButtonLongTapUp() async {
@@ -65,12 +66,11 @@ class _NeuButtonState extends State<NeuButton> {
       height: widget.height,
       width: widget.width,
       decoration: BoxDecoration(
-        color: CustomTheme.lightTheme.colorScheme.background,
-        boxShadow: _buttonShadow,
-        shape: BoxShape.rectangle,
-        borderRadius: BorderRadius.circular(20),
-        gradient: widget.isSelected ? CustomColors.primary180 : null
-      ),
+          color: CustomTheme.lightTheme.colorScheme.background,
+          boxShadow: _buttonShadow,
+          shape: BoxShape.rectangle,
+          borderRadius: BorderRadius.circular(20),
+          gradient: widget.isSelected ? CustomColors.primary180 : null),
       child: GestureDetector(
         behavior: HitTestBehavior.translucent,
         child: widget.child,

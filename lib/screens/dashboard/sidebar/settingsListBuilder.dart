@@ -42,7 +42,7 @@ class SettingsListBuidler extends StatelessWidget {
       switch (title) {
         case 'Location':
           return Provider.of<LocationProvider>(context, listen: false)
-                      .getAutomatic! ==
+                      .getAutomatic ==
                   false
               ? "Manual"
               : tr('automatic');

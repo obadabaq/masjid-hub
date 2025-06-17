@@ -22,7 +22,7 @@ class _SubSettingLocationState extends State<SubSettingLocation> {
   void initState() {
     super.initState();
     locationProvider = Provider.of<LocationProvider>(context, listen: false);
-    initialValue = locationProvider.getAutomatic ?? false;
+    initialValue = locationProvider.getAutomatic;
   }
 
   void onValueChanged(bool value) {
