@@ -16,8 +16,7 @@ class CountdownTimerAudioList extends StatefulWidget {
       _CountdownTimerAudioListState();
 }
 
-class _CountdownTimerAudioListState
-    extends State<CountdownTimerAudioList> {
+class _CountdownTimerAudioListState extends State<CountdownTimerAudioList> {
   static int? selectedAzanId = SharedPrefs().getSelectedCountdownAudioId;
   static int? selectedAzanAudioId;
 
@@ -41,11 +40,11 @@ class _CountdownTimerAudioListState
     } else {
       final String audioUrl = PrayerUtils().adhanRecitorIdToUrl(id);
       audioCache.load(audioUrl);
+      audioPlayer.play(AssetSource(audioUrl));
     }
     setState(() {
       if (selectedAzanAudioId == id) return selectedAzanAudioId = null;
       selectedAzanAudioId = id;
-
     });
   }
 
@@ -59,13 +58,12 @@ class _CountdownTimerAudioListState
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Container(
       child: ListView.builder(
         physics: const NeverScrollableScrollPhysics(),
-        padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+        padding: EdgeInsets.all(10),
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
         itemCount: timerAudioList.length,
@@ -78,7 +76,6 @@ class _CountdownTimerAudioListState
             onPressed: (id) => _onAzanItemPressed(id),
             onAudioPressed: (id) => _setAzanAudio(id),
             isAudioSelected: selectedAzanAudioId == timerAudioList[index].id,
-
           );
         },
       ),

@@ -10,6 +10,7 @@ import 'package:masjidhub/screens/setupScreens/chooseCountdown/countdownTimerAud
 import 'package:masjidhub/screens/setupScreens/utils/setupFooter/setupFooter.dart';
 import 'package:masjidhub/theme/colors.dart';
 import 'package:masjidhub/utils/sharedPrefs.dart';
+import 'package:sizer/sizer.dart';
 
 class ChooseCountdown extends StatefulWidget {
   final PageController pageController;
@@ -49,9 +50,6 @@ class _ChooseCountdownState extends State<ChooseCountdown> {
     });
     await SharedPrefs().setCountdownTimer(alertTime);
     await _updateNotification();
-
-
-
   }
 
   @override
@@ -60,31 +58,29 @@ class _ChooseCountdownState extends State<ChooseCountdown> {
       body: Align(
         alignment: Alignment.topCenter,
         child: SafeArea(
-          minimum: EdgeInsets.symmetric(horizontal: 0, vertical: 16),
+          minimum: EdgeInsets.symmetric(vertical: 16),
           child: LayoutBuilder(
             builder: (BuildContext context, BoxConstraints constraints) {
-              final _topPadding = constraints.maxHeight * 0.05;
               return SingleChildScrollView(
                 child: Column(
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(top: _topPadding),
+                      padding: EdgeInsets.only(top: 4.h),
                       child: SetupHeaderImage(image: countdownSetupImage),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(top: 30),
+                      padding: EdgeInsets.only(top: 4.5.h),
                       child: Text(
                         tr('countdown alert'),
                         style: TextStyle(
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w500,
                           fontSize: 30.0,
                           color: CustomColors.blackPearl,
                         ),
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(
-                          top: 20, left: 20, right: 20, bottom: 10),
+                      padding: EdgeInsets.only(top: 1.5.h, left: 30, right: 30),
                       child: Text(
                         tr('selectCountdownText'),
                         style: TextStyle(
@@ -97,7 +93,7 @@ class _ChooseCountdownState extends State<ChooseCountdown> {
                     ),
                     Counter(
                       count: alertTime,
-                      padding: EdgeInsets.fromLTRB(36, 0, 36, 0),
+                      padding: EdgeInsets.only(top: 2.h, left: 30, right: 30),
                       onIncrementPressed: () => _incrementAlertTime(),
                       onDecrementPressed: () => _decrementAlertTime(),
                       lowerLimit: 5,
@@ -106,13 +102,13 @@ class _ChooseCountdownState extends State<ChooseCountdown> {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Padding(
-                        padding: EdgeInsets.only(top: 20, left: 56, right: 40),
+                        padding: EdgeInsets.only(top: 1.h, left: 30),
                         child: Text(
                           tr('choose alert'),
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 25.0,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 22.0,
                             color: CustomColors.mischka,
                           ),
                         ),
