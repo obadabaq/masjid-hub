@@ -419,9 +419,9 @@ class LocationProvider extends ChangeNotifier {
   }) async {
     bool isOnline = await InternetConnectionChecker().hasConnection;
     if (!isOnline) onError(AppError.noInternet);
-    bool isAutoLocation = SharedPrefs().getAutomatic;
     try {
-      if (isAutoLocation) await saveAddress();
+      setAutomatic(false);
+      await saveAddress();
     } catch (e) {
       setErrorText(e.toString());
       onError(AppError.noGPS);

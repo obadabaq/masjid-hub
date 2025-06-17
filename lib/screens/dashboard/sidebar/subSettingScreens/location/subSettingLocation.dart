@@ -22,13 +22,9 @@ class _SubSettingLocationState extends State<SubSettingLocation> {
   void initState() {
     super.initState();
     locationProvider = Provider.of<LocationProvider>(context, listen: false);
-    initialValue = locationProvider.getAutomatic;
   }
 
   void onValueChanged(bool value) {
-    setState(() {
-      initialValue = value;
-    });
     if (value) {
       locationProvider.locateUser();
     } else {}
@@ -49,11 +45,11 @@ class _SubSettingLocationState extends State<SubSettingLocation> {
                     text: tr('automatically detect'),
                     icon: Icons.settings,
                     onClick: () {},
-                    defaultValue: initialValue,
+                    defaultValue: locationProvider.isAutomatic,
                     onValueChanged: (value) => onValueChanged(value),
                   ),
                   Visibility(
-                    visible: !initialValue,
+                    visible: locationProvider.isAutomatic,
                     child: ChooseLocationField(
                       buttonWidth: 350,
                       controller: controller,

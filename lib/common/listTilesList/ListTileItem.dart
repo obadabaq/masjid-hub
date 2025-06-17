@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ListTileItem extends StatelessWidget {
-  const ListTileItem({Key? key,
+  const ListTileItem({
+    Key? key,
     required this.title,
     required this.onSwitchOn,
     required this.onSwitchOff,
@@ -20,7 +21,7 @@ class ListTileItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
-      onTap: () => tileValue  == true ? onSwitchOff() : onSwitchOn(),
+      onTap: () => tileValue == true ? onSwitchOff() : onSwitchOn(),
       child: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
           return Column(
@@ -28,15 +29,16 @@ class ListTileItem extends StatelessWidget {
               Container(
                 constraints: BoxConstraints(minHeight: 40),
                 child: ListTile(
-                  title: Text(title),
-                  trailing: CustomSwitch(value: tileValue, onChanged: (value){
-                    if(value){
-                      onSwitchOn();
-                    }else{
-                      onSwitchOff();
-                    }
-                  })
-                ),
+                    title: Text(title),
+                    trailing: CustomSwitch(
+                        value: tileValue,
+                        onChanged: (value) {
+                          if (value) {
+                            onSwitchOn();
+                          } else {
+                            onSwitchOff();
+                          }
+                        })),
               ),
             ],
           );
@@ -76,7 +78,7 @@ class _CustomSwitchState extends State<CustomSwitch> {
             BoxShadow(
               color: widget.value
                   ? Colors.transparent
-                  : Color(0xFF00ACC1).withOpacity(0.5),
+                  : Color(0xFF00ACC1).withValues(alpha: 0.5),
               blurRadius: 10.0,
               spreadRadius: 2.0,
               offset: Offset(0, 4),
@@ -84,7 +86,8 @@ class _CustomSwitchState extends State<CustomSwitch> {
           ],
         ),
         child: Stack(
-          alignment: widget.value ? Alignment.centerRight : Alignment.centerLeft,
+          alignment:
+              widget.value ? Alignment.centerRight : Alignment.centerLeft,
           children: [
             AnimatedContainer(
               duration: Duration(milliseconds: 300),
@@ -97,7 +100,7 @@ class _CustomSwitchState extends State<CustomSwitch> {
                   BoxShadow(
                     color: widget.value
                         ? Colors.transparent
-                        : Color(0xFF00ACC1).withOpacity(0.3),
+                        : Color(0xFF00ACC1).withValues(alpha: 0.3),
                     blurRadius: 10.0,
                     spreadRadius: 2.0,
                   ),

@@ -89,10 +89,13 @@ class CsvFileService {
 
   static Future<void> _shareCsvFile(File file) async {
     try {
-      await Share.shareXFiles(
-        [XFile(file.path)],
-        subject: 'Log File Export',
-        text: 'Here is the log file you requested: ${path.basename(file.path)}',
+      await SharePlus.instance.share(
+        ShareParams(
+          files: [XFile(file.path)],
+          subject: 'Log File Export',
+          text:
+              'Here is the log file you requested: ${path.basename(file.path)}',
+        ),
       );
     } catch (e) {
       debugPrint('Error sharing file: $e');

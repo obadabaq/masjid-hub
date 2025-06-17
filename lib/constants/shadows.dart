@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 final List<BoxShadow> shadowNeu = ([
   BoxShadow(
-    color: Colors.white.withOpacity(0.75),
+    color: Colors.white.withValues(alpha: 0.75),
     blurRadius: 15.0,
     spreadRadius: 5.0,
     offset: Offset(
@@ -24,7 +24,7 @@ final List<BoxShadow> shadowNeu = ([
 
 final List<BoxShadow> shadowNeuSecondary = ([
   BoxShadow(
-    color: Colors.white.withOpacity(0.75),
+    color: Colors.white.withValues(alpha: 0.75),
     blurRadius: 10.0,
     spreadRadius: 2.0,
     offset: Offset(
@@ -45,7 +45,7 @@ final List<BoxShadow> shadowNeuSecondary = ([
 
 final List<BoxShadow> secondaryShadow = ([
   BoxShadow(
-    color: Colors.white.withOpacity(0.75),
+    color: Colors.white.withValues(alpha: 0.75),
     blurRadius: 10.0,
     spreadRadius: 5.0,
     offset: Offset(
@@ -66,7 +66,7 @@ final List<BoxShadow> secondaryShadow = ([
 
 final List<BoxShadow> tertiaryShadow = ([
   BoxShadow(
-    color: Colors.white.withOpacity(0.75),
+    color: Colors.white.withValues(alpha: 0.75),
     blurRadius: 10.0,
     spreadRadius: 1.0,
     offset: Offset(
@@ -87,7 +87,7 @@ final List<BoxShadow> tertiaryShadow = ([
 
 final List<BoxShadow> tesbihInnerConcaveShadow = ([
   BoxShadow(
-    color: Colors.white.withOpacity(0.75),
+    color: Colors.white.withValues(alpha: 0.75),
     blurRadius: 10.0,
     spreadRadius: 1.0,
     offset: Offset(
@@ -108,7 +108,7 @@ final List<BoxShadow> tesbihInnerConcaveShadow = ([
 
 final List<BoxShadow> tertiaryShadowAppBar = ([
   BoxShadow(
-    color: Colors.white.withOpacity(0.9),
+    color: Colors.white.withValues(alpha: 0.9),
     blurRadius: 5.0,
     spreadRadius: 1.0,
     offset: Offset(
@@ -129,7 +129,7 @@ final List<BoxShadow> tertiaryShadowAppBar = ([
 
 final List<BoxShadow> shadowNeuPressed = ([
   BoxShadow(
-    color: Colors.white.withOpacity(0.75),
+    color: Colors.white.withValues(alpha: 0.75),
     blurRadius: 15.0,
     spreadRadius: 5.0,
     offset: Offset(
@@ -150,7 +150,7 @@ final List<BoxShadow> shadowNeuPressed = ([
 
 final List<BoxShadow> shadowDotActive = ([
   BoxShadow(
-    color: Colors.white.withOpacity(0.75),
+    color: Colors.white.withValues(alpha: 0.75),
     blurRadius: 5.0,
     spreadRadius: 0.1,
     offset: Offset(
@@ -175,13 +175,13 @@ final List<Color> innerConcaveShadow = ([
 ]);
 
 final List<Color> tabBarInnerShadow = ([
-  Color(0xFF006064).withOpacity(0.4),
+  Color(0xFF006064).withValues(alpha: 0.4),
   CustomColors.irisBlue,
 ]);
 
 List<BoxShadow> bottomNavShadow(Color color) => ([
       BoxShadow(
-        color: color.withOpacity(0.75),
+        color: color.withValues(alpha: 0.75),
         blurRadius: 20.0,
         spreadRadius: 1.0,
         offset: Offset(

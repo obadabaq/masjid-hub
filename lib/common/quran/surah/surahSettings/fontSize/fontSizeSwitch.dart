@@ -32,7 +32,7 @@ class FontSizeSwitch extends StatelessWidget {
                   label,
                   textAlign: TextAlign.start,
                   style: TextStyle(
-                    color: CustomColors.blackPearl.withOpacity(0.7),
+                    color: CustomColors.blackPearl.withValues(alpha: 0.7),
                     fontSize: 18,
                     height: 1.3,
                   ),

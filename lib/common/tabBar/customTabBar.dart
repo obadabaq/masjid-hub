@@ -58,7 +58,7 @@ class CustomTabBar extends StatelessWidget {
                 fontWeight: FontWeight.w600,
                 letterSpacing: 1.2,
               ),
-              unselectedLabelColor: Colors.white.withOpacity(0.6),
+              unselectedLabelColor: Colors.white.withValues(alpha: 0.6),
               unselectedLabelStyle: const TextStyle(
                 fontWeight: FontWeight.w600,
               ),

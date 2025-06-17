@@ -72,7 +72,7 @@ class _QiblaDirectionHelperTextState extends State<QiblaDirectionHelperText>
                     tr('qibla help text'),
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      color: CustomColors.blackPearl.withOpacity(0.7),
+                      color: CustomColors.blackPearl.withValues(alpha: 0.7),
                       fontSize: 22,
                       height: 1.3,
                       fontWeight: FontWeight.w200,

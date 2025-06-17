@@ -67,7 +67,7 @@ class Counter extends StatelessWidget {
                           CupertinoIcons.minus_circle,
                           size: 38,
                           color: disableDecrement
-                              ? CustomColors.mischka.withOpacity(0.30)
+                              ? CustomColors.mischka.withValues(alpha: 0.30)
                               : CustomColors.mischka,
                         ),
                       ),
@@ -109,7 +109,7 @@ class Counter extends StatelessWidget {
                           CupertinoIcons.plus_circle,
                           size: 38,
                           color: disableIncrement
-                              ? CustomColors.mischka.withOpacity(0.30)
+                              ? CustomColors.mischka.withValues(alpha: 0.30)
                               : CustomColors.mischka,
                         ),
                       ),

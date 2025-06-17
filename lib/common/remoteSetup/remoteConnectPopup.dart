@@ -180,7 +180,7 @@ class _RemoteConnectPopupState extends State<RemoteConnectPopup> {
                                     CupertinoIcons.multiply,
                                     size: 30,
                                     color: CustomColors.blackPearl
-                                        .withOpacity(0.4),
+                                        .withValues(alpha: 0.4),
                                   ),
                                 )
                             ],
@@ -245,7 +245,8 @@ class _RemoteConnectPopupState extends State<RemoteConnectPopup> {
                               stateData.subTitle,
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                color: CustomColors.blackPearl.withOpacity(0.7),
+                                color: CustomColors.blackPearl
+                                    .withValues(alpha: 0.7),
                                 fontSize: 16,
                                 height: 1.3,
                               ),
@@ -261,7 +262,8 @@ class _RemoteConnectPopupState extends State<RemoteConnectPopup> {
                           tr('update homemasjid'),
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            color: CustomColors.blackPearl.withOpacity(0.9),
+                            color:
+                                CustomColors.blackPearl.withValues(alpha: 0.9),
                             fontSize: 16,
                             height: 1.3,
                           ),
@@ -276,7 +278,8 @@ class _RemoteConnectPopupState extends State<RemoteConnectPopup> {
                           ]),
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            color: CustomColors.blackPearl.withOpacity(0.9),
+                            color:
+                                CustomColors.blackPearl.withValues(alpha: 0.9),
                             fontSize: 16,
                             height: 1.3,
                           ),

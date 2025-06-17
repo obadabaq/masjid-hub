@@ -78,7 +78,7 @@ class _ChoosePrayerTimeState extends State<ChoosePrayerTime> {
                         style: TextStyle(
                           fontSize: 16.0,
                           height: 1.3,
-                          color: CustomColors.blackPearl.withOpacity(0.7),
+                          color: CustomColors.blackPearl.withValues(alpha: 0.7),
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -115,7 +115,7 @@ class _ChoosePrayerTimeState extends State<ChoosePrayerTime> {
                         style: TextStyle(
                           fontSize: 16.0,
                           height: 1.3,
-                          color: CustomColors.blackPearl.withOpacity(0.7),
+                          color: CustomColors.blackPearl.withValues(alpha: 0.7),
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -135,7 +135,7 @@ class _ChoosePrayerTimeState extends State<ChoosePrayerTime> {
                                   top: 0, left: 35, right: 35, bottom: 10),
                               padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
                               decoration: BoxDecoration(
-                                color: Colors.black.withOpacity(0.1),
+                                color: Colors.black.withValues(alpha: 0.1),
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               child: Row(

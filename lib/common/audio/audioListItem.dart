@@ -78,7 +78,7 @@ class AudioListItem extends StatelessWidget {
                           height: 1.3,
                           color: isSelected
                               ? CustomTheme.lightTheme.colorScheme.secondary
-                              : CustomColors.blackPearl.withOpacity(0.7),
+                              : CustomColors.blackPearl.withValues(alpha: 0.7),
                         ),
                       )
                     ],

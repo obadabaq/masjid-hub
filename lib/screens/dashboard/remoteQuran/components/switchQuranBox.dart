@@ -60,7 +60,7 @@ class SwitchQuranBox extends StatelessWidget {
                                           AppIcons.remote,
                                           size: 30,
                                           color: CustomColors.irisBlue
-                                              .withOpacity(0.6),
+                                              .withValues(alpha: 0.6),
                                         ),
                                       ),
                                       Column(
@@ -72,7 +72,7 @@ class SwitchQuranBox extends StatelessWidget {
                                             textAlign: TextAlign.start,
                                             style: TextStyle(
                                               color: CustomColors.blackPearl
-                                                  .withOpacity(0.7),
+                                                  .withValues(alpha: 0.7),
                                               fontSize: 20,
                                               height: 1.3,
                                             ),
@@ -96,8 +96,8 @@ class SwitchQuranBox extends StatelessWidget {
                                 icon: Icon(
                                   CupertinoIcons.multiply,
                                   size: 30,
-                                  color:
-                                      CustomColors.blackPearl.withOpacity(0.4),
+                                  color: CustomColors.blackPearl
+                                      .withValues(alpha: 0.4),
                                 ),
                               )
                             ],

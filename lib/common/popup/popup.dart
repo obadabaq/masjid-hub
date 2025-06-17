@@ -50,7 +50,7 @@ class PopupLayout extends ModalRoute {
   Widget _buildOverlayContent(BuildContext context) {
     return Container(
       decoration: new BoxDecoration(
-        color: CustomColors.solitude.withOpacity(0.7),
+        color: CustomColors.solitude.withValues(alpha: 0.7),
       ),
       padding: EdgeInsets.symmetric(horizontal: 30),
       child: SafeArea(

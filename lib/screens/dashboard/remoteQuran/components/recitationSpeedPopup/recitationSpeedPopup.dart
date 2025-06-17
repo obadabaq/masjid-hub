@@ -48,7 +48,7 @@ class RecitationSpeedPopup extends StatelessWidget {
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       color: CustomColors.blackPearl
-                                          .withOpacity(0.7),
+                                          .withValues(alpha: 0.7),
                                       fontSize: 20,
                                       height: 1.3,
                                     ),
@@ -61,7 +61,8 @@ class RecitationSpeedPopup extends StatelessWidget {
                               icon: Icon(
                                 CupertinoIcons.multiply,
                                 size: 30,
-                                color: CustomColors.blackPearl.withOpacity(0.4),
+                                color: CustomColors.blackPearl
+                                    .withValues(alpha: 0.4),
                               ),
                             )
                           ],

@@ -35,7 +35,7 @@ class CompassPainter extends CustomPainter {
 
     Path ballShadow = Path();
     ballShadow..moveTo(start.dx, start.dy + 8);
-    ballShadow.lineTo(start.dx, end.dy + - 5);
+    ballShadow.lineTo(start.dx, end.dy + -5);
     ballShadow.lineTo(start.dx + 10, end.dy - 5);
     ballShadow.lineTo(start.dx + 10, start.dy + 8);
     ballShadow.close();
@@ -43,7 +43,8 @@ class CompassPainter extends CustomPainter {
     canvas.translate(center.dx, center.dy);
     canvas.rotate(rotation);
     canvas.translate(-center.dx, -center.dy);
-    canvas.drawShadow(ballShadow, Colors.black.withOpacity(0.3), 5.0, true);
+    canvas.drawShadow(
+        ballShadow, Colors.black.withValues(alpha: 0.3), 5.0, true);
     canvas.drawLine(start, end, needle);
   }
 

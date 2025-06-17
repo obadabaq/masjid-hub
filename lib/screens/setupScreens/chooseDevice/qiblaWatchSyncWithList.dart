@@ -78,7 +78,7 @@ class _QiblaWatchSyncAppsState extends State<QiblaWatchSyncApps> {
                     borderRadius: BorderRadius.all(Radius.circular(10)),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
+                        color: Colors.grey.withValues(alpha: 0.5),
                         spreadRadius: 5,
                         blurRadius: 7,
                         offset: Offset(0, 3), // changes position of shadow
@@ -123,7 +123,7 @@ class _QiblaWatchSyncAppsState extends State<QiblaWatchSyncApps> {
                     borderRadius: BorderRadius.all(Radius.circular(10)),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
+                        color: Colors.grey.withValues(alpha: 0.5),
                         spreadRadius: 5,
                         blurRadius: 7,
                         offset: Offset(0, 3), // changes position of shadow
@@ -155,7 +155,7 @@ class _QiblaWatchSyncAppsState extends State<QiblaWatchSyncApps> {
                         padding: EdgeInsets.only(top: 4),
                         child: Container(
                           height: 1,
-                          color: Colors.grey.withOpacity(0.2),
+                          color: Colors.grey.withValues(alpha: 0.2),
                         ),
                       ),
                       ListTileItem(
@@ -180,7 +180,7 @@ class _QiblaWatchSyncAppsState extends State<QiblaWatchSyncApps> {
                         padding: EdgeInsets.only(top: 4),
                         child: Container(
                           height: 1,
-                          color: Colors.grey.withOpacity(0.2),
+                          color: Colors.grey.withValues(alpha: 0.2),
                         ),
                       ),
                       ListTileItem(
@@ -206,7 +206,7 @@ class _QiblaWatchSyncAppsState extends State<QiblaWatchSyncApps> {
                         padding: EdgeInsets.only(top: 4),
                         child: Container(
                           height: 1,
-                          color: Colors.grey.withOpacity(0.2),
+                          color: Colors.grey.withValues(alpha: 0.2),
                         ),
                       ),
                       ListTileItem(
@@ -229,7 +229,7 @@ class _QiblaWatchSyncAppsState extends State<QiblaWatchSyncApps> {
                       ),
                       Container(
                         height: 1,
-                        color: Colors.black12.withOpacity(0.08),
+                        color: Colors.black12.withValues(alpha: 0.08),
                       ),
                       ListTileItem(
                         title: 'Google Calendar',

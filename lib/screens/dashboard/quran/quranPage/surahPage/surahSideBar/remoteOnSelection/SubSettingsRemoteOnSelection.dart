@@ -198,7 +198,7 @@ Future<void> _showPicker(
 }) async {
   await showCupertinoModalPopup(
     context: ctx,
-    barrierColor: CustomColors.solitude.withOpacity(0.7),
+    barrierColor: CustomColors.solitude.withValues(alpha: 0.7),
     barrierDismissible: true,
     builder: (_) {
       int _selectedValue = 2;

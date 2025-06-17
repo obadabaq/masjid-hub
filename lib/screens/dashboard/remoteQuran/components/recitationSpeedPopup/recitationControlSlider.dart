@@ -40,7 +40,8 @@ class _RecitationControlSliderState extends State<RecitationControlSlider> {
                   child: Slider(
                     value: _currentSliderValue,
                     activeColor: CustomColors.irisBlue,
-                    inactiveColor: CustomColors.gunPowder.withOpacity(0.1),
+                    inactiveColor:
+                        CustomColors.gunPowder.withValues(alpha: 0.1),
                     max: 1.75,
                     min: 0.25,
                     divisions: 6,

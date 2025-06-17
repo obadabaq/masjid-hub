@@ -41,7 +41,8 @@ class _VolumeControlSliderComponentState
                     builder: (ctx, ble, _) => Slider(
                       value: ble.getRemoteVoume,
                       activeColor: CustomColors.irisBlue,
-                      inactiveColor: CustomColors.gunPowder.withOpacity(0.1),
+                      inactiveColor:
+                          CustomColors.gunPowder.withValues(alpha: 0.1),
                       max: 10,
                       min: 0,
                       onChangeEnd: (double value) => ble.changeVolume(value),

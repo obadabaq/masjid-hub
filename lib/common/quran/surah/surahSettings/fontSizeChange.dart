@@ -51,7 +51,7 @@ class FontSizeChange extends StatelessWidget {
                                           AppIcons.fontSize,
                                           size: 20,
                                           color: CustomColors.blackPearl
-                                              .withOpacity(0.6),
+                                              .withValues(alpha: 0.6),
                                         ),
                                       ),
                                       Text(
@@ -59,7 +59,7 @@ class FontSizeChange extends StatelessWidget {
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                           color: CustomColors.blackPearl
-                                              .withOpacity(0.7),
+                                              .withValues(alpha: 0.7),
                                           fontSize: 20,
                                           height: 1.3,
                                         ),
@@ -73,8 +73,8 @@ class FontSizeChange extends StatelessWidget {
                                 icon: Icon(
                                   CupertinoIcons.multiply,
                                   size: 30,
-                                  color:
-                                      CustomColors.blackPearl.withOpacity(0.4),
+                                  color: CustomColors.blackPearl
+                                      .withValues(alpha: 0.4),
                                 ),
                               )
                             ],

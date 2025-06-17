@@ -41,7 +41,7 @@ class _TesbihSubSettingsState extends State<TesbihSubSettings> {
             style: TextStyle(
               fontSize: 16.0,
               height: 1.3,
-              color: CustomColors.blackPearl.withOpacity(0.7),
+              color: CustomColors.blackPearl.withValues(alpha: 0.7),
             ),
             textAlign: TextAlign.center,
           ),

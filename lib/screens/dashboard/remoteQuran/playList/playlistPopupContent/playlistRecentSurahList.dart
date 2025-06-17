@@ -34,7 +34,7 @@ class PlaylistRecentSurahList extends StatelessWidget {
               child: Text(
                 tr('noRecentSurah'),
                 style: TextStyle(
-                  color: CustomColors.blackPearl.withOpacity(0.7),
+                  color: CustomColors.blackPearl.withValues(alpha: 0.7),
                   fontSize: 20,
                   height: 1.3,
                 ),

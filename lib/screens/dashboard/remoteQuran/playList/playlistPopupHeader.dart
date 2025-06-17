@@ -24,7 +24,7 @@ class PlaylistPopupHeader extends StatelessWidget {
                 icon: Icon(
                   CupertinoIcons.multiply,
                   size: 30,
-                  color: CustomColors.blackPearl.withOpacity(0.4),
+                  color: CustomColors.blackPearl.withValues(alpha: 0.4),
                 ),
               )
             ],

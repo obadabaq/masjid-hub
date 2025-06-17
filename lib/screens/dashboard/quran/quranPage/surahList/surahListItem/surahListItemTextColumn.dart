@@ -43,7 +43,7 @@ class SurahListItemTextColumn extends StatelessWidget {
                 fontSize: 17,
                 height: 1.3,
                 fontWeight: FontWeight.w400,
-                color: CustomColors.blackPearl.withOpacity(0.7),
+                color: CustomColors.blackPearl.withValues(alpha: 0.7),
               ),
               minFontSize: 10,
               maxLines: 1,

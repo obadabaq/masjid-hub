@@ -8,7 +8,8 @@ class TasbeehProgressIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double progressValue = tasbeehCount % 33 / 33.0; // Progress resets after reaching 33
+    double progressValue =
+        tasbeehCount % 33 / 33.0; // Progress resets after reaching 33
 
     return Center(
       child: Stack(
@@ -22,7 +23,7 @@ class TasbeehProgressIndicator extends StatelessWidget {
               value: progressValue,
               strokeWidth: 6.0,
               valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
-              backgroundColor: Colors.grey.withOpacity(0.3),
+              backgroundColor: Colors.grey.withValues(alpha: 0.3),
             ),
           ),
           // Tasbeeh count displayed in the center of the progress circle
@@ -47,7 +48,8 @@ class TasbeehDottedIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double progressValue = tasbeehCount % 33 / 33.0; // Dotted progress resets after reaching 33
+    double progressValue =
+        tasbeehCount % 33 / 33.0; // Dotted progress resets after reaching 33
     int dotsCount = 33; // Number of dots
 
     return Center(
@@ -95,7 +97,7 @@ class DottedCirclePainter extends CustomPainter {
       ..style = PaintingStyle.fill;
 
     Paint backgroundPaint = Paint()
-      ..color = Colors.grey.withOpacity(0.3)
+      ..color = Colors.grey.withValues(alpha: 0.3)
       ..style = PaintingStyle.fill;
 
     // Draw all background dots

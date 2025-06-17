@@ -92,7 +92,7 @@ class SurahPageHeader extends StatelessWidget {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 20,
-                      color: CustomColors.blackPearl.withOpacity(0.7),
+                      color: CustomColors.blackPearl.withValues(alpha: 0.7),
                     ),
                   ),
                 ],

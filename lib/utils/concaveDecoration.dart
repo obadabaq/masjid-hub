@@ -65,8 +65,8 @@ class _ConcaveDecorationPainter extends BoxPainter {
       depth = -depth;
     }
     colors = [
-      colors[0].withOpacity(opacity),
-      colors[1].withOpacity(opacity),
+      colors[0].withValues(alpha: opacity),
+      colors[1].withValues(alpha: opacity),
     ];
   }
 
