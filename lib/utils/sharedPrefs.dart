@@ -224,7 +224,7 @@ class SharedPrefs {
   Future<void> setCountdownAudioId(int? audioId) async => _sharedPrefs?.setInt(
       keyCountdownAudioId, audioId ?? defaultCountdownAudioId);
 
-  final int defaultMadhabId = 0;
+  final int defaultMadhabId = -1;
   int? _selectedMadhabId = _sharedPrefs?.getInt(keyMadhabId);
 
   int get getSelectedMadhabId => _selectedMadhabId ?? defaultMadhabId;

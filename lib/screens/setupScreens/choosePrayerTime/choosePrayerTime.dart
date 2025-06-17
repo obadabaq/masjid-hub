@@ -47,21 +47,24 @@ class _ChoosePrayerTimeState extends State<ChoosePrayerTime> {
           minimum: EdgeInsets.symmetric(horizontal: 0, vertical: 16),
           child: LayoutBuilder(
             builder: (BuildContext context, BoxConstraints constraints) {
-              final _topPadding = constraints.maxHeight * 0.05;
               return SingleChildScrollView(
                 child: Column(
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(top: _topPadding),
+                      padding: EdgeInsets.only(top: 4.h),
                       child: SetupHeaderImage(image: calculatorSetupImage),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(top: 50, left: 20, right: 20),
+                      padding: EdgeInsets.only(
+                        top: 4.5.h,
+                        left: 15.w,
+                        right: 15.w,
+                      ),
                       child: Text(
                         tr('prayer time calculation'),
                         style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 30.0,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 32.0,
                           height: 1.3,
                           color: CustomColors.blackPearl,
                         ),
@@ -69,8 +72,7 @@ class _ChoosePrayerTimeState extends State<ChoosePrayerTime> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(
-                          top: 20, left: 10, right: 10, bottom: 0),
+                      padding: EdgeInsets.only(top: 1.5.h),
                       child: Text(
                         tr('select your madzhab.'),
                         style: TextStyle(
@@ -89,7 +91,7 @@ class _ChoosePrayerTimeState extends State<ChoosePrayerTime> {
                             mainAxisSpacing: 25.0,
                             mainAxisExtent: 66),
                         physics: const NeverScrollableScrollPhysics(),
-                        padding: EdgeInsets.fromLTRB(30, 20, 30, 30),
+                        padding: EdgeInsets.fromLTRB(30, 3.h, 30, 3.h),
                         shrinkWrap: true,
                         itemCount: madhabList.length,
                         itemBuilder: (BuildContext context, int index) {
@@ -107,7 +109,7 @@ class _ChoosePrayerTimeState extends State<ChoosePrayerTime> {
                     ),
                     Padding(
                       padding: EdgeInsets.only(
-                          top: 20, left: 10, right: 10, bottom: 20),
+                          top: 3.h, left: 10, right: 10, bottom: 20),
                       child: Text(
                         '... or select an organisation',
                         style: TextStyle(
@@ -145,17 +147,21 @@ class _ChoosePrayerTimeState extends State<ChoosePrayerTime> {
                                   SizedBox(
                                     width: 5.w,
                                   ),
-                                  Text(
-                                    provider.getOrgId == -1
-                                        ? tr('select organisation')
-                                        : PrayerUtils().getOrgNameFromId(
-                                            provider.getOrgId),
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.grey,
+                                  Flexible(
+                                    child: Text(
+                                      provider.getOrgId == -1
+                                          ? tr('select organisation')
+                                          : PrayerUtils().getOrgNameFromId(
+                                              provider.getOrgId),
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.grey,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
                                     ),
-                                    textAlign: TextAlign.center,
                                   )
                                 ],
                               ),
@@ -194,11 +200,14 @@ class _ChoosePrayerTimeState extends State<ChoosePrayerTime> {
                         ],
                       ),
                     ),
-                    SetupFooter(
-                      currentPage: 3,
-                      margin: EdgeInsets.only(bottom: 30),
-                      buttonText: tr('next'),
-                      controller: widget.pageController,
+                    Consumer<PrayerTimingsProvider>(
+                      builder: (ctx, provider, _) => SetupFooter(
+                        currentPage: 3,
+                        margin: EdgeInsets.only(bottom: 30),
+                        isPrimaryButtonDisabled: provider.getMadhabId == -1,
+                        buttonText: tr('next'),
+                        controller: widget.pageController,
+                      ),
                     ),
                   ],
                 ),
