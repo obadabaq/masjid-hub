@@ -15,6 +15,9 @@ import 'package:masjidhub/provider/quranProvider.dart';
 import 'package:masjidhub/theme/colors.dart';
 import 'package:masjidhub/provider/tesbihProvider.dart';
 
+import '../../constants/settingsList/locationSettingsListData.dart';
+import '../../screens/dashboard/sidebar/subSettingScreens/subSettingLayout.dart';
+
 class CustomAppBar extends StatelessWidget {
   final Function openDrawer;
   final AppBarState state;
@@ -103,17 +106,33 @@ class CustomAppBar extends StatelessWidget {
                 Row(
                   children: [
                     Expanded(
-                      child: AutoSizeText(
-                        AppBarUtils().getTitle(state),
-                        style: TextStyle(
-                          fontSize: AppBarUtils().titleFontSize(state),
-                          height: 1.3,
-                          color: CustomColors.blackPearl,
+                      child: GestureDetector(
+                        behavior: HitTestBehavior.translucent,
+                        onTap: () {
+                          if (state == AppBarState.address) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => SubSettingLayout(
+                                  title: locationSettingsList.first.title,
+                                  contxt: context,
+                                ),
+                              ),
+                            );
+                          }
+                        },
+                        child: AutoSizeText(
+                          AppBarUtils().getTitle(state),
+                          style: TextStyle(
+                            fontSize: AppBarUtils().titleFontSize(state),
+                            height: 1.3,
+                            color: CustomColors.blackPearl,
+                          ),
+                          minFontSize: 16,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: AppBarUtils().titleAlignment(state),
                         ),
-                        minFontSize: 16,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: AppBarUtils().titleAlignment(state),
                       ),
                     ),
                   ],
