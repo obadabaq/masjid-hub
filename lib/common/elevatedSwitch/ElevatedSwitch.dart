@@ -64,7 +64,7 @@ class ElevatedSwitch extends StatelessWidget {
                 ],
               ),
               Switch(
-                thumbColor: MaterialStateProperty.all<Color>(
+                thumbColor: WidgetStateProperty.all<Color>(
                     CustomTheme.lightTheme.colorScheme.background),
                 value: defaultValue,
                 activeTrackColor: CustomTheme.lightTheme.colorScheme.secondary,

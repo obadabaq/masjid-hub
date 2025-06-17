@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:masjidhub/screens/setupScreens/utils/setup_pageview_template.dart';
 import 'package:provider/provider.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -15,8 +14,6 @@ import 'package:masjidhub/theme/colors.dart';
 import 'package:masjidhub/screens/setupScreens/chooseLocation/chooseLocationField.dart';
 import 'package:masjidhub/screens/setupScreens/utils/setupFooter/setupFooter.dart';
 import 'package:masjidhub/common/snackBar/AppSnackBar.dart';
-import 'package:masjidhub/common/errorPopups/errorPopup.dart';
-import 'package:masjidhub/common/popup/popup.dart';
 import 'package:masjidhub/constants/images.dart';
 import 'package:sizer/sizer.dart';
 
@@ -162,7 +159,4 @@ class _ChooseLocationState extends State<ChooseLocation> {
       ),
     );
   }
-
-  _showOfflinePopup(BuildContext context) =>
-      Navigator.push(context, PopupLayout(child: ErrorPopup()));
 }

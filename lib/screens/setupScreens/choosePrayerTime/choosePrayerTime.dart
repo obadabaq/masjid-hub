@@ -26,8 +26,6 @@ class ChoosePrayerTime extends StatefulWidget {
 
 class _ChoosePrayerTimeState extends State<ChoosePrayerTime> {
   bool _showOrgDropdown = false;
-  static int? selectedMadhabId;
-  static int? selectedOrgId;
 
   static EdgeInsetsGeometry buttonPadding =
       const EdgeInsets.fromLTRB(0, 20, 0, 20);
@@ -35,7 +33,6 @@ class _ChoosePrayerTimeState extends State<ChoosePrayerTime> {
   Future<void> _setOrgId(id) async {
     final provider = Provider.of<PrayerTimingsProvider>(context, listen: false);
     setState(() {
-      selectedOrgId = id;
       _showOrgDropdown = false;
     });
     provider.setOrgId(id);

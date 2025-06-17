@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:masjidhub/models/quran/audioPlayerStateModel.dart';
@@ -75,7 +74,6 @@ class AudioUtils {
       oldList,
       oldList[oldStateIndex],
       SurahListActionButtonState.paused,
-
     );
   }
 

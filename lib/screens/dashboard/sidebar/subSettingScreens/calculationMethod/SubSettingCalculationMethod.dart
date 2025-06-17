@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-import 'package:masjidhub/common/buttons/primaryButton.dart';
 import 'package:masjidhub/common/radioList/RadioList.dart';
 import 'package:masjidhub/constants/madhabs.dart';
 import 'package:masjidhub/constants/organisations.dart';
@@ -23,11 +22,9 @@ class SubSettingCalculationMethod extends StatefulWidget {
 class _SubSettingCalculationMethodState
     extends State<SubSettingCalculationMethod> {
   bool _showOrgDropdown = false;
-  static int? selectedOrgId;
 
   Future<void> _setOrgId(id) async {
     setState(() {
-      selectedOrgId = id;
       _showOrgDropdown = false;
     });
     final provider = Provider.of<PrayerTimingsProvider>(context, listen: false);
@@ -43,7 +40,7 @@ class _SubSettingCalculationMethodState
             children: [
               Padding(
                 padding:
-                EdgeInsets.only(top: 0, left: 10, right: 10, bottom: 25),
+                    EdgeInsets.only(top: 0, left: 10, right: 10, bottom: 25),
                 child: Text(
                   tr('select your madzhab.'),
                   style: TextStyle(
@@ -65,7 +62,7 @@ class _SubSettingCalculationMethodState
               ),
               Padding(
                 padding:
-                EdgeInsets.only(top: 40, left: 10, right: 10, bottom: 20),
+                    EdgeInsets.only(top: 40, left: 10, right: 10, bottom: 20),
                 child: Text(
                   tr('select organisation'),
                   style: TextStyle(
@@ -84,7 +81,8 @@ class _SubSettingCalculationMethodState
                 },
                 child: Container(
                   width: constraints.maxWidth,
-                  margin: EdgeInsets.only(top: 0, left: 35, right: 35, bottom: 10),
+                  margin:
+                      EdgeInsets.only(top: 0, left: 35, right: 35, bottom: 10),
                   padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
                   decoration: BoxDecoration(
                     color: CustomColors.irisBlue,

@@ -14,7 +14,6 @@ class PlaylistPopup extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
-        final _containerWidth = constraints.maxWidth * 0.95;
         final _containerTopPadding = constraints.maxHeight * 0.15;
         return SingleChildScrollView(
           child: Column(
@@ -23,7 +22,6 @@ class PlaylistPopup extends StatelessWidget {
               Container(
                 margin: EdgeInsets.only(top: _containerTopPadding),
                 padding: EdgeInsets.only(bottom: 30),
-                width: _containerWidth,
                 decoration: BoxDecoration(
                   color: CustomTheme.lightTheme.colorScheme.background,
                   borderRadius: BorderRadius.circular(20),

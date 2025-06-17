@@ -807,14 +807,6 @@ class WatchProvider with ChangeNotifier {
     });
   }
 
-  void _processIncomingData(String hexData) {
-    if (hexData.contains('1A02D1') || hexData.contains('1A02D2')) {
-      _handleTasbeehEvent(hexData);
-    } else {
-      _eventStreamController.add("sport");
-    }
-  }
-
   void _handleTasbeehEvent(String hexData) {
     final countHex = hexData.contains('1A02D1')
         ? hexData.substring(6, 10)

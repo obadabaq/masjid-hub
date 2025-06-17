@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:masjidhub/common/listTilesList/ListTileItem.dart';
 import 'package:masjidhub/constants/shadows.dart';
 import 'package:masjidhub/theme/customTheme.dart';
-import 'package:masjidhub/utils/enums/qiblaWatchSyncApps.dart';
 import 'package:masjidhub/utils/qiblaWatchSyncUtils.dart';
 
 class ListTileList extends StatelessWidget {

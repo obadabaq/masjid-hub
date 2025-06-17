@@ -121,8 +121,7 @@ class _RemoteConnectPopupState extends State<RemoteConnectPopup> {
               remoteConnectStates.firstWhere((data) => data.state == ble.state);
 
           bool isSyncing = ble.state == QuranBoxConnectionState.prayerTimesSync;
-          bool isDisconnected =
-              ble.state == QuranBoxConnectionState.disconnected;
+
           bool isOfflineTimesSyncing =
               ble.state == QuranBoxConnectionState.OfflinePrayerTimesSync;
           bool isConnecting = ble.state == QuranBoxConnectionState.connecting;
@@ -190,8 +189,7 @@ class _RemoteConnectPopupState extends State<RemoteConnectPopup> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(
-                          top: 0, bottom: 0, left: 10, right: 10),
+                      padding: EdgeInsets.symmetric(horizontal: 10),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

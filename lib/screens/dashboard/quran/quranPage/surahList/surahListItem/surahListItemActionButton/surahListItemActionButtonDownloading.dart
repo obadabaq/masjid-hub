@@ -72,7 +72,7 @@ class _SurahListItemActionButtonDownloadingState
 
       if (mounted)
         setState(() {
-          if (progress! > 0) {
+          if (progress > 0) {
             downloadProgress = (progress / 100).toDouble();
           } else {
             downloadProgress = 0;

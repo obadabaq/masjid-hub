@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_compass/flutter_compass.dart';
@@ -7,7 +5,6 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:masjidhub/helper_qibla.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_compass/flutter_compass.dart';
 import 'package:masjidhub/provider/locationProvider.dart';
 import 'package:masjidhub/utils/locationUtils.dart';
 import 'package:masjidhub/common/icons/app_icons.dart';
@@ -20,7 +17,6 @@ import 'package:masjidhub/utils/concaveDecoration.dart';
 import 'package:vibration/vibration.dart';
 
 import '../../../../provider/wathc_provider.dart';
-import '../../../../utils/sharedPrefs.dart';
 
 class QiblaCompass extends StatefulWidget {
   const QiblaCompass({

@@ -14,7 +14,7 @@ import 'package:provider/provider.dart';
 
 class SettingsListBuidler extends StatelessWidget {
   final List<SettingsListModel> list;
-  Function? onClick;
+  final Function? onClick;
 
   SettingsListBuidler({
     Key? key,

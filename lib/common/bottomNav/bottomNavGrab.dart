@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:masjidhub/constants/bottomNav.dart';
 
-import 'package:masjidhub/constants/shadows.dart';
-import 'package:masjidhub/common/bottomNav/snappedAudioPlayer.dart';
 import 'package:masjidhub/screens/setupScreens/utils/setupFooter/dot.dart';
 
 class BottomNavGrab extends StatefulWidget {

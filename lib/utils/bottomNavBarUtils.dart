@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:masjidhub/utils/enums/appBarEnums.dart';
 import 'package:masjidhub/utils/sharedPrefs.dart';
 
 class BottomNavBarUtils {

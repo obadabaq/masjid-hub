@@ -31,8 +31,6 @@ class ChooseLocationField extends StatelessWidget {
         hintText: hintText,
         buttonWidth: buttonWidth,
         controller: controller,
-
-
       ),
     );
   }

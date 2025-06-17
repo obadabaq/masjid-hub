@@ -17,7 +17,6 @@ class FontSizeChange extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
-        final _containerWidth = constraints.maxWidth * 0.90;
         final _containerTopPadding = constraints.maxHeight * 0.30;
         return Column(
           mainAxisSize: MainAxisSize.max,
@@ -25,7 +24,6 @@ class FontSizeChange extends StatelessWidget {
             Consumer<QuranProvider>(
               builder: (ctx, quran, _) => Container(
                 margin: EdgeInsets.only(top: _containerTopPadding),
-                width: _containerWidth,
                 decoration: BoxDecoration(
                   color: CustomTheme.lightTheme.colorScheme.background,
                   borderRadius: BorderRadius.circular(20),
@@ -88,16 +86,12 @@ class FontSizeChange extends StatelessWidget {
                       builder: (ctx, font, _) => Column(
                         children: [
                           FontSizeSwitch(
-                            margin: EdgeInsets.only(bottom: 20),
-                            containerWidth: _containerWidth,
                             label: 'Arabic Font',
                             selectedSize: font.surahFontSize,
                             onChange: (size) =>
                                 font.onSurahFontSizeChange(size),
                           ),
                           FontSizeSwitch(
-                            margin: EdgeInsets.only(bottom: 30),
-                            containerWidth: _containerWidth,
                             label: 'Translation Font',
                             selectedSize: font.translationFontSize,
                             onChange: (size) =>

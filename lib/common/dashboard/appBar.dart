@@ -4,7 +4,6 @@ import 'package:masjidhub/provider/bleProvider.dart';
 import 'package:provider/provider.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
-import 'package:masjidhub/screens/dashboard/remoteQuran/components/switchQuranBox.dart';
 import 'package:masjidhub/utils/appBarUtils.dart';
 import 'package:masjidhub/common/snackBar/AppSnackBar.dart';
 import 'package:masjidhub/utils/enums/appBarEnums.dart';
@@ -149,7 +148,4 @@ class CustomAppBar extends StatelessWidget {
 
   _showOfflinePopup(BuildContext context, AppError error) =>
       Navigator.push(context, PopupLayout(child: ErrorPopup(errorType: error)));
-
-  _showSwitchQuranBoxPopup(BuildContext context) =>
-      Navigator.push(context, PopupLayout(child: SwitchQuranBox()));
 }

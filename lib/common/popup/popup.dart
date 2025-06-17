@@ -52,6 +52,7 @@ class PopupLayout extends ModalRoute {
       decoration: new BoxDecoration(
         color: CustomColors.solitude.withOpacity(0.7),
       ),
+      padding: EdgeInsets.symmetric(horizontal: 30),
       child: SafeArea(
         minimum: EdgeInsets.symmetric(horizontal: 0, vertical: 16),
         child: Column(

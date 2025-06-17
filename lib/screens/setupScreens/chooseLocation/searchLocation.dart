@@ -73,7 +73,6 @@ class _SearchLocationState extends State<SearchLocation> {
                 color: CustomTheme.lightTheme.colorScheme.background,
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: shadowNeu,
-
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

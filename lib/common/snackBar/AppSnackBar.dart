@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+
 class AppSnackBar {
   Future<void> showSnackBar(context, message, {Function()? onTap}) async {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         dismissDirection: DismissDirection.up,
-        duration:  Duration(minutes: 1) ?? const Duration(milliseconds: 1000),
+        duration: Duration(minutes: 1),
         backgroundColor: Colors.grey,
         margin: EdgeInsets.only(
             bottom: MediaQuery.of(context).size.height - 100,

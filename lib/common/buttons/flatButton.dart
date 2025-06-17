@@ -26,9 +26,9 @@ class CustomFlatButton extends StatelessWidget {
         height: 50,
         child: ElevatedButton(
           style: ButtonStyle(
-            shadowColor: MaterialStateProperty.all<Color>(Colors.transparent),
-            backgroundColor: MaterialStateProperty.all<Color>(color),
-            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            shadowColor: WidgetStateProperty.all<Color>(Colors.transparent),
+            backgroundColor: WidgetStateProperty.all<Color>(color),
+            shape: WidgetStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),
               ),

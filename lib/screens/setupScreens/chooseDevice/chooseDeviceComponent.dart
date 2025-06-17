@@ -1,10 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:masjidhub/common/buttons/devicesButton.dart';
 import 'package:masjidhub/common/icons/app_icons.dart';
 import 'package:masjidhub/common/popup/popup.dart';
 import 'package:masjidhub/common/remoteSetup/remoteConnectPopup.dart';
-import 'package:masjidhub/provider/providerList.dart';
 import 'package:masjidhub/provider/wathc_provider.dart';
 import 'package:masjidhub/screens/setupScreens/chooseDevice/qiblaWatchSyncWithList.dart';
 import 'package:provider/provider.dart';

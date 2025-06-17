@@ -1,18 +1,11 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:tuple/tuple.dart';
 import 'package:masjidhub/provider/audioProvider.dart';
 import 'package:masjidhub/models/ayahModel.dart';
-import 'package:masjidhub/screens/dashboard/quran/quranPage/ayahList/ayahTrailing.dart';
-import 'package:masjidhub/theme/colors.dart';
-import 'package:masjidhub/theme/customTheme.dart';
 import 'package:masjidhub/utils/enums/surahFontSize.dart';
-import 'package:masjidhub/constants/shadows.dart';
 import 'package:masjidhub/utils/quranUtils.dart';
-import 'package:masjidhub/provider/quranProvider.dart';
 import 'package:masjidhub/provider/ayahListProvider.dart';
 import 'package:masjidhub/utils/ayahUtils.dart';
 
@@ -83,18 +76,15 @@ class _AyahListItemState extends State<AyahListItem> {
 
   void shareAyah() async {
     try {
-      Directory appDocDir = await getTemporaryDirectory();
-      String appDocPath = appDocDir.path;
-      String fileName = 'ayah-screenshot';
-      String path = '$appDocPath';
+      await getTemporaryDirectory();
 
-      String socialSharingText = QuranUtils().getSocialShareText(
+      QuranUtils().getSocialShareText(
         ayahNumber: widget.ayah.ayahNumberInSurah,
         surahNumber: widget.surahNumber,
         surahName: widget.surahName,
       );
 
-      String copyClipboardText = QuranUtils().getCopyClipboardTest(
+      QuranUtils().getCopyClipboardTest(
         ayahText: widget.ayah.text,
         ayahTranslation: widget.ayah.translation,
         ayahNumber: widget.ayah.ayahNumberInSurah,

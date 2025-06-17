@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:masjidhub/provider/bleProvider.dart';
-import 'package:masjidhub/provider/quranProvider.dart';
 import 'package:masjidhub/utils/audioUtils.dart';
 import 'package:provider/provider.dart';
 

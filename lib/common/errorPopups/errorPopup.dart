@@ -32,14 +32,12 @@ class ErrorPopup extends StatelessWidget {
 
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
-        final _containerWidth = constraints.maxWidth * 0.80;
         final _containerTopPadding = constraints.maxHeight * 0.20;
         return Column(
           mainAxisSize: MainAxisSize.max,
           children: [
             Container(
               margin: EdgeInsets.only(top: _containerTopPadding),
-              width: _containerWidth,
               decoration: BoxDecoration(
                 color: CustomTheme.lightTheme.colorScheme.background,
                 borderRadius: BorderRadius.circular(20),

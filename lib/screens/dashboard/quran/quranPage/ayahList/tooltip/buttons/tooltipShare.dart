@@ -12,15 +12,7 @@ class TooltipShare extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     void shareAyah() async {
-      QuranProvider quranProvider =
-          Provider.of<QuranProvider>(context, listen: false);
-      String socialSharingText = await quranProvider.getSocialSharingText();
-      String imagePath = await quranProvider.getSocialSharingImagePath();
-
-      // await SocialShare.shareOptions(
-      //   socialSharingText,
-      //   imagePath: imagePath,
-      // );
+      Provider.of<QuranProvider>(context, listen: false);
     }
 
     return Consumer<QuranProvider>(

@@ -32,12 +32,6 @@ class _DevicesButtonState extends State<DevicesButton> {
   // bool _buttonSelected = false;
   List<BoxShadow> _buttonShadow = shadowNeu;
 
-  Future<void> _setShadow(shadow) async {
-    setState(() {
-      _buttonShadow = shadow;
-    });
-  }
-
   Future<void> _onButtonTap() async {
     widget.onClick();
   }

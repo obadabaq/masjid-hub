@@ -20,7 +20,7 @@ import 'package:masjidhub/constants/coordinates.dart';
 import '../helper_qibla.dart';
 
 class LocationProvider extends ChangeNotifier {
-  LocationProvider._privateConstructor({this.setupProvider});
+  LocationProvider._privateConstructor();
 
   final String apiKey = LocationUtils().gMapsKey;
 
@@ -248,7 +248,6 @@ class LocationProvider extends ChangeNotifier {
       log(position.toString());
       final double lat = position.latitude;
       final double lon = position.longitude;
-      Timer? _timer2;
       final userCords = Cords(lat: lat, lon: lon);
       final address = await getPlaceFromCoordinates(lat, lon);
       setupProvider.setUserCords(userCords);

@@ -1,19 +1,12 @@
-import 'dart:developer';
-import 'dart:ffi';
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:masjidhub/frimware_update.dart';
-import 'package:masjidhub/provider/locationProvider.dart';
 import 'package:masjidhub/theme/customTheme.dart';
 import 'package:masjidhub/utils/sharedPrefs.dart';
 import 'package:provider/provider.dart';
 import '../../../common/listTilesList/ListTileItem.dart';
-import '../../../provider/prayerTimingsProvider.dart';
 import '../../../provider/wathc_provider.dart';
-import '../../../utils/locationUtils.dart';
-import '../../../utils/tasbeeh_helper.dart';
 
 const MethodChannel _dfuChannel = MethodChannel('dfu_channel');
 

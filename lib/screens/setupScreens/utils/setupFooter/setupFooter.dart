@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-import 'package:masjidhub/common/buttons/flatButton.dart';
 import 'package:masjidhub/common/buttons/primaryButton.dart';
 import 'package:masjidhub/common/snackBar/AppSnackBar.dart';
 import 'package:masjidhub/provider/setupProvider.dart';
@@ -38,8 +37,6 @@ class SetupFooter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isFirstPage = currentPage == 0;
-
     Future<void> _completeSetup() async {
       var setupProvider = Provider.of<SetupProvider>(context, listen: false);
       try {

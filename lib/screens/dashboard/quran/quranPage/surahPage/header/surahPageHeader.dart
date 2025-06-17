@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:audioplayers/audioplayers.dart';
 
 import 'package:masjidhub/common/quran/surah/chapterIconWithNumber.dart';
 import 'package:masjidhub/constants/quran.dart';
@@ -37,7 +36,6 @@ class SurahPageHeader extends StatelessWidget {
     }
 
     final Color enabledToggle = CustomColors.blackPearl;
-    final Color disabledToggle = CustomColors.blackPearl.withOpacity(0.2);
 
     return Container(
       width: MediaQuery.of(context).size.width,
@@ -50,8 +48,7 @@ class SurahPageHeader extends StatelessWidget {
           final bool isSurahToggleDisabled =
               false; // allow toggle while playing audio
 
-          final Color toggleColor =
-              isSurahToggleDisabled ? disabledToggle : enabledToggle;
+          final Color toggleColor = enabledToggle;
 
           return Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,

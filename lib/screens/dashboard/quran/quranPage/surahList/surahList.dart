@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
-import 'package:masjidhub/common/scrollable_main_screen.dart';
 import 'package:masjidhub/provider/audioProvider.dart';
-import 'package:masjidhub/provider/bottom_bar_provider.dart';
 import 'package:masjidhub/utils/audioUtils.dart';
 import 'package:provider/provider.dart';
 import 'package:tuple/tuple.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
 import 'package:masjidhub/models/quran/surahModel.dart';
-import 'package:masjidhub/provider/quranProvider.dart';
 import 'package:masjidhub/screens/dashboard/quran/quranPage/surahList/surahListItem/surahListItem.dart';
 
 class SurahList extends StatefulWidget {
