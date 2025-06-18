@@ -55,20 +55,16 @@ class SubSettingLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<LocationProvider>(
       builder: (context, location, _) {
-        return AbsorbPointer(
-          absorbing: Provider.of<LocationProvider>(context, listen: false)
-              .isLoadingLocation,
-          child: Scaffold(
-            appBar: PreferredSize(
-              preferredSize: Size.fromHeight(80),
-              child: SideAppBar(title: title, contxt: contxt),
-            ),
-            body: Container(
-              padding: EdgeInsets.symmetric(vertical: 20),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [switchLocationWidget()],
-                ),
+        return Scaffold(
+          appBar: PreferredSize(
+            preferredSize: Size.fromHeight(80),
+            child: SideAppBar(title: title, contxt: contxt),
+          ),
+          body: Container(
+            padding: EdgeInsets.symmetric(vertical: 20),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [switchLocationWidget()],
               ),
             ),
           ),

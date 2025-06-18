@@ -122,17 +122,21 @@ class CustomAppBar extends StatelessWidget {
                             );
                           }
                         },
-                        child: AutoSizeText(
-                          AppBarUtils().getTitle(state),
-                          style: TextStyle(
-                            fontSize: AppBarUtils().titleFontSize(state),
-                            height: 1.3,
-                            color: CustomColors.blackPearl,
-                          ),
-                          minFontSize: 16,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: AppBarUtils().titleAlignment(state),
+                        child: Consumer<LocationProvider>(
+                          builder: (ctx, locationProvider, _) {
+                            return AutoSizeText(
+                              AppBarUtils().getTitle(state),
+                              style: TextStyle(
+                                fontSize: AppBarUtils().titleFontSize(state),
+                                height: 1.3,
+                                color: CustomColors.blackPearl,
+                              ),
+                              minFontSize: 16,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              textAlign: AppBarUtils().titleAlignment(state),
+                            );
+                          },
                         ),
                       ),
                     ),

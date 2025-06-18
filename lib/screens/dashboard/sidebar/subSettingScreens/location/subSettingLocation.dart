@@ -58,17 +58,44 @@ class _SubSettingLocationState extends State<SubSettingLocation> {
                 ],
               ),
             ),
-            if (locationProvider.isLoadingLocation)
-              Container(
-                width: 100.w,
-                height: 100.h,
-                child: Center(
-                  child: CircularProgressIndicator(),
-                ),
-              ),
+            // if (locationProvider.isLoadingLocation) _buildLoadingLocation(),
           ],
         );
       },
+    );
+  }
+
+  Widget _buildLoadingLocation() {
+    return SizedBox(
+      width: 100.w,
+      height: 80.h,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            padding: EdgeInsets.all(10.w),
+            decoration: BoxDecoration(color: Colors.white, boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.5),
+                offset: Offset(0, 0),
+                blurRadius: 10.0,
+                spreadRadius: 2.0,
+              )
+            ]),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CircularProgressIndicator(),
+                SizedBox(
+                  height: 5,
+                ),
+                Text("loading location"),
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 }

@@ -228,6 +228,7 @@ class LocationProvider extends ChangeNotifier {
         address = address.split(',')[0];
       }
 
+      SharedPrefs().setLocation(lat, lng, address, addressMobile);
       return [address, addressMobile];
     } catch (e) {
       return ["Error: $e"];
@@ -236,7 +237,7 @@ class LocationProvider extends ChangeNotifier {
 
   Future<void> locateUser() async {
     try {
-      isLoadingLocation = true;
+      locationLoading = true;
       notifyListeners();
       // final locationCords = await checkLocationPermissionAndLocate();
       await Geolocator.requestPermission();
@@ -245,9 +246,10 @@ class LocationProvider extends ChangeNotifier {
       final double lat = position.latitude;
       final double lon = position.longitude;
       final userCords = Cords(lat: lat, lon: lon);
-      final address = await getPlaceFromCoordinates(lat, lon);
+      getPlaceFromCoordinates(lat, lon);
+      locationLoading = false;
+      notifyListeners();
       setupProvider.setUserCords(userCords);
-      await SharedPrefs().setLocation(lat, lon, address[0], address[1]);
       PrayerUtils().getAltitude();
       getBearingFromMecca(userCords);
       final watchProvider = WatchProvider();
@@ -283,7 +285,6 @@ class LocationProvider extends ChangeNotifier {
           log(e.toString());
         }
       }
-      isLoadingLocation = false;
     } catch (e) {
       print(e.toString());
       setErrorText(tr('error location'));

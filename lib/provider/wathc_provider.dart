@@ -705,30 +705,11 @@ class WatchProvider with ChangeNotifier {
       _setupConnectionMonitoring(device);
       _enableNotifications();
       updateDateTime();
-      _getNext300DaysPrayerTimes();
 
       notifyListeners();
     } catch (e) {
       _isConnecting = false;
       _updateError("Connection failed: ${e.toString()}");
-    }
-  }
-
-  _getNext300DaysPrayerTimes() async {
-    PrayerTimingsProvider prayerTimingsProvider = PrayerTimingsProvider();
-    try {
-      List<Map<String, dynamic>> next30DaysPrayerTimes =
-          await prayerTimingsProvider.getNext30DaysPrayerTimes();
-      next30DaysPrayerTimes.forEach((element) {
-        DateTime date = element['date'];
-        List<DateTime> prayers =
-            (element['prayers'] as List).map((p) => p as DateTime).toList();
-        print('Date: $date, Prayers: $prayers');
-      });
-
-      updatePrayerTimes(next30DaysPrayerTimes);
-    } catch (e) {
-      print('Error fetching or sending prayer times: $e');
     }
   }
 
