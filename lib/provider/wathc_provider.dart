@@ -11,7 +11,6 @@ import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:intl/intl.dart';
 import 'package:masjidhub/constants/errors.dart';
 import 'package:masjidhub/main.dart';
-import 'package:masjidhub/provider/prayerTimingsProvider.dart';
 import 'package:masjidhub/screens/dashboard/sidebar/sidebarBody.dart';
 import 'package:masjidhub/utils/otaUtils.dart';
 import 'package:masjidhub/utils/sharedPrefs.dart';

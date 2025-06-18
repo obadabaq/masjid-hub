@@ -5,7 +5,6 @@ import 'package:masjidhub/screens/setupScreens/utils/setup_pageview_template.dar
 import 'package:provider/provider.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:masjidhub/provider/locationProvider.dart';
-import 'package:masjidhub/provider/setupProvider.dart';
 import 'package:masjidhub/common/buttons/neuButton.dart';
 import 'package:masjidhub/common/icons/app_icons.dart';
 import 'package:masjidhub/common/setup/setupHeaderImage.dart';
@@ -142,9 +141,6 @@ class _ChooseLocationState extends State<ChooseLocation> {
                         ],
                       ),
                     ),
-                    // locationProvider.isLoadingLocation
-                    //     ? _buildLoadingLocation()
-                    //     : Container(),
                   ],
                 );
               },
@@ -158,40 +154,6 @@ class _ChooseLocationState extends State<ChooseLocation> {
           ),
         );
       },
-    );
-  }
-
-  Widget _buildLoadingLocation() {
-    return SizedBox(
-      width: 100.w,
-      height: 100.h,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            padding: EdgeInsets.all(10.w),
-            decoration: BoxDecoration(color: Colors.white, boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.5),
-                offset: Offset(0, 0),
-                blurRadius: 10.0,
-                spreadRadius: 2.0,
-              )
-            ]),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CircularProgressIndicator(),
-                SizedBox(
-                  height: 5,
-                ),
-                Text("loading location"),
-              ],
-            ),
-          )
-        ],
-      ),
     );
   }
 

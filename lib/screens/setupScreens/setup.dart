@@ -7,6 +7,9 @@ import 'package:masjidhub/screens/setupScreens/chooseLocation/chooseLocation.dar
 import 'package:masjidhub/screens/setupScreens/choosePrayerTime/choosePrayerTime.dart';
 import 'package:masjidhub/screens/setupScreens/chooseTesbih/chooseTesbih.dart';
 import 'package:masjidhub/screens/setupScreens/utils/custom_pageview_physics.dart';
+import 'package:provider/provider.dart';
+
+import '../../provider/setupProvider.dart';
 
 class Setup extends StatefulWidget {
   Setup({Key? key}) : super(key: key);
@@ -16,29 +19,22 @@ class Setup extends StatefulWidget {
 }
 
 class _SetupState extends State<Setup> with AutomaticKeepAliveClientMixin {
-  final PageController setupController =
-      PageController(initialPage: 0, keepPage: true);
-
-  @override
-  void dispose() {
-    setupController.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return PageView(
-      physics: CustomScrollPhysics(),
-      controller: setupController,
-      children: [
-        ChooseLocation(pageController: setupController),
-        ChooseAdhan(pageController: setupController),
-        ChooseCountdown(pageController: setupController),
-        ChoosePrayerTime(pageController: setupController),
-        ChooseTesbih(pageController: setupController),
-        ChooseDevice(pageController: setupController)
-      ],
+    return Consumer<SetupProvider>(
+      builder: (ctx, setupProvider, _) => PageView(
+        physics: CustomScrollPhysics(),
+        controller: setupProvider.setupController,
+        children: [
+          ChooseLocation(pageController: setupProvider.setupController),
+          ChooseAdhan(pageController: setupProvider.setupController),
+          ChooseCountdown(pageController: setupProvider.setupController),
+          ChoosePrayerTime(pageController: setupProvider.setupController),
+          ChooseTesbih(pageController: setupProvider.setupController),
+          ChooseDevice(pageController: setupProvider.setupController)
+        ],
+      ),
     );
   }
 

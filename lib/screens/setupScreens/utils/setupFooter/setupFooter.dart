@@ -31,7 +31,7 @@ class SetupFooter extends StatelessWidget {
   }) : super(key: key);
 
   void _nextPage() {
-    controller.animateToPage(currentPage + 1,
+    controller.animateToPage((currentPage + 1).toInt(),
         duration: Duration(milliseconds: 500), curve: Curves.ease);
   }
 

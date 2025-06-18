@@ -7,6 +7,7 @@ import 'package:masjidhub/utils/sharedPrefs.dart';
 class SetupProvider extends ChangeNotifier {
   bool _isSetupCompleted = SharedPrefs().isSetupCompleted;
   Cords? userCords;
+  PageController setupController = PageController(initialPage: 0);
 
   // Shared Preferenses
   bool get isSetupCompleted => _isSetupCompleted;
@@ -16,9 +17,6 @@ class SetupProvider extends ChangeNotifier {
     SharedPrefs().setIsSetupCompleted(isSetupCompleted);
     notifyListeners();
   }
-
-  // Location
-  bool get isLocationSetupComplete => userCords != null;
 
   Cords get getUserCords => userCords ?? kaabaCords;
 
