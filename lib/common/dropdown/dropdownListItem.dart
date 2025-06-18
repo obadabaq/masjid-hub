@@ -6,12 +6,14 @@ class DropdownListItem extends StatelessWidget {
   final String id;
   final String title;
   final Function onPressed;
+  final EdgeInsets padding;
 
   const DropdownListItem({
     Key? key,
     required this.id,
     required this.title,
     required this.onPressed,
+    this.padding = const EdgeInsets.only(top: 12, bottom: 12),
   }) : super(key: key);
 
   @override
@@ -20,7 +22,7 @@ class DropdownListItem extends StatelessWidget {
       behavior: HitTestBehavior.translucent,
       onTap: () => onPressed(id, title),
       child: Container(
-        padding: EdgeInsets.only(top: 12, bottom: 12),
+        padding: padding,
         child: Text(
           title,
           style: TextStyle(

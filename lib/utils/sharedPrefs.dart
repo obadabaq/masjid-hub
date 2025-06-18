@@ -16,6 +16,8 @@ import 'package:masjidhub/models/tesbih/tesbihDataModel.dart';
 import 'package:masjidhub/utils/enums/tesbihAnalyticsEnums.dart';
 import 'package:masjidhub/utils/tesbihUtils.dart';
 
+import '../models/placesModel.dart';
+
 class SharedPrefs {
   static SharedPreferences? _sharedPrefs;
 
@@ -58,6 +60,7 @@ class SharedPrefs {
     keyRemoteOnRecentSurah,
     keyHasAdpConnectBefore,
     keyRemoteVol,
+    keyLastSelectedLocation,
   ];
 
   Future<void> init() async {
@@ -309,6 +312,16 @@ class SharedPrefs {
 
   bool isNotificationLocationChanged() {
     return getNotificationLastLocation != getAddress;
+  }
+
+  Future<void> setLastSelectedLocation(PlacesModel model) async {
+    await _sharedPrefs?.setString(keyLastSelectedLocation, model.toString());
+  }
+
+  Future<PlacesModel?> getLastSelectedLocation() async {
+    String? value = _sharedPrefs?.getString(keyLastSelectedLocation);
+    if (value == null) return null;
+    return PlacesModel.fromString(value);
   }
 
   // Bookmarks //

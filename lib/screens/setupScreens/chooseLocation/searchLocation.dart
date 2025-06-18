@@ -10,6 +10,10 @@ import 'package:masjidhub/provider/locationProvider.dart';
 import 'package:masjidhub/theme/customTheme.dart';
 import 'package:provider/provider.dart';
 
+import '../../../common/dropdown/dropdownListItem.dart';
+import '../../../models/placesModel.dart';
+import '../../../utils/sharedPrefs.dart';
+
 class SearchLocation extends StatefulWidget {
   final TextEditingController controller;
   final String hintText;
@@ -26,7 +30,7 @@ class SearchLocation extends StatefulWidget {
 
 class _SearchLocationState extends State<SearchLocation> {
   Timer? _debounce;
-
+  PlacesModel? lastSelectedLocation;
   void _onSearchChanged() {
     if (_debounce?.isActive ?? false) _debounce?.cancel();
     _debounce = Timer(const Duration(milliseconds: 500), () async {
@@ -40,13 +44,29 @@ class _SearchLocationState extends State<SearchLocation> {
     _debounce?.cancel();
     var locationProvider =
         Provider.of<LocationProvider>(context, listen: false);
+    await setLastSelectedLocation(id, title);
     await locationProvider.getPlacesCords(id);
     locationProvider.resetPlaces();
+    setState(() {
+      lastSelectedLocation = null;
+    });
+  }
+
+  Future<void> setLastSelectedLocation(String id, String title) async {
+    SharedPrefs().setLastSelectedLocation(PlacesModel(id: id, title: title));
+  }
+
+  void getLastSelectedLocation() async {
+    PlacesModel? place = await SharedPrefs().getLastSelectedLocation();
+    setState(() {
+      this.lastSelectedLocation = place;
+    });
   }
 
   void initState() {
     super.initState();
     widget.controller.addListener(_onSearchChanged);
+    getLastSelectedLocation();
   }
 
   @override
@@ -88,13 +108,21 @@ class _SearchLocationState extends State<SearchLocation> {
                     builder: (ctx, location, _) => Visibility(
                       visible: location.places.isNotEmpty,
                       child: Dropdown(
-                          width: _buttonWidth,
-                          list: location.places,
-                          onItemPressed: _onLocatioSelected),
+                        width: _buttonWidth,
+                        list: location.places,
+                        onItemPressed: _onLocatioSelected,
+                      ),
                     ),
                   ),
+                  if (lastSelectedLocation != null)
+                    DropdownListItem(
+                      title: lastSelectedLocation!.title,
+                      id: lastSelectedLocation!.id,
+                      padding: const EdgeInsets.only(top: 20),
+                      onPressed: _onLocatioSelected,
+                    ),
                   Padding(
-                    padding: EdgeInsets.only(top: 20),
+                    padding: EdgeInsets.only(top: 10),
                     child: CustomFlatButton(
                       padding: EdgeInsets.all(15),
                       onPressed: () => Navigator.pop(context),

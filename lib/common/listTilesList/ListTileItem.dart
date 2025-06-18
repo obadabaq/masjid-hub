@@ -76,7 +76,7 @@ class _CustomSwitchState extends State<CustomSwitch> {
             InnerShadow(
               shadows: [
                 Shadow(
-                  color: Colors.black.withOpacity(0.5),
+                  color: Colors.black.withValues(alpha: 0.5),
                   blurRadius: 5,
                   offset: Offset(0, 0),
                 )

@@ -45,3 +45,4 @@ const String keyRemoteOnRecentSurah = "remoteOnRecentSurah";
 const String keyRemoteVol = "remoteVol";
 const String keyHasAdpConnectBefore = "hasAdpConnectBefore";
 const String keyQiblaWatchSyncStatus = "qiblaWatchSync_";
+const String keyLastSelectedLocation = "lastSelectedLocation_";
