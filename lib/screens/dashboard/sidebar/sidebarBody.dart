@@ -12,6 +12,7 @@ import 'package:masjidhub/provider/wathc_provider.dart';
 import 'package:masjidhub/screens/dashboard/sidebar/settingsListBuilder.dart';
 import 'package:masjidhub/theme/colors.dart';
 import 'package:masjidhub/utils/otaUtils.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
@@ -29,6 +30,20 @@ class Sidebarbody extends StatefulWidget {
 
 class _SidebarbodyState extends State<Sidebarbody> {
   FilePickerResult? result;
+  String version = "";
+  String buildNumber = "";
+
+  @override
+  void initState() {
+    Future.microtask(() async {
+      PackageInfo packageInfo = await PackageInfo.fromPlatform();
+      setState(() {
+        version = packageInfo.version;
+        buildNumber = packageInfo.buildNumber;
+      });
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -100,6 +115,7 @@ class _SidebarbodyState extends State<Sidebarbody> {
                   )
                 : Container(),
             // SettingsListBuidler(list: remoteSettings),
+            Text("version: $version ($buildNumber)"),
             SizedBox(height: 50),
           ],
         ),
