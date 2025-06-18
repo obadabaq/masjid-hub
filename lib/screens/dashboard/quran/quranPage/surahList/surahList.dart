@@ -68,11 +68,13 @@ class _SurahListState extends State<SurahList> {
           ? widget.list.length + 1
           : widget.list.length,
       controller: widget.scrollController,
-      itemBuilder: (BuildContext context, int i) {
-        final SurahModel surah = widget.list[i];
-        if (widget.topWidget != null && i == 0) {
+      itemBuilder: (BuildContext context, int index) {
+        if (widget.topWidget != null && index == 0) {
           return widget.topWidget;
         }
+        int i = widget.topWidget != null ? index + -1 : index;
+
+        final SurahModel surah = widget.list[i];
         return Selector<AudioProvider, Tuple2<int, int>>(
           selector: (_, select) => Tuple2(
             select.audioState.surahId,
