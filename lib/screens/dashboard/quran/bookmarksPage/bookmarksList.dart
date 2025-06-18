@@ -39,16 +39,12 @@ class BookmarksList extends StatelessWidget {
 
             return Padding(
               padding: EdgeInsets.only(bottom: 10, top: 50),
-              child: Column(
-                children: [
-                  SurahList(
-                    list: surahList,
-                    quranRecitorId: quran.quranReciter,
-                    surahCompleted: quran.surahCompleted,
-                    audioPlayer: quran.audioPlayer,
-                    hidePlayButton: true,
-                  )
-                ],
+              child: SurahList(
+                list: surahList,
+                quranRecitorId: quran.quranReciter,
+                surahCompleted: quran.surahCompleted,
+                audioPlayer: quran.audioPlayer,
+                hidePlayButton: true,
               ),
             );
           }
