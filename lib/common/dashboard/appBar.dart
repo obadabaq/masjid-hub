@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:masjidhub/provider/bleProvider.dart';
 import 'package:provider/provider.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-
 import 'package:masjidhub/utils/appBarUtils.dart';
 import 'package:masjidhub/common/snackBar/AppSnackBar.dart';
 import 'package:masjidhub/utils/enums/appBarEnums.dart';
@@ -14,9 +13,8 @@ import 'package:masjidhub/provider/locationProvider.dart';
 import 'package:masjidhub/provider/quranProvider.dart';
 import 'package:masjidhub/theme/colors.dart';
 import 'package:masjidhub/provider/tesbihProvider.dart';
-
-import '../../constants/settingsList/locationSettingsListData.dart';
-import '../../screens/dashboard/sidebar/subSettingScreens/subSettingLayout.dart';
+import 'package:masjidhub/constants/settingsList/locationSettingsListData.dart';
+import 'package:masjidhub/screens/dashboard/sidebar/subSettingScreens/subSettingLayout.dart';
 
 class CustomAppBar extends StatelessWidget {
   final Function openDrawer;
@@ -31,8 +29,11 @@ class CustomAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // When user clicks on location icon on prayer times dashboard
-    void fetchAddress() => Provider.of<LocationProvider>(context, listen: false)
-        .fetchAddress(onError: (err) => _showOfflinePopup(context, err));
+    void fetchAddress() {
+      Provider.of<LocationProvider>(context, listen: false).setAutomatic(true);
+      Provider.of<LocationProvider>(context, listen: false)
+          .fetchAddress(onError: (err) => _showOfflinePopup(context, err));
+    }
 
     void onQuranSearchToggle() =>
         Provider.of<QuranProvider>(context, listen: false).toggleSearchActive();

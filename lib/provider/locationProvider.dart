@@ -49,13 +49,16 @@ class LocationProvider extends ChangeNotifier {
   bool isAutomatic = false;
 
   bool get getAutomatic {
+    print("wtf22 ${SharedPrefs().getAutomatic}");
     isAutomatic = SharedPrefs().getAutomatic;
+    print("wtf2 $isAutomatic");
     return isAutomatic;
   }
 
   void setAutomatic(bool value) {
     SharedPrefs().setAutomatic(value);
     isAutomatic = value;
+    print("wtf ${SharedPrefs().getAutomatic}");
     notifyListeners();
   }
 
@@ -418,7 +421,7 @@ class LocationProvider extends ChangeNotifier {
     bool isOnline = await InternetConnectionChecker().hasConnection;
     if (!isOnline) onError(AppError.noInternet);
     try {
-      setAutomatic(false);
+      setAutomatic(true);
       await saveAddress();
     } catch (e) {
       setErrorText(e.toString());

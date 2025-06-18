@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:masjidhub/utils/enums/deviceScale.dart';
 import 'package:masjidhub/utils/layoutUtils.dart';
 import 'adhanTime/adhanTimeList.dart';

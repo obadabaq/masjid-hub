@@ -49,7 +49,7 @@ class _SubSettingLocationState extends State<SubSettingLocation> {
                     onValueChanged: (value) => onValueChanged(value),
                   ),
                   Visibility(
-                    visible: locationProvider.isAutomatic,
+                    visible: !locationProvider.isAutomatic,
                     child: ChooseLocationField(
                       buttonWidth: 350,
                       controller: controller,
