@@ -89,36 +89,3 @@ class _ChooseDeviceComponentState extends State<ChooseDeviceComponent> {
     }
   }
 }
-
-class WatchComponent extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Consumer<WatchProvider>(
-      builder: (context, watchProvider, child) {
-        return Column(
-          children: [
-            if (watchProvider.isScanning) CircularProgressIndicator(),
-            if (watchProvider.isConnected) ...[
-              Text('Already connected to W570'),
-              ElevatedButton(
-                onPressed: () {
-                  watchProvider.updateDateTime();
-                },
-                child: Text('Update Date & Time'),
-              ),
-              ElevatedButton(
-                onPressed: () async {},
-                child: Text('Update Prayer Times'),
-              ),
-            ],
-            if (watchProvider.errorMessage != null)
-              Text(
-                watchProvider.errorMessage!,
-                style: TextStyle(color: Colors.red),
-              ),
-          ],
-        );
-      },
-    );
-  }
-}

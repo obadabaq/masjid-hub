@@ -49,16 +49,13 @@ class LocationProvider extends ChangeNotifier {
   bool isAutomatic = false;
 
   bool get getAutomatic {
-    print("wtf22 ${SharedPrefs().getAutomatic}");
     isAutomatic = SharedPrefs().getAutomatic;
-    print("wtf2 $isAutomatic");
     return isAutomatic;
   }
 
   void setAutomatic(bool value) {
     SharedPrefs().setAutomatic(value);
     isAutomatic = value;
-    print("wtf ${SharedPrefs().getAutomatic}");
     notifyListeners();
   }
 

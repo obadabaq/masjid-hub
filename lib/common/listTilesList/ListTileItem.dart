@@ -1,5 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_inner_shadow/flutter_inner_shadow.dart';
+import 'package:sizer/sizer.dart';
 
 class ListTileItem extends StatelessWidget {
   const ListTileItem({
@@ -68,39 +69,38 @@ class _CustomSwitchState extends State<CustomSwitch> {
       },
       child: AnimatedContainer(
         duration: Duration(milliseconds: 300),
-        width: 60.0,
-        height: 34.0,
-        padding: EdgeInsets.symmetric(horizontal: 4.0),
-        decoration: BoxDecoration(
-          color: widget.value ? Color(0xFF00ACC1) : Colors.white,
-          borderRadius: BorderRadius.circular(20.0),
-          boxShadow: [
-            BoxShadow(
-              color: widget.value
-                  ? Colors.transparent
-                  : Color(0xFF00ACC1).withValues(alpha: 0.5),
-              blurRadius: 10.0,
-              spreadRadius: 2.0,
-              offset: Offset(0, 4),
-            ),
-          ],
-        ),
         child: Stack(
           alignment:
               widget.value ? Alignment.centerRight : Alignment.centerLeft,
           children: [
+            InnerShadow(
+              shadows: [
+                Shadow(
+                  color: Colors.black.withOpacity(0.5),
+                  blurRadius: 5,
+                  offset: Offset(0, 0),
+                )
+              ],
+              child: Container(
+                width: 12.w,
+                height: 2.5.h,
+                padding: EdgeInsets.symmetric(horizontal: 4.0),
+                decoration: BoxDecoration(
+                  color: widget.value ? Color(0xFF00ACC1) : Colors.white,
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+              ),
+            ),
             AnimatedContainer(
               duration: Duration(milliseconds: 300),
-              width: 28.0,
-              height: 28.0,
+              width: 6.w,
+              height: 6.w,
               decoration: BoxDecoration(
                 color: Colors.white,
                 shape: BoxShape.circle,
                 boxShadow: [
                   BoxShadow(
-                    color: widget.value
-                        ? Colors.transparent
-                        : Color(0xFF00ACC1).withValues(alpha: 0.3),
+                    color: Color(0xFF00ACC1).withValues(alpha: 0.3),
                     blurRadius: 10.0,
                     spreadRadius: 2.0,
                   ),

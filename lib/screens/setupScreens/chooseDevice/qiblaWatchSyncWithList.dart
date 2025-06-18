@@ -1,5 +1,4 @@
 import 'package:android_intent_plus/android_intent.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:masjidhub/theme/customTheme.dart';
@@ -269,8 +268,6 @@ class _QiblaWatchSyncAppsState extends State<QiblaWatchSyncApps> {
     );
   }
 
-  // Function to open the dialog
-  // Function to open the dialog with state management using StatefulBuilder
   void showAudioPlayerDialog(WatchProvider watchProvider) {
     Future.delayed(Duration(seconds: 7), () {
       watchProvider.sendCommand('1A01C205');
