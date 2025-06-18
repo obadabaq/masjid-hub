@@ -38,9 +38,7 @@ class LocationProvider extends ChangeNotifier {
   String? _address;
 
   String? get getAddress {
-    if (_address == null) {
-      _address = SharedPrefs().getAddress;
-    }
+    _address = SharedPrefs().getAddress;
     return _address;
   }
 

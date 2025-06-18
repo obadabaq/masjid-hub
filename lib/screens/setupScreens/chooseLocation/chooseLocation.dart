@@ -86,9 +86,7 @@ class _ChooseLocationState extends State<ChooseLocation> {
                   padding: EdgeInsets.only(top: 3.h),
                   child: Consumer<LocationProvider>(
                     builder: (ctx, locationProvider, _) => NeuButton(
-                      onClick: !locationProvider.getAutomatic
-                          ? () => _locateUser()
-                          : null,
+                      onClick: () => _locateUser(),
                       height: 60,
                       width: _buttonWidth,
                       child: Row(
@@ -147,14 +145,18 @@ class _ChooseLocationState extends State<ChooseLocation> {
   }
 
   Future<void> _locateUser() async {
-    locationProvider = Provider.of<LocationProvider>(context, listen: false);
-    locationProvider.setAutomatic(true);
-    try {
-      await locationProvider.locateUser();
-      _controller.text =
-          locationProvider.getAddress ?? tr('could not fetch location');
-    } catch (e) {
-      AppSnackBar().showSnackBar(context, e);
+    if (!locationProvider.getAutomatic) {
+      locationProvider = Provider.of<LocationProvider>(context, listen: false);
+      locationProvider.setAutomatic(true);
+      try {
+        await locationProvider.locateUser();
+        _controller.text =
+            locationProvider.getAddress ?? tr('could not fetch location');
+      } catch (e) {
+        AppSnackBar().showSnackBar(context, e);
+      }
+    } else {
+      locationProvider.setAutomatic(false);
     }
   }
 }

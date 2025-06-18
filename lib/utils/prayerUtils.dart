@@ -125,7 +125,7 @@ class PrayerUtils {
   Future<void> getAltitude() async {
     Location location = new Location();
     final LocationData _locationData =
-        await location.getLocation().timeout(Duration(seconds: 3));
+        await location.getLocation();
     final double _altitude = _locationData.altitude ?? 0;
     SharedPrefs().setAltitude(_altitude);
   }
