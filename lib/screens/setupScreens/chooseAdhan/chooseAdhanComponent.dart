@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
-
 import 'package:masjidhub/common/audio/audioListItem.dart';
 import 'package:masjidhub/common/buttons/adhanButtons.dart';
 import 'package:masjidhub/common/icons/app_icons.dart';
@@ -27,55 +26,6 @@ class _ChooseAdhanComponentState extends State<ChooseAdhanComponent> {
 
   static AudioPlayer audioPlayer = AudioPlayer();
   static AudioCache audioCache = AudioCache();
-
-  Future<void> _onAdhanButtonClick(id) async {
-    await Provider.of<PrayerTimingsProvider>(context, listen: false)
-        .setAlarmForAdhan(id);
-    setState(() {});
-  }
-
-  Future<void> _setAzanId(id) async {
-    setState(() {
-      if (selectedAzanId == id) return selectedAzanId = null;
-      selectedAzanId = id;
-    });
-    await SharedPrefs().setSelectedAdhanId(selectedAzanId);
-    await Provider.of<PrayerTimingsProvider>(context, listen: false)
-        .updateNotification(notificationChannelChange: true);
-  }
-
-  Future<void> _setAzanAudio(id) async {
-    if (selectedAzanAudioId == id) {
-      audioPlayer.pause();
-    } else {
-      final String audioUrl = PrayerUtils().adhanRecitorIdToUrl(id);
-      audioCache.load(audioUrl);
-      audioPlayer.play(AssetSource(audioUrl));
-    }
-    setState(() {
-      if (selectedAzanAudioId == id) return selectedAzanAudioId = null;
-      selectedAzanAudioId = id;
-    });
-  }
-
-  _onAzanItemPressed(int id) async {
-    _setAzanId(id);
-  }
-
-  @override
-  void dispose() {
-    audioPlayer.pause();
-    super.dispose();
-  }
-
-  Future<List<AdhanTimeModel>> _fetchPrayerTimes() async {
-    var prayerTimesProvider =
-        Provider.of<PrayerTimingsProvider>(context, listen: false);
-    List<AdhanTimeModel> times = await SharedPrefs().getPrayerTimesList() ??
-        await prayerTimesProvider.getPrayerTimes();
-
-    return times;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -183,5 +133,54 @@ class _ChooseAdhanComponentState extends State<ChooseAdhanComponent> {
         );
       },
     );
+  }
+
+  @override
+  void dispose() {
+    audioPlayer.pause();
+    super.dispose();
+  }
+
+  Future<void> _onAdhanButtonClick(id) async {
+    await Provider.of<PrayerTimingsProvider>(context, listen: false)
+        .setAlarmForAdhan(id);
+    setState(() {});
+  }
+
+  Future<void> _setAzanId(id) async {
+    setState(() {
+      if (selectedAzanId == id) return selectedAzanId = null;
+      selectedAzanId = id;
+    });
+    await SharedPrefs().setSelectedAdhanId(selectedAzanId);
+    await Provider.of<PrayerTimingsProvider>(context, listen: false)
+        .updateNotification(notificationChannelChange: true);
+  }
+
+  Future<void> _setAzanAudio(id) async {
+    if (selectedAzanAudioId == id) {
+      audioPlayer.pause();
+    } else {
+      final String audioUrl = PrayerUtils().adhanRecitorIdToUrl(id);
+      audioCache.load(audioUrl);
+      audioPlayer.play(AssetSource(audioUrl));
+    }
+    setState(() {
+      if (selectedAzanAudioId == id) return selectedAzanAudioId = null;
+      selectedAzanAudioId = id;
+    });
+  }
+
+  _onAzanItemPressed(int id) async {
+    _setAzanId(id);
+  }
+
+  Future<List<AdhanTimeModel>> _fetchPrayerTimes() async {
+    var prayerTimesProvider =
+        Provider.of<PrayerTimingsProvider>(context, listen: false);
+    List<AdhanTimeModel> times = await SharedPrefs().getPrayerTimesList() ??
+        await prayerTimesProvider.getPrayerTimes();
+
+    return times;
   }
 }

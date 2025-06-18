@@ -4,7 +4,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:masjidhub/screens/setupScreens/utils/setup_pageview_template.dart';
 import 'package:provider/provider.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-
 import 'package:masjidhub/provider/locationProvider.dart';
 import 'package:masjidhub/provider/setupProvider.dart';
 import 'package:masjidhub/common/buttons/neuButton.dart';
@@ -31,22 +30,17 @@ class ChooseLocation extends StatefulWidget {
 
 class _ChooseLocationState extends State<ChooseLocation> {
   final _controller = TextEditingController();
+  late LocationProvider locationProvider;
+
+  @override
+  void initState() {
+    locationProvider = Provider.of<LocationProvider>(context, listen: false);
+    _controller.text = locationProvider.getAddress ?? "";
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    Future<void> _locateUser() async {
-      var locationProvider =
-          Provider.of<LocationProvider>(context, listen: false);
-      locationProvider.setAutomatic(true);
-      try {
-        await locationProvider.locateUser();
-        _controller.text =
-            locationProvider.getAddress ?? tr('could not fetch location');
-      } catch (e) {
-        AppSnackBar().showSnackBar(context, e);
-      }
-    }
-
     return SetupPageViewTemplate(
       minimum: const EdgeInsets.all(16.0),
       body: LayoutBuilder(
@@ -92,7 +86,7 @@ class _ChooseLocationState extends State<ChooseLocation> {
                   padding: EdgeInsets.only(top: 3.h),
                   child: Consumer<LocationProvider>(
                     builder: (ctx, locationProvider, _) => NeuButton(
-                      onClick: !locationProvider.isAutomatic
+                      onClick: !locationProvider.getAutomatic
                           ? () => _locateUser()
                           : null,
                       height: 60,
@@ -100,11 +94,13 @@ class _ChooseLocationState extends State<ChooseLocation> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          if (locationProvider.isAutomatic)
+                          if (locationProvider.getAutomatic)
                             Icon(
                               AppIcons.locationIcon,
                               size: 20,
-                              color: CustomColors.mischka,
+                              color: locationProvider.getAutomatic
+                                  ? Colors.white
+                                  : CustomColors.mischka,
                             ),
                           Padding(
                             padding: EdgeInsets.only(left: 12, right: 10),
@@ -117,7 +113,7 @@ class _ChooseLocationState extends State<ChooseLocation> {
                                 style: TextStyle(
                                   fontSize: 15,
                                   height: 1.3,
-                                  color: !locationProvider.isAutomatic
+                                  color: locationProvider.getAutomatic
                                       ? Colors.white
                                       : CustomColors.mischka,
                                 ),
@@ -130,7 +126,7 @@ class _ChooseLocationState extends State<ChooseLocation> {
                           ),
                         ],
                       ),
-                      isSelected: !locationProvider.isAutomatic,
+                      isSelected: locationProvider.getAutomatic,
                     ),
                   ),
                 ),
@@ -144,9 +140,21 @@ class _ChooseLocationState extends State<ChooseLocation> {
           currentPage: 0,
           buttonText: tr('save location'),
           controller: widget.pageController,
-          isPrimaryButtonDisabled: !setup.isLocationSetupComplete,
+          isPrimaryButtonDisabled: _controller.text.isEmpty,
         ),
       ),
     );
+  }
+
+  Future<void> _locateUser() async {
+    locationProvider = Provider.of<LocationProvider>(context, listen: false);
+    locationProvider.setAutomatic(true);
+    try {
+      await locationProvider.locateUser();
+      _controller.text =
+          locationProvider.getAddress ?? tr('could not fetch location');
+    } catch (e) {
+      AppSnackBar().showSnackBar(context, e);
+    }
   }
 }

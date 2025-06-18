@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
-
 import 'package:masjidhub/common/setup/setupHeaderImage.dart';
 import 'package:masjidhub/constants/images.dart';
 import 'package:masjidhub/screens/setupScreens/chooseAdhan/chooseAdhanComponent.dart';
@@ -21,6 +20,7 @@ class ChooseAdhan extends StatefulWidget {
 }
 
 class _ChooseAdhanState extends State<ChooseAdhan> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

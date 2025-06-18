@@ -73,7 +73,6 @@ class _CalendarTextState extends State<CalendarText> {
                 //   future: dateProvider.geoorgianToHijri(),
                 //   initialData: '',
                 //   builder: (BuildContext context, AsyncSnapshot snapshot) {
-                //     print("wtf1");
                 //     return Text(
                 //       snapshot.hasData ? snapshot.data : '',
                 //       style: TextStyle(
