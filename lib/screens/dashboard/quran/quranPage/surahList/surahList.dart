@@ -18,6 +18,8 @@ class SurahList extends StatefulWidget {
     required this.audioPlayer,
     this.isRemoteOn = false,
     this.hidePlayButton = false,
+    this.topWidget,
+    this.scrollController,
     Key? key,
   }) : super(key: key);
 
@@ -28,7 +30,8 @@ class SurahList extends StatefulWidget {
   final AudioPlayer audioPlayer;
   final bool? isRemoteOn;
   final bool? hidePlayButton;
-
+  final Widget? topWidget;
+  final ScrollController? scrollController;
   @override
   _SurahListState createState() => _SurahListState();
 }
@@ -59,13 +62,17 @@ class _SurahListState extends State<SurahList> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      padding: EdgeInsets.symmetric(vertical: 10),
-      physics: const NeverScrollableScrollPhysics(),
-      shrinkWrap: true,
-      itemCount: widget.list.length,
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      physics: const ClampingScrollPhysics(),
+      itemCount: widget.topWidget != null
+          ? widget.list.length + 1
+          : widget.list.length,
+      controller: widget.scrollController,
       itemBuilder: (BuildContext context, int i) {
         final SurahModel surah = widget.list[i];
-
+        if (widget.topWidget != null && i == 0) {
+          return widget.topWidget;
+        }
         return Selector<AudioProvider, Tuple2<int, int>>(
           selector: (_, select) => Tuple2(
             select.audioState.surahId,
@@ -76,22 +83,23 @@ class _SurahListState extends State<SurahList> {
           builder: (ctx, audioState, _) {
             bool isAudioSelected = audioState.item1 == surah.id;
             return VisibilityDetector(
-                key: Key(surah.englishName),
-                onVisibilityChanged: (v) =>
-                    onItemVisibilityChange(v.visibleFraction, isAudioSelected),
-                child: SurahListItem(
-                  englishName: surah.englishName,
-                  verseCount: surah.numberOfAyahs,
-                  surahNumber: surah.id,
-                  isAudioSelected: isAudioSelected,
-                  revelationType: surah.revelationType,
-                  audioProgress: audioState.item2,
-                  onAudioButonPressed: (state) => {},
-                  isRemoteOn: widget.isRemoteOn,
-                  bookmarkedAyah: surah.bookmarkedAyah,
-                  scrollPosition: surah.bookmarkedScrollPosition ?? 0,
-                  hidePlayButton: widget.hidePlayButton,
-                ));
+              key: Key(surah.englishName),
+              onVisibilityChanged: (v) =>
+                  onItemVisibilityChange(v.visibleFraction, isAudioSelected),
+              child: SurahListItem(
+                englishName: surah.englishName,
+                verseCount: surah.numberOfAyahs,
+                surahNumber: surah.id,
+                isAudioSelected: isAudioSelected,
+                revelationType: surah.revelationType,
+                audioProgress: audioState.item2,
+                onAudioButonPressed: (state) => {},
+                isRemoteOn: widget.isRemoteOn,
+                bookmarkedAyah: surah.bookmarkedAyah,
+                scrollPosition: surah.bookmarkedScrollPosition ?? 0,
+                hidePlayButton: widget.hidePlayButton,
+              ),
+            );
           },
         );
       },

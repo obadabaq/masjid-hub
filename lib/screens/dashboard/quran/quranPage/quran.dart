@@ -149,13 +149,12 @@ class _QuranState extends State<Quran> {
                   width: constraints.maxWidth,
                   child: ScrollableMainScreen(
                     scrollController: scrollController,
-                    child: SingleChildScrollView(
-                      controller: scrollController,
-                      physics: ClampingScrollPhysics(),
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                            top: quran.isSearchActive ? 80 : 30),
-                        child: Column(
+                    child: Padding(
+                      padding:
+                          EdgeInsets.only(top: quran.isSearchActive ? 80 : 30),
+                      child: SurahListWrapper(
+                        scrollController: scrollController,
+                        topWidget: Column(
                           children: [
                             Consumer<WatchProvider>(
                               builder: (context, watchProvider, child) {
@@ -197,7 +196,6 @@ class _QuranState extends State<Quran> {
                                 ),
                               ],
                             ),
-                            SurahListWrapper()
                           ],
                         ),
                       ),
