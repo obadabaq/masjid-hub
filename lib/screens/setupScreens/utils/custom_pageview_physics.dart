@@ -4,7 +4,11 @@ import 'package:flutter/material.dart';
 class CustomScrollPhysics extends ScrollPhysics {
   CustomScrollPhysics({ScrollPhysics? parent}) : super(parent: parent);
 
-  bool isGoingLeft = false;
+  static bool _isGoingLeft = false;
+
+  static void setGoingLeft(bool value) {
+    _isGoingLeft = value;
+  }
 
   @override
   CustomScrollPhysics applyTo(ScrollPhysics? ancestor) {
@@ -13,7 +17,7 @@ class CustomScrollPhysics extends ScrollPhysics {
 
   @override
   double applyPhysicsToUserOffset(ScrollMetrics position, double offset) {
-    isGoingLeft = offset.sign < 0;
+    _isGoingLeft = offset.sign < 0;
     return offset;
   }
 
@@ -46,7 +50,7 @@ class CustomScrollPhysics extends ScrollPhysics {
         position.maxScrollExtent < value)
       return value - position.maxScrollExtent;
 
-    if (isGoingLeft) {
+    if (_isGoingLeft) {
       return value - position.pixels;
     }
     return 0.0;

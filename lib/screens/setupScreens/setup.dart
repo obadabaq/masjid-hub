@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
-
 import 'package:masjidhub/screens/setupScreens/chooseAdhan/chooseAdhan.dart';
 import 'package:masjidhub/screens/setupScreens/chooseCountdown/chooseCountdown.dart';
 import 'package:masjidhub/screens/setupScreens/chooseDevice/chooseDevice.dart';
 import 'package:masjidhub/screens/setupScreens/chooseLocation/chooseLocation.dart';
 import 'package:masjidhub/screens/setupScreens/choosePrayerTime/choosePrayerTime.dart';
 import 'package:masjidhub/screens/setupScreens/chooseTesbih/chooseTesbih.dart';
-import 'package:masjidhub/screens/setupScreens/utils/custom_pageview_physics.dart';
 import 'package:provider/provider.dart';
-
-import '../../provider/setupProvider.dart';
+import 'package:masjidhub/provider/setupProvider.dart';
 
 class Setup extends StatefulWidget {
   Setup({Key? key}) : super(key: key);
@@ -24,7 +21,7 @@ class _SetupState extends State<Setup> with AutomaticKeepAliveClientMixin {
     super.build(context);
     return Consumer<SetupProvider>(
       builder: (ctx, setupProvider, _) => PageView(
-        physics: CustomScrollPhysics(),
+        physics: NeverScrollableScrollPhysics(),
         controller: setupProvider.setupController,
         children: [
           ChooseLocation(pageController: setupProvider.setupController),

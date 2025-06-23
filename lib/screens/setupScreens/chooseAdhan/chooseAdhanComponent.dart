@@ -31,7 +31,7 @@ class _ChooseAdhanComponentState extends State<ChooseAdhanComponent> {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
-        final buttonWidth = (constraints.maxWidth / 2) - 30;
+        final buttonWidth = (constraints.maxWidth / 2) - 20;
 
         return Column(
           children: [
@@ -40,54 +40,59 @@ class _ChooseAdhanComponentState extends State<ChooseAdhanComponent> {
               builder: (BuildContext context,
                   AsyncSnapshot<List<AdhanTimeModel>> snapshot) {
                 if (snapshot.hasData)
-                  return Wrap(
-                    children: [
-                      AdhanButton(
-                        id: 0,
-                        isSelected: !snapshot.data![0].isAlarmDisabled,
-                        onClick: (id) => _onAdhanButtonClick(id),
-                        height: 70,
-                        width: buttonWidth,
-                        text: tr('fajr'),
-                        icon: AppIcons.fajrIcon,
-                      ),
-                      AdhanButton(
-                        id: 1,
-                        isSelected: !snapshot.data![1].isAlarmDisabled,
-                        onClick: (id) => _onAdhanButtonClick(id),
-                        height: 70,
-                        width: buttonWidth,
-                        text: tr('dhuhr'),
-                        icon: AppIcons.duhrIcon,
-                      ),
-                      AdhanButton(
-                        id: 2,
-                        isSelected: !snapshot.data![2].isAlarmDisabled,
-                        onClick: (id) => _onAdhanButtonClick(id),
-                        height: 70,
-                        width: buttonWidth,
-                        text: tr('asr'),
-                        icon: AppIcons.asrIcon,
-                      ),
-                      AdhanButton(
-                        id: 3,
-                        isSelected: !snapshot.data![3].isAlarmDisabled,
-                        onClick: (id) => _onAdhanButtonClick(id),
-                        height: 70,
-                        width: buttonWidth,
-                        text: tr('maghrib'),
-                        icon: AppIcons.maghribIcon,
-                      ),
-                      AdhanButton(
-                        id: 4,
-                        isSelected: !snapshot.data![4].isAlarmDisabled,
-                        onClick: (id) => _onAdhanButtonClick(id),
-                        height: 70,
-                        width: buttonWidth,
-                        text: tr('isha'),
-                        icon: AppIcons.ishaIcon,
-                      ),
-                    ],
+                  return SizedBox(
+                    width: double.infinity,
+                    child: Wrap(
+                      spacing: 9.w,
+                      runSpacing: 3.h,
+                      children: [
+                        AdhanButton(
+                          id: 0,
+                          isSelected: !snapshot.data![0].isAlarmDisabled,
+                          onClick: (id) => _onAdhanButtonClick(id),
+                          height: 70,
+                          width: buttonWidth,
+                          text: tr('fajr'),
+                          icon: AppIcons.fajrIcon,
+                        ),
+                        AdhanButton(
+                          id: 1,
+                          isSelected: !snapshot.data![1].isAlarmDisabled,
+                          onClick: (id) => _onAdhanButtonClick(id),
+                          height: 70,
+                          width: buttonWidth,
+                          text: tr('dhuhr'),
+                          icon: AppIcons.duhrIcon,
+                        ),
+                        AdhanButton(
+                          id: 2,
+                          isSelected: !snapshot.data![2].isAlarmDisabled,
+                          onClick: (id) => _onAdhanButtonClick(id),
+                          height: 70,
+                          width: buttonWidth,
+                          text: tr('asr'),
+                          icon: AppIcons.asrIcon,
+                        ),
+                        AdhanButton(
+                          id: 3,
+                          isSelected: !snapshot.data![3].isAlarmDisabled,
+                          onClick: (id) => _onAdhanButtonClick(id),
+                          height: 70,
+                          width: buttonWidth,
+                          text: tr('maghrib'),
+                          icon: AppIcons.maghribIcon,
+                        ),
+                        AdhanButton(
+                          id: 4,
+                          isSelected: !snapshot.data![4].isAlarmDisabled,
+                          onClick: (id) => _onAdhanButtonClick(id),
+                          height: 70,
+                          width: buttonWidth,
+                          text: tr('isha'),
+                          icon: AppIcons.ishaIcon,
+                        ),
+                      ],
+                    ),
                   );
                 return Container(
                   margin: EdgeInsets.only(top: 50),
@@ -98,7 +103,7 @@ class _ChooseAdhanComponentState extends State<ChooseAdhanComponent> {
             Row(
               children: [
                 Padding(
-                  padding: EdgeInsets.only(top: 1.h),
+                  padding: EdgeInsets.only(top: 5.h),
                   child: Text(
                     tr('choose adhan'),
                     textAlign: TextAlign.start,

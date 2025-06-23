@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:masjidhub/screens/setupScreens/utils/custom_pageview_physics.dart';
 import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
-
 import 'package:masjidhub/common/buttons/primaryButton.dart';
 import 'package:masjidhub/common/snackBar/AppSnackBar.dart';
 import 'package:masjidhub/provider/setupProvider.dart';
@@ -31,8 +31,13 @@ class SetupFooter extends StatelessWidget {
   }) : super(key: key);
 
   void _nextPage() {
-    controller.animateToPage((currentPage + 1).toInt(),
-        duration: Duration(milliseconds: 500), curve: Curves.ease);
+    CustomScrollPhysics.setGoingLeft(false);
+    controller
+        .animateToPage((currentPage + 1).toInt(),
+            duration: Duration(milliseconds: 500), curve: Curves.ease)
+        .then((_) {
+      CustomScrollPhysics.setGoingLeft(true);
+    });
   }
 
   @override

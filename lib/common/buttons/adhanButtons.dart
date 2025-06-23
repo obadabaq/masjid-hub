@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-
 import 'package:masjidhub/constants/shadows.dart';
 import 'package:masjidhub/theme/colors.dart';
 import 'package:masjidhub/theme/customTheme.dart';
@@ -58,59 +57,56 @@ class _AdhanButtonState extends State<AdhanButton> {
       widget.onClick(id);
     }
 
-    return Padding(
-      padding: EdgeInsets.fromLTRB(10, 0, 10, 30),
-      child: AnimatedContainer(
-        duration: Duration(milliseconds: 200),
-        curve: Curves.fastOutSlowIn,
-        width: widget.width,
-        decoration: BoxDecoration(
-          color: CustomTheme.lightTheme.colorScheme.background,
-          boxShadow: _buttonShadow,
-          shape: BoxShape.rectangle,
-          borderRadius: BorderRadius.circular(20),
-          gradient: _buttonSelected ? CustomColors.primary180 : null,
-        ),
-        child: GestureDetector(
-          behavior: HitTestBehavior.translucent,
-          onTap: () => _onButtonTap(widget.id),
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: EdgeInsets.all(5),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.all(5),
-                      child: Icon(
-                        widget.icon,
-                        size: 25,
+    return AnimatedContainer(
+      duration: Duration(milliseconds: 200),
+      curve: Curves.fastOutSlowIn,
+      width: widget.width,
+      decoration: BoxDecoration(
+        color: CustomTheme.lightTheme.colorScheme.background,
+        boxShadow: _buttonShadow,
+        shape: BoxShape.rectangle,
+        borderRadius: BorderRadius.circular(20),
+        gradient: _buttonSelected ? CustomColors.primary180 : null,
+      ),
+      child: GestureDetector(
+        behavior: HitTestBehavior.translucent,
+        onTap: () => _onButtonTap(widget.id),
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: EdgeInsets.all(5),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.all(5),
+                    child: Icon(
+                      widget.icon,
+                      size: 25,
+                      color: _buttonSelected
+                          ? Colors.white
+                          : CustomColors.blackPearl,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 5),
+                    child: Text(
+                      widget.text,
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w500,
+                        height: 1.3,
                         color: _buttonSelected
                             ? Colors.white
                             : CustomColors.blackPearl,
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 5),
-                      child: Text(
-                        widget.text,
-                        style: TextStyle(
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.w500,
-                          height: 1.3,
-                          color: _buttonSelected
-                              ? Colors.white
-                              : CustomColors.blackPearl,
-                        ),
-                      ),
-                    )
-                  ],
-                ),
+                  )
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

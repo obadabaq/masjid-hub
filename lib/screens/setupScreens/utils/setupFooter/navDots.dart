@@ -16,6 +16,9 @@ class NavDots extends StatefulWidget {
 class _NavDotsState extends State<NavDots> {
   int currentPage = 0;
 
+  double _startX = 0.0;
+  bool _isRight = false;
+
   void getCurrentPage() {
     if (mounted)
       setState(() {
@@ -41,16 +44,40 @@ class _NavDotsState extends State<NavDots> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(bottom: 20),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          for (var i = 0; i < 6; i++)
-            Dot(
-              isActive: currentPage == i,
-            ),
-        ],
+    return GestureDetector(
+      onPanStart: (details) {
+        _startX = details.globalPosition.dx; // Record initial X position
+      },
+      onPanUpdate: (details) {
+        final currentX = details.globalPosition.dx;
+        final deltaX = currentX - _startX;
+
+        if (deltaX > 0) {
+          setState(() => _isRight = true);
+        } else if (deltaX < 0) {
+          setState(() => _isRight = false);
+        }
+      },
+      onPanEnd: (_) {
+        if (_isRight) {
+          widget.controller.animateToPage(
+            currentPage - 1,
+            duration: Duration(milliseconds: 500),
+            curve: Curves.ease,
+          );
+        }
+      },
+      child: Container(
+        margin: EdgeInsets.only(bottom: 20),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            for (var i = 0; i < 6; i++)
+              Dot(
+                isActive: currentPage == i,
+              ),
+          ],
+        ),
       ),
     );
   }
