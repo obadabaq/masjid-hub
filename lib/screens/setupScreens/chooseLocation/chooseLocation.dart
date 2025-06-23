@@ -44,7 +44,7 @@ class _ChooseLocationState extends State<ChooseLocation> {
         return AbsorbPointer(
           absorbing: locationProvider.isLoadingLocation,
           child: SetupPageViewTemplate(
-            minimum: const EdgeInsets.all(16.0),
+            minimum: const EdgeInsets.symmetric(horizontal: 30, vertical: 16),
             body: LayoutBuilder(
               builder: (BuildContext context, BoxConstraints constraints) {
                 return Stack(
@@ -57,7 +57,11 @@ class _ChooseLocationState extends State<ChooseLocation> {
                             child: SetupHeaderImage(image: mapSetupImage),
                           ),
                           Padding(
-                            padding: EdgeInsets.only(top: 4.5.h),
+                            padding: EdgeInsets.only(
+                              top: 4.5.h,
+                              left: 7.w,
+                              right: 7.w,
+                            ),
                             child: Text(
                               tr('set your location'),
                               textAlign: TextAlign.center,
@@ -69,7 +73,11 @@ class _ChooseLocationState extends State<ChooseLocation> {
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsets.only(top: 1.5.h),
+                            padding: EdgeInsets.only(
+                              top: 1.5.h,
+                              left: 7.w,
+                              right: 7.w,
+                            ),
                             child: Text(
                               tr('enterLocationText'),
                               style: TextStyle(
@@ -83,7 +91,7 @@ class _ChooseLocationState extends State<ChooseLocation> {
                           ),
                           ChooseLocationField(
                             controller: _controller,
-                            buttonWidth: MediaQuery.sizeOf(context).width * .91,
+                            buttonWidth: MediaQuery.sizeOf(context).width * .85,
                           ),
                           Row(
                             children: [
