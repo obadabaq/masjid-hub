@@ -29,6 +29,7 @@ class SearchTextField extends StatelessWidget {
   static TextStyle textStyle = TextStyle(
     fontSize: 16.sp,
     color: CustomColors.mischka,
+    height: 2.5,
   );
 
   @override
@@ -54,7 +55,7 @@ class SearchTextField extends StatelessWidget {
             decoration: InputDecoration(
               prefixIcon: Icon(
                 AppIcons.searchIcon,
-                size: 20,
+                size: 18.sp,
                 color: CustomColors.mischka,
               ),
               border: InputBorder.none,
