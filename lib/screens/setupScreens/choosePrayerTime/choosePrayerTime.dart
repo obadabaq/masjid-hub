@@ -201,12 +201,15 @@ class _ChoosePrayerTimeState extends State<ChoosePrayerTime> {
                       ),
                     ),
                     Consumer<PrayerTimingsProvider>(
-                      builder: (ctx, provider, _) => SetupFooter(
-                        currentPage: 3,
-                        margin: EdgeInsets.only(bottom: 30),
-                        isPrimaryButtonDisabled: provider.getMadhabId == -1,
-                        buttonText: tr('next'),
-                        controller: widget.pageController,
+                      builder: (ctx, provider, _) => Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 30),
+                        child: SetupFooter(
+                          currentPage: 3,
+                          margin: EdgeInsets.only(bottom: 30),
+                          isPrimaryButtonDisabled: provider.getMadhabId == -1,
+                          buttonText: tr('next'),
+                          controller: widget.pageController,
+                        ),
                       ),
                     ),
                   ],

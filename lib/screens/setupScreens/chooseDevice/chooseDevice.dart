@@ -62,12 +62,15 @@ class _ChooseDeviceState extends State<ChooseDevice> {
                     //   ),
                     // ),
                     ChooseDeviceComponent(),
-                    SetupFooter(
-                      currentPage: 5,
-                      margin: EdgeInsets.only(bottom: 30),
-                      buttonText: tr('complete setup'),
-                      controller: widget.pageController,
-                      isLastStep: true,
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 30),
+                      child: SetupFooter(
+                        currentPage: 5,
+                        margin: EdgeInsets.only(bottom: 30),
+                        buttonText: tr('complete setup'),
+                        controller: widget.pageController,
+                        isLastStep: true,
+                      ),
                     ),
                   ],
                 ),

@@ -118,11 +118,14 @@ class _ChooseCountdownState extends State<ChooseCountdown> {
                       padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                       child: CountdownTimerAudioList(),
                     ),
-                    SetupFooter(
-                      currentPage: 2,
-                      margin: EdgeInsets.only(bottom: 30),
-                      buttonText: tr('next'),
-                      controller: widget.pageController,
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 30),
+                      child: SetupFooter(
+                        currentPage: 2,
+                        margin: EdgeInsets.only(bottom: 30),
+                        buttonText: tr('next'),
+                        controller: widget.pageController,
+                      ),
                     ),
                   ],
                 ),

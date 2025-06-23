@@ -89,11 +89,14 @@ class _ChooseTesbihState extends State<ChooseTesbih> {
           );
         },
       ),
-      footer: SetupFooter(
-        currentPage: 4,
-        margin: EdgeInsets.only(bottom: 30),
-        buttonText: tr('next'),
-        controller: widget.pageController,
+      footer: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 30),
+        child: SetupFooter(
+          currentPage: 4,
+          margin: EdgeInsets.only(bottom: 30),
+          buttonText: tr('next'),
+          controller: widget.pageController,
+        ),
       ),
     );
   }

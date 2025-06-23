@@ -20,7 +20,6 @@ class ChooseAdhan extends StatefulWidget {
 }
 
 class _ChooseAdhanState extends State<ChooseAdhan> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,11 +63,14 @@ class _ChooseAdhanState extends State<ChooseAdhan> {
                       padding: EdgeInsets.only(top: 3.h, left: 30, right: 30),
                       child: ChooseAdhanComponent(),
                     ),
-                    SetupFooter(
-                      currentPage: 1,
-                      margin: EdgeInsets.only(bottom: 30),
-                      buttonText: tr('next'),
-                      controller: widget.pageController,
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 30),
+                      child: SetupFooter(
+                        currentPage: 1,
+                        margin: EdgeInsets.only(bottom: 30),
+                        buttonText: tr('next'),
+                        controller: widget.pageController,
+                      ),
                     ),
                   ],
                 ),
