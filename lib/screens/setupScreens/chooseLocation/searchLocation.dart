@@ -31,16 +31,18 @@ class SearchLocation extends StatefulWidget {
 class _SearchLocationState extends State<SearchLocation> {
   Timer? _debounce;
   PlacesModel? lastSelectedLocation;
+  TextEditingController controller = TextEditingController();
   void _onSearchChanged() {
     if (_debounce?.isActive ?? false) _debounce?.cancel();
     _debounce = Timer(const Duration(milliseconds: 500), () async {
       await Provider.of<LocationProvider>(context, listen: false)
-          .fetchSuggestions(widget.controller.text, 'en');
+          .fetchSuggestions(controller.text, 'en');
     });
   }
 
   _onLocatioSelected(id, title) async {
     widget.controller.text = title;
+    controller.text = title;
     _debounce?.cancel();
     var locationProvider =
         Provider.of<LocationProvider>(context, listen: false);
@@ -66,14 +68,14 @@ class _SearchLocationState extends State<SearchLocation> {
 
   void initState() {
     super.initState();
-    widget.controller.addListener(_onSearchChanged);
+    controller.addListener(_onSearchChanged);
     getLastSelectedLocation();
   }
 
   @override
   void dispose() {
     _debounce?.cancel();
-    widget.controller.removeListener(_onSearchChanged);
+    controller.removeListener(_onSearchChanged);
     super.dispose();
   }
 
@@ -101,9 +103,9 @@ class _SearchLocationState extends State<SearchLocation> {
                   SearchTextField(
                     padding: EdgeInsets.only(top: 30),
                     buttonWidth: _buttonWidth,
-                    controller: widget.controller,
+                    controller: controller,
                     onPressed: () => {
-                      widget.controller.text = '',
+                      controller.text = '',
                     },
                     hintText: widget.hintText,
                   ),
@@ -118,17 +120,29 @@ class _SearchLocationState extends State<SearchLocation> {
                     ),
                   ),
                   if (lastSelectedLocation != null)
-                    DropdownListItem(
-                      title: lastSelectedLocation!.title,
-                      id: lastSelectedLocation!.id,
-                      padding: const EdgeInsets.only(top: 20),
-                      onPressed: _onLocatioSelected,
+                    Row(
+                      children: [
+                        Expanded(
+                          child: DropdownListItem(
+                            title: lastSelectedLocation!.title,
+                            id: lastSelectedLocation!.id,
+                            padding: const EdgeInsets.only(
+                              top: 20,
+                              left: 30,
+                              right: 30,
+                            ),
+                            onPressed: _onLocatioSelected,
+                          ),
+                        ),
+                      ],
                     ),
                   Padding(
                     padding: EdgeInsets.only(top: 10),
                     child: CustomFlatButton(
                       padding: EdgeInsets.all(15),
-                      onPressed: () => Navigator.pop(context),
+                      onPressed: () => {
+                        Navigator.pop(context),
+                      },
                       text: tr('go back'),
                     ),
                   ),
