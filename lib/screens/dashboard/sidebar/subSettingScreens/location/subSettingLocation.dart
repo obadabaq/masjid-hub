@@ -50,8 +50,8 @@ class _SubSettingLocationState extends State<SubSettingLocation> {
                   Visibility(
                     visible: !locationProvider.isAutomatic,
                     child: ChooseLocationField(
-                      buttonWidth: 350,
                       controller: controller,
+                      buttonWidth: MediaQuery.sizeOf(context).width * .8,
                     ),
                   ),
                 ],

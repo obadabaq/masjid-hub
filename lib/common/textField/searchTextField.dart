@@ -4,6 +4,7 @@ import 'package:masjidhub/common/icons/app_icons.dart';
 import 'package:masjidhub/constants/shadows.dart';
 import 'package:masjidhub/theme/colors.dart';
 import 'package:masjidhub/utils/concaveDecoration.dart';
+import 'package:sizer/sizer.dart';
 
 class SearchTextField extends StatelessWidget {
   final String? initialValue;
@@ -26,7 +27,7 @@ class SearchTextField extends StatelessWidget {
   }) : super(key: key);
 
   static TextStyle textStyle = TextStyle(
-    fontSize: 20,
+    fontSize: 16.sp,
     color: CustomColors.mischka,
   );
 
@@ -44,7 +45,7 @@ class SearchTextField extends StatelessWidget {
             colors: innerConcaveShadow,
             size: Size(buttonWidth, 70)),
         child: Padding(
-          padding: EdgeInsets.only(top: 10, left: 10, right: 10),
+          padding: EdgeInsets.only(top: 10, left: 10, right: 20),
           child: TextFormField(
             readOnly: readOnly,
             controller: controller,

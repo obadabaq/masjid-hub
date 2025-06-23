@@ -34,11 +34,6 @@ class _ChooseLocationState extends State<ChooseLocation> {
   @override
   void initState() {
     locationProvider = Provider.of<LocationProvider>(context, listen: false);
-    _controller.text = locationProvider.getAddress != null
-        ? locationProvider.getAddress!.contains("Unable to locate")
-            ? ""
-            : locationProvider.getAddress!
-        : "";
     super.initState();
   }
 
@@ -52,11 +47,6 @@ class _ChooseLocationState extends State<ChooseLocation> {
             minimum: const EdgeInsets.all(16.0),
             body: LayoutBuilder(
               builder: (BuildContext context, BoxConstraints constraints) {
-                const double _buttonMaxWidth = 400.0;
-                final _buttonWidth = constraints.maxWidth < _buttonMaxWidth
-                    ? constraints.maxWidth * 0.9
-                    : _buttonMaxWidth * 0.9;
-
                 return Stack(
                   children: [
                     SingleChildScrollView(
@@ -92,51 +82,55 @@ class _ChooseLocationState extends State<ChooseLocation> {
                             ),
                           ),
                           ChooseLocationField(
-                              buttonWidth: 350, controller: _controller),
-                          Padding(
-                            padding: EdgeInsets.only(top: 3.h),
-                            child: NeuButton(
-                              onClick: () => _locateUser(),
-                              height: 60,
-                              width: _buttonWidth,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  if (locationProvider.getAutomatic)
-                                    Icon(
-                                      AppIcons.locationIcon,
-                                      size: 20,
-                                      color: locationProvider.getAutomatic
-                                          ? Colors.white
-                                          : CustomColors.mischka,
-                                    ),
-                                  Padding(
-                                    padding:
-                                        EdgeInsets.only(left: 12, right: 10),
-                                    child: ConstrainedBox(
-                                      constraints: BoxConstraints(
-                                        maxWidth: 250,
-                                      ),
-                                      child: AutoSizeText(
-                                        'Automatically Detect Location'.tr(),
-                                        style: TextStyle(
-                                          fontSize: 15,
-                                          height: 1.3,
-                                          color: locationProvider.getAutomatic
-                                              ? Colors.white
-                                              : CustomColors.mischka,
+                            controller: _controller,
+                            buttonWidth: MediaQuery.sizeOf(context).width * .91,
+                          ),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Padding(
+                                  padding: EdgeInsets.only(top: 3.h),
+                                  child: NeuButton(
+                                    onClick: () => _locateUser(),
+                                    height: 60,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        if (locationProvider.isAutomatic)
+                                          Icon(
+                                            AppIcons.locationIcon,
+                                            size: 20,
+                                            color: locationProvider.isAutomatic
+                                                ? Colors.white
+                                                : CustomColors.mischka,
+                                          ),
+                                        Padding(
+                                          padding: EdgeInsets.only(left: 12),
+                                          child: AutoSizeText(
+                                            'Automatically Detect Location'
+                                                .tr(),
+                                            style: TextStyle(
+                                              fontSize: 15,
+                                              height: 1.3,
+                                              color:
+                                                  locationProvider.isAutomatic
+                                                      ? Colors.white
+                                                      : CustomColors.mischka,
+                                            ),
+                                            minFontSize: 12,
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            textAlign: TextAlign.center,
+                                          ),
                                         ),
-                                        minFontSize: 12,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        textAlign: TextAlign.center,
-                                      ),
+                                      ],
                                     ),
+                                    isSelected: locationProvider.isAutomatic,
                                   ),
-                                ],
+                                ),
                               ),
-                              isSelected: locationProvider.getAutomatic,
-                            ),
+                            ],
                           ),
                         ],
                       ),
@@ -158,7 +152,7 @@ class _ChooseLocationState extends State<ChooseLocation> {
   }
 
   Future<void> _locateUser() async {
-    if (!locationProvider.getAutomatic) {
+    if (!locationProvider.isAutomatic) {
       locationProvider = Provider.of<LocationProvider>(context, listen: false);
       locationProvider.setAutomatic(true);
       try {
@@ -168,8 +162,6 @@ class _ChooseLocationState extends State<ChooseLocation> {
       } catch (e) {
         AppSnackBar().showSnackBar(context, e);
       }
-    } else {
-      locationProvider.setAutomatic(false);
     }
   }
 }

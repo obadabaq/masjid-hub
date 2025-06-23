@@ -47,6 +47,7 @@ class _SearchLocationState extends State<SearchLocation> {
     await setLastSelectedLocation(id, title);
     await locationProvider.getPlacesCords(id);
     locationProvider.resetPlaces();
+    locationProvider.setAutomatic(false);
     setState(() {
       lastSelectedLocation = null;
     });
@@ -101,7 +102,9 @@ class _SearchLocationState extends State<SearchLocation> {
                     padding: EdgeInsets.only(top: 30),
                     buttonWidth: _buttonWidth,
                     controller: widget.controller,
-                    onPressed: () => {},
+                    onPressed: () => {
+                      widget.controller.text = '',
+                    },
                     hintText: widget.hintText,
                   ),
                   Consumer<LocationProvider>(

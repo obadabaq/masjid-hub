@@ -42,7 +42,10 @@ class LocationProvider extends ChangeNotifier {
     return _address;
   }
 
-  set setAddress(String addr) => _address = addr;
+  set setAddress(String addr) {
+    // SharedPrefs().setAddress(addr);
+    _address = addr;
+  }
 
   bool isLoadingLocation = false;
 
@@ -227,7 +230,6 @@ class LocationProvider extends ChangeNotifier {
       if (address.length >= 15) {
         address = address.split(',')[0];
       }
-
       SharedPrefs().setLocation(lat, lng, address, addressMobile);
       return [address, addressMobile];
     } catch (e) {
@@ -246,7 +248,7 @@ class LocationProvider extends ChangeNotifier {
       final double lat = position.latitude;
       final double lon = position.longitude;
       final userCords = Cords(lat: lat, lon: lon);
-      getPlaceFromCoordinates(lat, lon);
+      await getPlaceFromCoordinates(lat, lon);
       locationLoading = false;
       notifyListeners();
       setupProvider.setUserCords(userCords);

@@ -50,10 +50,10 @@ class SetupFooter extends StatelessWidget {
       margin: margin,
       padding: padding,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           PrimaryButton(
-            margin: EdgeInsets.only(
-                top: 30, left: 20, right: 20, bottom: isLastStep ? 50 : 0),
+            margin: EdgeInsets.only(top: 30, bottom: isLastStep ? 50 : 0),
             padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
             text: buttonText,
             width: 300,
@@ -70,7 +70,8 @@ class SetupFooter extends StatelessWidget {
                 onTap: () => _nextPage(),
                 child: Text(
                   tr('skip this step'),
-                  style: TextStyle(color: Colors.grey, fontSize: 18.sp),
+                  style: TextStyle(color: Colors.grey, fontSize: 16.sp),
+                  textAlign: TextAlign.center,
                 ),
               ),
             ),

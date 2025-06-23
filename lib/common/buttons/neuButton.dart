@@ -10,15 +10,15 @@ class NeuButton extends StatefulWidget {
     Key? key,
     this.onClick,
     required this.child,
-    required this.height,
-    required this.width,
+    this.height,
+    this.width,
     this.isSelected = false,
   }) : super(key: key);
 
   final Function? onClick;
   final Widget child;
-  final double height;
-  final double width;
+  final double? height;
+  final double? width;
   final bool isSelected;
 
   @override
