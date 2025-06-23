@@ -160,13 +160,14 @@ class _ChooseLocationState extends State<ChooseLocation> {
   }
 
   Future<void> _locateUser() async {
+    AppSnackBar().closeSnackBar(context);
     if (!locationProvider.isAutomatic) {
       locationProvider = Provider.of<LocationProvider>(context, listen: false);
-      locationProvider.setAutomatic(true);
       try {
         await locationProvider.locateUser();
         _controller.text =
             locationProvider.getAddress ?? tr('could not fetch location');
+        locationProvider.setAutomatic(true);
       } catch (e) {
         AppSnackBar().showSnackBar(context, e);
       }

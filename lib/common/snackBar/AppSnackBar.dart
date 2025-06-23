@@ -8,7 +8,9 @@ class AppSnackBar {
         duration: Duration(minutes: 1),
         backgroundColor: Colors.grey,
         margin: EdgeInsets.only(
-            bottom: MediaQuery.of(context).size.height - 100,
+            bottom: MediaQuery.of(context).size.height -
+                100 -
+                MediaQuery.of(context).padding.top,
             left: 10,
             right: 10),
         behavior: SnackBarBehavior.floating,
@@ -20,5 +22,9 @@ class AppSnackBar {
         ),
       ),
     );
+  }
+
+  Future<void> closeSnackBar(context) async {
+    ScaffoldMessenger.of(context).clearSnackBars();
   }
 }
