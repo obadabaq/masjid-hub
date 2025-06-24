@@ -5,10 +5,8 @@ import 'package:masjidhub/constants/madhabs.dart';
 import 'package:masjidhub/constants/organisations.dart';
 import 'package:masjidhub/provider/prayerTimingsProvider.dart';
 import 'package:masjidhub/theme/colors.dart';
-import 'package:masjidhub/utils/concaveDecoration.dart';
 import 'package:masjidhub/utils/prayerUtils.dart';
 import 'package:provider/provider.dart';
-import 'package:sizer/sizer.dart';
 
 class SubSettingCalculationMethod extends StatefulWidget {
   const SubSettingCalculationMethod({
@@ -65,7 +63,7 @@ class _SubSettingCalculationMethodState
                 padding:
                     EdgeInsets.only(top: 40, left: 10, right: 10, bottom: 20),
                 child: Text(
-                  "... or select an organization",
+                  tr('select organisation'),
                   style: TextStyle(
                     fontSize: 16.0,
                     height: 1.3,
@@ -85,41 +83,18 @@ class _SubSettingCalculationMethodState
                   margin:
                       EdgeInsets.only(top: 0, left: 35, right: 35, bottom: 10),
                   padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
-                  decoration: ConcaveDecoration(
-                      depth: 9,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20)),
-                      colors: ([
-                        Colors.white,
-                        CustomColors.spindle,
-                      ]),
-                      size: Size(84.w, 70)),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.search,
-                        color: Colors.grey,
-                      ),
-                      SizedBox(
-                        width: 5.w,
-                      ),
-                      Flexible(
-                        child: Text(
-                          provider.getOrgId == -1
-                              ? tr('select organisation')
-                              : PrayerUtils()
-                                  .getOrgNameFromId(provider.getOrgId),
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.grey,
-                          ),
-                          textAlign: TextAlign.center,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      )
-                    ],
+                  decoration: BoxDecoration(
+                    color: CustomColors.irisBlue,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Text(
+                    PrayerUtils().getOrgNameFromId(provider.getOrgId),
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
                 ),
               ),
