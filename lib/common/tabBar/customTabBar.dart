@@ -47,6 +47,7 @@ class CustomTabBar extends StatelessWidget {
             child: TabBar(
               controller: controller,
               indicatorColor: Colors.transparent,
+              dividerColor: Colors.transparent,
               indicator: BoxDecoration(
                 borderRadius: BorderRadius.circular(_radius),
                 gradient: CustomColors.grey90,
