@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
-
 import 'package:masjidhub/common/buttons/flatButton.dart';
 import 'package:masjidhub/common/buttons/primaryButton.dart';
 import 'package:masjidhub/constants/organisations.dart';
@@ -27,11 +26,6 @@ class _SearchOrganisationState extends State<SearchOrganisation> {
 
   void initState() {
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 
   @override
@@ -63,7 +57,6 @@ class _SearchOrganisationState extends State<SearchOrganisation> {
                   color: CustomTheme.lightTheme.colorScheme.background,
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: shadowNeu,
-
                 ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -73,24 +66,20 @@ class _SearchOrganisationState extends State<SearchOrganisation> {
                       padding: EdgeInsets.fromLTRB(30, 10, 30, 10),
                       scrollDirection: Axis.vertical,
                       shrinkWrap: true,
-
                       itemCount: organisationList.length,
                       itemBuilder: (BuildContext context, int index) {
                         return PrimaryButton(
                           id: organisationList[index].id,
                           text: organisationList[index].title,
                           width: _buttonWidth,
-
                           padding: buttonPadding,
                           margin: EdgeInsets.only(bottom: 30),
                           onPressed: (id) => _setOrgId(id),
                           textAlign: TextAlign.left,
                           isSelected:
-
                               selectedOrgId == organisationList[index].id,
                           isDisabled: false,
                           fontSize: 19,
-
                         );
                       },
                     ),

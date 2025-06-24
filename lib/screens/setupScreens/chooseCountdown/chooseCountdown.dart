@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:masjidhub/common/counter/counter.dart';
 import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
-
 import 'package:masjidhub/common/setup/setupHeaderImage.dart';
 import 'package:masjidhub/constants/images.dart';
 import 'package:masjidhub/provider/prayerTimingsProvider.dart';
@@ -28,29 +27,6 @@ class _ChooseCountdownState extends State<ChooseCountdown> {
   static int alertTime = SharedPrefs().getCountdownTimer;
   static int alertTimeChangeInterval = 5;
   static int alertTimeChangeMaxInterval = 100;
-
-  Future<void> _updateNotification() async {
-    Provider.of<PrayerTimingsProvider>(context, listen: false)
-        .updateNotification(notificationChannelChange: true);
-  }
-
-  Future<void> _incrementAlertTime() async {
-    if (alertTime == alertTimeChangeMaxInterval) return null;
-    setState(() {
-      alertTime = alertTime + alertTimeChangeInterval;
-    });
-    await SharedPrefs().setCountdownTimer(alertTime);
-    await _updateNotification();
-  }
-
-  Future<void> _decrementAlertTime() async {
-    if (alertTime == alertTimeChangeInterval) return null;
-    setState(() {
-      alertTime = alertTime - alertTimeChangeInterval;
-    });
-    await SharedPrefs().setCountdownTimer(alertTime);
-    await _updateNotification();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +56,8 @@ class _ChooseCountdownState extends State<ChooseCountdown> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(top: 1.5.h, left: 30, right: 30),
+                      padding:
+                          EdgeInsets.only(top: 1.5.h, left: 15.w, right: 15.w),
                       child: Text(
                         tr('selectCountdownText'),
                         style: TextStyle(
@@ -115,8 +92,11 @@ class _ChooseCountdownState extends State<ChooseCountdown> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                      padding: EdgeInsets.symmetric(horizontal: 30),
                       child: CountdownTimerAudioList(),
+                    ),
+                    SizedBox(
+                      height: 2.h,
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 30),
@@ -135,5 +115,28 @@ class _ChooseCountdownState extends State<ChooseCountdown> {
         ),
       ),
     );
+  }
+
+  Future<void> _updateNotification() async {
+    Provider.of<PrayerTimingsProvider>(context, listen: false)
+        .updateNotification(notificationChannelChange: true);
+  }
+
+  Future<void> _incrementAlertTime() async {
+    if (alertTime == alertTimeChangeMaxInterval) return null;
+    setState(() {
+      alertTime = alertTime + alertTimeChangeInterval;
+    });
+    await SharedPrefs().setCountdownTimer(alertTime);
+    await _updateNotification();
+  }
+
+  Future<void> _decrementAlertTime() async {
+    if (alertTime == alertTimeChangeInterval) return null;
+    setState(() {
+      alertTime = alertTime - alertTimeChangeInterval;
+    });
+    await SharedPrefs().setCountdownTimer(alertTime);
+    await _updateNotification();
   }
 }

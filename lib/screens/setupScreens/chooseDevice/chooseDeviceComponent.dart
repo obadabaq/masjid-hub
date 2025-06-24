@@ -9,7 +9,12 @@ import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 class ChooseDeviceComponent extends StatefulWidget {
-  ChooseDeviceComponent({Key? key}) : super(key: key);
+  final bool fromSetup;
+
+  ChooseDeviceComponent({
+    Key? key,
+    this.fromSetup = false,
+  }) : super(key: key);
 
   @override
   _ChooseDeviceComponentState createState() => _ChooseDeviceComponentState();
@@ -60,12 +65,14 @@ class _ChooseDeviceComponentState extends State<ChooseDeviceComponent> {
             ),
             isWatchConnects == true
                 ? QiblaWatchSyncApps()
-                : SizedBox(
-                    height: 45.h,
-                    child: Center(
-                      child: Text("No Connected Devices"),
-                    ),
-                  ),
+                : widget.fromSetup
+                    ? Container()
+                    : SizedBox(
+                        height: 45.h,
+                        child: Center(
+                          child: Text("No Connected Devices"),
+                        ),
+                      ),
           ],
         );
       }),

@@ -3,7 +3,6 @@ import 'package:masjidhub/screens/setupScreens/utils/setup_pageview_template.dar
 import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:masjidhub/common/counter/counter.dart';
-
 import 'package:masjidhub/common/setup/setupHeaderImage.dart';
 import 'package:masjidhub/constants/images.dart';
 import 'package:masjidhub/provider/tesbihProvider.dart';
@@ -26,18 +25,6 @@ class ChooseTesbih extends StatefulWidget {
 class _ChooseTesbihState extends State<ChooseTesbih> {
   static int tesbihGoal = SharedPrefs().getTesbihGoal;
   static int tesbihGoalChangeInterval = 33;
-
-  Future<void> _incrementTesbihGoal() async {
-    setState(() => tesbihGoal = tesbihGoal + tesbihGoalChangeInterval);
-    await SharedPrefs().setTesbihGoal(tesbihGoal);
-    Provider.of<TesbihProvider>(context, listen: false).updateAnalytics();
-  }
-
-  Future<void> _decrementTesbihGoal() async {
-    setState(() => tesbihGoal = tesbihGoal - tesbihGoalChangeInterval);
-    await SharedPrefs().setTesbihGoal(tesbihGoal);
-    Provider.of<TesbihProvider>(context, listen: false).updateAnalytics();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -99,5 +86,17 @@ class _ChooseTesbihState extends State<ChooseTesbih> {
         ),
       ),
     );
+  }
+
+  Future<void> _incrementTesbihGoal() async {
+    setState(() => tesbihGoal = tesbihGoal + tesbihGoalChangeInterval);
+    await SharedPrefs().setTesbihGoal(tesbihGoal);
+    Provider.of<TesbihProvider>(context, listen: false).updateAnalytics();
+  }
+
+  Future<void> _decrementTesbihGoal() async {
+    setState(() => tesbihGoal = tesbihGoal - tesbihGoalChangeInterval);
+    await SharedPrefs().setTesbihGoal(tesbihGoal);
+    Provider.of<TesbihProvider>(context, listen: false).updateAnalytics();
   }
 }

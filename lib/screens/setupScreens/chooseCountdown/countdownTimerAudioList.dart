@@ -1,7 +1,6 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'package:masjidhub/common/audio/audioListItem.dart';
 import 'package:masjidhub/constants/timerAudio.dart';
 import 'package:masjidhub/provider/prayerTimingsProvider.dart';
@@ -22,6 +21,35 @@ class _CountdownTimerAudioListState extends State<CountdownTimerAudioList> {
 
   static AudioPlayer audioPlayer = AudioPlayer();
   static AudioCache audioCache = AudioCache();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: ListView.builder(
+        physics: const NeverScrollableScrollPhysics(),
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        itemCount: timerAudioList.length,
+        itemBuilder: (BuildContext context, int index) {
+          return AudioListItem(
+            id: timerAudioList[index].id,
+            title: timerAudioList[index].title,
+            subTitle: timerAudioList[index].subTitle,
+            isSelected: selectedAzanId == timerAudioList[index].id,
+            onPressed: (id) => _onAzanItemPressed(id),
+            onAudioPressed: (id) => _setAzanAudio(id),
+            isAudioSelected: selectedAzanAudioId == timerAudioList[index].id,
+          );
+        },
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    audioPlayer.pause();
+    super.dispose();
+  }
 
   Future<void> _setAzanId(id) async {
     setState(() {
@@ -50,35 +78,5 @@ class _CountdownTimerAudioListState extends State<CountdownTimerAudioList> {
 
   _onAzanItemPressed(int id) {
     _setAzanId(id);
-  }
-
-  @override
-  void dispose() {
-    audioPlayer.pause();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: ListView.builder(
-        physics: const NeverScrollableScrollPhysics(),
-        padding: EdgeInsets.all(10),
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        itemCount: timerAudioList.length,
-        itemBuilder: (BuildContext context, int index) {
-          return AudioListItem(
-            id: timerAudioList[index].id,
-            title: timerAudioList[index].title,
-            subTitle: timerAudioList[index].subTitle,
-            isSelected: selectedAzanId == timerAudioList[index].id,
-            onPressed: (id) => _onAzanItemPressed(id),
-            onAudioPressed: (id) => _setAzanAudio(id),
-            isAudioSelected: selectedAzanAudioId == timerAudioList[index].id,
-          );
-        },
-      ),
-    );
   }
 }

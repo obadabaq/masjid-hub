@@ -8,6 +8,7 @@ import 'package:masjidhub/constants/organisations.dart';
 import 'package:masjidhub/provider/prayerTimingsProvider.dart';
 import 'package:masjidhub/screens/setupScreens/utils/setupFooter/setupFooter.dart';
 import 'package:masjidhub/theme/colors.dart';
+import 'package:masjidhub/utils/concaveDecoration.dart';
 import 'package:masjidhub/utils/prayerUtils.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
@@ -132,12 +133,17 @@ class _ChoosePrayerTimeState extends State<ChoosePrayerTime> {
                             child: Container(
                               width: constraints.maxWidth,
                               margin: EdgeInsets.only(
-                                  top: 0, left: 35, right: 35, bottom: 10),
+                                  top: 0, left: 8.w, right: 8.w, bottom: 10),
                               padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
-                              decoration: BoxDecoration(
-                                color: Colors.black.withValues(alpha: 0.1),
-                                borderRadius: BorderRadius.circular(20),
-                              ),
+                              decoration: ConcaveDecoration(
+                                  depth: 9,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20)),
+                                  colors: ([
+                                    Colors.white,
+                                    CustomColors.spindle,
+                                  ]),
+                                  size: Size(84.w, 70)),
                               child: Row(
                                 children: [
                                   Icon(
@@ -172,7 +178,7 @@ class _ChoosePrayerTimeState extends State<ChoosePrayerTime> {
                               width: constraints.maxWidth * 0.8,
                               margin: EdgeInsets.only(bottom: 20),
                               decoration: BoxDecoration(
-                                color: Colors.white,
+                                color: CustomColors.greyColor,
                                 borderRadius: BorderRadius.circular(10),
                                 boxShadow: [
                                   BoxShadow(

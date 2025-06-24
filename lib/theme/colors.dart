@@ -32,6 +32,7 @@ class CustomColors {
   static const Color mildGrey = const Color(0xFFF6C6E71);
   static const Color nero = const Color(0xFFF202020);
   static const Color gunPowder = const Color(0xFFF505052);
+  static const Color greyColor = const Color(0xFFECF0F3);
 
   // Gradients
   static const LinearGradient primary180 =
