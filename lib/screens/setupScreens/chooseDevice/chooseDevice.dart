@@ -6,6 +6,7 @@ import 'package:masjidhub/screens/setupScreens/chooseDevice/chooseDeviceComponen
 import 'package:masjidhub/screens/setupScreens/utils/setupFooter/setupFooter.dart';
 import 'package:masjidhub/screens/setupScreens/utils/setup_pageview_template.dart';
 import 'package:masjidhub/theme/colors.dart';
+import 'package:sizer/sizer.dart';
 
 class ChooseDevice extends StatefulWidget {
   final PageController pageController;
@@ -22,13 +23,16 @@ class ChooseDevice extends StatefulWidget {
 class _ChooseDeviceState extends State<ChooseDevice> {
   @override
   Widget build(BuildContext context) {
-    return SetupPageViewTemplate(
+    return Scaffold(
       body: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
           final _topPadding = constraints.maxHeight * 0.05;
           return SingleChildScrollView(
             child: Column(
               children: [
+                SizedBox(
+                  height: 6.h,
+                ),
                 Padding(
                   padding: EdgeInsets.only(top: _topPadding),
                   child: SetupHeaderImage(image: deviceSetupImage),
@@ -44,34 +48,34 @@ class _ChooseDeviceState extends State<ChooseDevice> {
                     ),
                   ),
                 ),
-                // Padding(
-                //   padding: EdgeInsets.only(
-                //       top: 20, left: 29, right: 29, bottom: 30),
-                //   child: Text(
-                //     tr('connectDeviceText'),
-                //     style: TextStyle(
-                //       fontSize: 16.0,
-                //       height: 1.3,
-                //       color: CustomColors.blackPearl.withValues(alpha: 0.7),
-                //     ),
-                //     textAlign: TextAlign.center,
-                //   ),
-                // ),
+                Padding(
+                  padding: EdgeInsets.only(
+                      top: 10, left: 29, right: 29, bottom: 6.h),
+                  child: Text(
+                    tr('connectDeviceText'),
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      height: 1.3,
+                      color: CustomColors.blackPearl.withValues(alpha: 0.7),
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
                 ChooseDeviceComponent(fromSetup: true),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 30),
+                  child: SetupFooter(
+                    currentPage: 5,
+                    margin: EdgeInsets.only(bottom: 30),
+                    buttonText: "Complete Setup",
+                    controller: widget.pageController,
+                    isLastStep: true,
+                  ),
+                ),
               ],
             ),
           );
         },
-      ),
-      footer: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 30),
-        child: SetupFooter(
-          currentPage: 5,
-          margin: EdgeInsets.only(bottom: 30),
-          buttonText: tr('next'),
-          controller: widget.pageController,
-          isLastStep: true,
-        ),
       ),
     );
   }

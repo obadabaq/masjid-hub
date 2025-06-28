@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
-
 import 'package:masjidhub/common/dashboard/bottomNavigationItem.dart';
 import 'package:masjidhub/common/icons/app_icons.dart';
 import 'package:masjidhub/utils/bottomNavBarUtils.dart';
 import 'package:masjidhub/utils/sharedPrefs.dart';
 import 'package:provider/provider.dart';
-
-import '../../constants/shadows.dart';
-import '../../provider/bottom_bar_provider.dart';
-import '../bottomNav/bottomNavGrab.dart';
+import 'package:masjidhub/constants/shadows.dart';
+import 'package:masjidhub/provider/bottom_bar_provider.dart';
+import 'package:masjidhub/common/bottomNav/bottomNavGrab.dart';
 
 class CustomBottonNavigation extends StatefulWidget {
   final Function(int) onTabTapped;
@@ -29,12 +27,6 @@ class _CustomBottonNavigationState extends State<CustomBottonNavigation> {
   ScrollController bottomNavScrollController = ScrollController();
 
   @override
-  void dispose() {
-    super.dispose();
-    bottomNavScrollController.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Future.delayed(Duration(seconds: 3), () {
@@ -42,6 +34,7 @@ class _CustomBottonNavigationState extends State<CustomBottonNavigation> {
       });
     });
     final state = Provider.of<BottomBarProvider>(context, listen: true);
+
     return AnimatedContainer(
       duration: const Duration(milliseconds: 500),
       height: state.isNavBarVisible ? 122 : 50,
@@ -112,5 +105,11 @@ class _CustomBottonNavigationState extends State<CustomBottonNavigation> {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    bottomNavScrollController.dispose();
   }
 }

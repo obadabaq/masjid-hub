@@ -76,9 +76,11 @@ class _CustomSwitchState extends State<CustomSwitch> {
             InnerShadow(
               shadows: [
                 Shadow(
-                  color: Colors.black.withValues(alpha: 0.5),
-                  blurRadius: 5,
-                  offset: Offset(0, 0),
+                  color: widget.value
+                      ? Colors.black.withValues(alpha: 0.3)
+                      : Colors.black.withValues(alpha: 0.2),
+                  blurRadius: widget.value ? 10 : 5,
+                  offset: widget.value ? Offset(0, 4) : Offset(0, 5),
                 )
               ],
               child: Container(
@@ -100,9 +102,10 @@ class _CustomSwitchState extends State<CustomSwitch> {
                 shape: BoxShape.circle,
                 boxShadow: [
                   BoxShadow(
-                    color: Color(0xFF00ACC1).withValues(alpha: 0.3),
-                    blurRadius: 10.0,
+                    color: Color(0xFF00ACC1).withValues(alpha: 0.2),
+                    blurRadius: 2.0,
                     spreadRadius: 2.0,
+                    offset: Offset(1, 2),
                   ),
                 ],
               ),

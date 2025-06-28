@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-
 import 'package:masjidhub/constants/shadows.dart';
 import 'package:masjidhub/theme/colors.dart';
 import 'package:masjidhub/utils/concaveDecoration.dart';
 import 'package:provider/provider.dart';
-
-import '../../provider/bottom_bar_provider.dart';
+import 'package:masjidhub/provider/bottom_bar_provider.dart';
+import 'package:sizer/sizer.dart';
 
 class BottomNavigationItem extends StatelessWidget {
   final int index;
@@ -29,8 +28,9 @@ class BottomNavigationItem extends StatelessWidget {
   Widget build(BuildContext context) {
     bool _isSelected = index == currentIndex;
     bool _isQiblaIcon = index == 1;
-    double _iconContainerLength = 70;
+    double _iconContainerLength = 8.5.h;
     final state = Provider.of<BottomBarProvider>(context, listen: true);
+
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () => onItemPressed(index),
@@ -60,12 +60,14 @@ class BottomNavigationItem extends StatelessWidget {
                             color: CustomColors.solitude,
                             borderRadius: BorderRadius.circular(20),
                           ),
-                    child: Icon(
-                      icon,
-                      size: _isQiblaIcon ? 40 : 30,
-                      color: _isSelected
-                          ? Theme.of(context).colorScheme.secondary
-                          : CustomColors.mischka,
+                    child: Center(
+                      child: Icon(
+                        icon,
+                        size: _isQiblaIcon ? 40 : 30,
+                        color: _isSelected
+                            ? Theme.of(context).colorScheme.secondary
+                            : CustomColors.mischka,
+                      ),
                     ),
                   ),
                 ),

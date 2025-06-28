@@ -69,7 +69,7 @@ class _AdhanTimeListState extends State<AdhanTimeList> {
                           AsyncSnapshot<List<AdhanTimeModel>> snapshot) {
                         if (snapshot.hasData)
                           return ListView.builder(
-                            padding: EdgeInsets.only(top: 10, bottom: 150),
+                            padding: EdgeInsets.only(top: 10, bottom: 10),
                             physics: NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
                             itemCount: 6,
