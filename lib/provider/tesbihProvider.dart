@@ -83,6 +83,7 @@ class TesbihProvider extends ChangeNotifier {
         int count = int.tryParse(newTasbeehCount) ?? 0;
         newFromWatch = count;
 
+        SharedPrefs().incrementTesbihCountToday();
         if (newFromWatch != oldFromWatch) {
           if (count == 0) {
             resetTesbih();

@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
-
 import 'package:masjidhub/screens/dashboard/tesbih/tesbihAnalytics/tesbihAnalytics.dart';
 import 'package:masjidhub/screens/dashboard/tesbih/tesbihCountView/tesbihCountView.dart';
 import 'package:masjidhub/screens/dashboard/tesbih/tesbihDial/tesbihDial.dart';
 import 'package:masjidhub/utils/sharedPrefs.dart';
 import 'package:masjidhub/utils/tesbihUtils.dart';
 import 'package:provider/provider.dart';
-
-import '../../../common/scrollable_main_screen.dart';
-import '../../../provider/tesbihProvider.dart';
-import '../../../provider/wathc_provider.dart';
+import 'package:masjidhub/common/scrollable_main_screen.dart';
+import 'package:masjidhub/provider/tesbihProvider.dart';
+import 'package:masjidhub/provider/wathc_provider.dart';
 
 class Tesbih extends StatefulWidget {
   const Tesbih({Key? key}) : super(key: key);
@@ -37,12 +35,6 @@ class _TesbihState extends State<Tesbih> with SingleTickerProviderStateMixin {
   }
 
   @override
-  void dispose() {
-    super.dispose();
-    tesbihScrollController.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return ScrollableMainScreen(
       scrollController: tesbihScrollController,
@@ -60,6 +52,12 @@ class _TesbihState extends State<Tesbih> with SingleTickerProviderStateMixin {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    tesbihScrollController.dispose();
   }
 
   void onIconDownClick() => TesbihUtils()
