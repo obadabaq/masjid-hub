@@ -9,7 +9,7 @@ class Dropdown extends StatefulWidget {
   final Color color;
   final double width;
   final list;
-  final Function onItemPressed;
+  final Function(String id, String title) onItemPressed;
   final selectedValue;
 
   const Dropdown({
@@ -68,7 +68,6 @@ class _DropdownState extends State<Dropdown> {
                 title: widget.selectedValue.title,
                 id: widget.selectedValue.id.toString(),
                 onPressed: (id, title) {
-                  widget.onItemPressed(id, title);
                   setState(() {
                     isOpened = true;
                   });
@@ -78,8 +77,10 @@ class _DropdownState extends State<Dropdown> {
             return DropdownListItem(
               title: widget.list[index].title,
               id: widget.list[index].id.toString(),
-              isSelected: widget.selectedValue.id.toString() ==
-                  widget.list[index].id.toString(),
+              isSelected: widget.selectedValue != null
+                  ? widget.selectedValue.id.toString() ==
+                      widget.list[index].id.toString()
+                  : false,
               onPressed: (id, title) {
                 widget.onItemPressed(id, title);
                 setState(() {

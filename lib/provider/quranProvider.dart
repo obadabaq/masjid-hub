@@ -132,9 +132,9 @@ class QuranProvider extends ChangeNotifier {
 
   // Quran Recitation
   int quranReciter = SharedPrefs().getSelectedQuranRecitor;
-  Future<void> onQuranReciterChanged(int id) async {
-    quranReciter = id;
-    SharedPrefs().setQuranRecitor(id);
+  Future<void> onQuranReciterChanged(String id, String title) async {
+    quranReciter = int.parse(id);
+    SharedPrefs().setQuranRecitor(int.parse(id));
     notifyListeners();
   }
 
