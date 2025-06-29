@@ -4,7 +4,6 @@ import 'package:masjidhub/common/buttons/primaryButton.dart';
 import 'package:masjidhub/common/setup/setupHeaderImage.dart';
 import 'package:masjidhub/constants/images.dart';
 import 'package:masjidhub/constants/madhabs.dart';
-import 'package:masjidhub/constants/organisations.dart';
 import 'package:masjidhub/provider/prayerTimingsProvider.dart';
 import 'package:masjidhub/screens/setupScreens/utils/setupFooter/setupFooter.dart';
 import 'package:masjidhub/theme/colors.dart';
@@ -12,6 +11,9 @@ import 'package:masjidhub/utils/concaveDecoration.dart';
 import 'package:masjidhub/utils/prayerUtils.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../../common/popup/popup.dart';
+import '../../dashboard/sidebar/subSettingScreens/calculationMethod/select_org.dart';
 
 class ChoosePrayerTime extends StatefulWidget {
   final PageController pageController;
@@ -26,18 +28,8 @@ class ChoosePrayerTime extends StatefulWidget {
 }
 
 class _ChoosePrayerTimeState extends State<ChoosePrayerTime> {
-  bool _showOrgDropdown = false;
-
   static EdgeInsetsGeometry buttonPadding =
       const EdgeInsets.fromLTRB(0, 20, 0, 20);
-
-  Future<void> _setOrgId(id) async {
-    final provider = Provider.of<PrayerTimingsProvider>(context, listen: false);
-    setState(() {
-      _showOrgDropdown = false;
-    });
-    provider.setOrgId(id);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -126,9 +118,11 @@ class _ChoosePrayerTimeState extends State<ChoosePrayerTime> {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              setState(() {
-                                _showOrgDropdown = !_showOrgDropdown;
-                              });
+                              _showPopup(
+                                context,
+                                SelectOrg(),
+                                popupContext: context,
+                              );
                             },
                             child: Container(
                               width: constraints.maxWidth,
@@ -173,36 +167,6 @@ class _ChoosePrayerTimeState extends State<ChoosePrayerTime> {
                               ),
                             ),
                           ),
-                          if (_showOrgDropdown)
-                            Container(
-                              width: constraints.maxWidth * 0.8,
-                              margin: EdgeInsets.only(bottom: 20),
-                              decoration: BoxDecoration(
-                                color: CustomColors.greyColor,
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black12,
-                                    blurRadius: 10,
-                                    spreadRadius: 2,
-                                  ),
-                                ],
-                              ),
-                              constraints: BoxConstraints(
-                                maxHeight: 200,
-                              ),
-                              child: ListView.builder(
-                                shrinkWrap: true,
-                                itemCount: organisationList.length,
-                                itemBuilder: (_, index) {
-                                  return ListTile(
-                                    title: Text(
-                                        PrayerUtils().getOrgNameFromId(index)),
-                                    onTap: () => _setOrgId(index),
-                                  );
-                                },
-                              ),
-                            ),
                         ],
                       ),
                     ),
@@ -224,6 +188,16 @@ class _ChoosePrayerTimeState extends State<ChoosePrayerTime> {
             },
           ),
         ),
+      ),
+    );
+  }
+
+  _showPopup(BuildContext context, Widget widget,
+      {required BuildContext popupContext}) {
+    Navigator.push(
+      context,
+      PopupLayout(
+        child: widget,
       ),
     );
   }
