@@ -8,6 +8,7 @@ import 'package:masjidhub/theme/colors.dart';
 import 'package:masjidhub/utils/prayerUtils.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../common/buttons/primaryButton.dart';
 import '../../../../../common/popup/popup.dart';
 
 class SubSettingCalculationMethod extends StatelessWidget {
@@ -57,32 +58,18 @@ class SubSettingCalculationMethod extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
               ),
-              GestureDetector(
-                onTap: () {
-                  _showPopup(
-                    context,
-                    SelectOrg(),
-                    popupContext: context,
-                  );
-                },
-                child: Container(
-                  width: constraints.maxWidth,
-                  margin:
-                      EdgeInsets.only(top: 0, left: 35, right: 35, bottom: 10),
-                  padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
-                  decoration: BoxDecoration(
-                    color: CustomColors.irisBlue,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Text(
-                    PrayerUtils().getOrgNameFromId(provider.getOrgId),
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.white,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
+              PrimaryButton(
+                margin:
+                    EdgeInsets.only(top: 0, left: 35, right: 35, bottom: 10),
+                padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
+                text: PrayerUtils().getOrgNameFromId(provider.getOrgId),
+                width: constraints.maxWidth,
+                isSelected: true,
+                isDisabled: false,
+                onPressed: () => _showPopup(
+                  context,
+                  SelectOrg(),
+                  popupContext: context,
                 ),
               ),
             ],
