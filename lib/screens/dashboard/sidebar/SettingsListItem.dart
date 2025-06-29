@@ -51,16 +51,27 @@ class SettingsListItem extends StatelessWidget {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 3),
-                  child: Text(
-                    selectedValue,
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: CustomColors.mischka,
+                if (selectedValue.isNotEmpty)
+                  Flexible(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Flexible(
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 3),
+                            child: Text(
+                              selectedValue,
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: CustomColors.mischka,
+                              ),
+                              maxLines: 2,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                ),
                 Container(
                   child: Icon(
                     Icons.arrow_forward_ios,

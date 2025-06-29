@@ -26,7 +26,7 @@ save location,Save Location,Enregistrer l'emplacement,Sicherer Ort,Konumu kaydet
 find your location,Find your location,Trouvez votre position,Finden Sie Ihren Standort,Konumunuzu bulun,
 go back,Go Back,Retourner,Geh zurück,Geri dön,
 select organisation,Select organisation,Sélectionnez l'organisation,Organisation auswählen,Kuruluş seçin,
-select your madzhab.,Select your Madzhab.,Sélectionnez votre Madzhab.,Wählen Sie Ihre Madschab aus.,Medzhab'ınızı seçin.,
+select your madzhab,Select your Madzhab,Sélectionnez votre Madzhab,Wählen Sie Ihre Madschab aus,Medzhab'ınızı seçin,
 prayer time calculation,Prayer Time Calculation,Calcul du temps de prière,Berechnung der Gebetszeit,Namaz Vakti Hesaplama,
 remote control,Remote Control,Télécommande,Fernbedienung,Uzaktan kumanda,
 disconnectedStateButtonText,"Even without an internet connection, you can play the Quran on your HomeMasjid by using your phone as a remote control.","Même sans connexion Internet, vous pouvez lire le Coran sur votre HomeMasjid en utilisant votre téléphone comme télécommande.","Auch ohne Internetverbindung können Sie den Koran auf Ihrer HomeMasjid abspielen, indem Sie Ihr Telefon als Fernbedienung verwenden.",İnternet bağlantınız olmasa bile telefonunuzu uzaktan kumanda olarak kullanarak Ev Mescidi'nizde Kuran-ı Kerim'i oynatabilirsiniz.,
@@ -190,3 +190,4 @@ Please go back to the main screen to download surah audio files in order to play
 Back to Surah,Back to Surah,Back to Surah,Back to Surah,Back to Surah,
 Go to Main Screen,Go to Main Screen,Go to Main Screen,Go to Main Screen,Go to Main Screen,
 quran settings,Quran Settings,Quran Settings,Quran Settings,Quran Settings,
+select an organisation,Select an Organisation,Select an Organisation,Select an Organisation,

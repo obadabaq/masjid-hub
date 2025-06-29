@@ -47,8 +47,11 @@ class SettingsListBuidler extends StatelessWidget {
               ? "Manual"
               : tr('automatic');
         case 'Calculation Method':
-          String madhab =
-              tr(PrayerUtils().getMadhabTitleFromId(provider.getMadhabId));
+          String madhab = tr(provider.getMadhabId != -1
+              ? PrayerUtils().getMadhabTitleFromId(provider.getMadhabId)
+              : provider.getOrgId != -1
+                  ? PrayerUtils().getOrgNameFromId(provider.getOrgId)
+                  : "");
           return madhab.toString();
         case 'Countdown to Adhan':
           return 'min'.tr(args: ['${provider.countdownTimer}']);

@@ -4,7 +4,6 @@ import 'package:masjidhub/common/setup/setupHeaderImage.dart';
 import 'package:masjidhub/constants/images.dart';
 import 'package:masjidhub/screens/setupScreens/chooseDevice/chooseDeviceComponent.dart';
 import 'package:masjidhub/screens/setupScreens/utils/setupFooter/setupFooter.dart';
-import 'package:masjidhub/screens/setupScreens/utils/setup_pageview_template.dart';
 import 'package:masjidhub/theme/colors.dart';
 import 'package:sizer/sizer.dart';
 
