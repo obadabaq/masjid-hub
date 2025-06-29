@@ -83,7 +83,19 @@ class SettingsListItem extends StatelessWidget {
             ),
           ),
         ),
-        if (requiresDivider) Divider(),
+        if (requiresDivider)
+          Column(
+            children: [
+              Divider(
+                color: CustomColors.mischka,
+                height: 1,
+              ),
+              Divider(
+                color: Colors.white,
+                height: 1,
+              ),
+            ],
+          ),
       ],
     );
   }
