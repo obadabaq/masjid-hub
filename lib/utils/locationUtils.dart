@@ -20,11 +20,11 @@ class LocationUtils {
 
     final int organisationIndex = organisationList
         .indexWhere((el) => el.supportedCountries.contains(countryIsoCode));
-
-    final countryNotListedByOrg = organisationIndex == -1;
-    if (countryNotListedByOrg) return defaultOrgId;
-
-    return organisationList[organisationIndex].id;
+    print('objectsadads asda');
+    print(organisationIndex);
+    return organisationIndex == -1
+        ? defaultOrgId
+        : organisationList[organisationIndex].id;
   }
 
   double adjustedNegativeBearing(double bearing) {
@@ -47,7 +47,6 @@ class LocationUtils {
     String? pCity = placemark.locality;
     String? pStreet = placemark.street;
     String? subAdminstrativeArea = placemark.subAdministrativeArea;
-
 
     bool hasCountry = checkIfValidString(pCountry);
     bool hasCity = checkIfValidString(pCity);

@@ -87,7 +87,7 @@ class _SelectOrgState extends State<SelectOrg> {
                     list: organisationList,
                     onItemPressed: onSelectedItem,
                     selectedValue: OrganisationModel(
-                      id: int.parse(id ?? '-1'),
+                      id: int.parse(id ?? '0'),
                       title: title.toString(),
                       param: PrayerUtils().getMethodFromId(provider.getOrgId),
                       supportedCountries: [],

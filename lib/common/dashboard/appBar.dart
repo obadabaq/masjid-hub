@@ -16,7 +16,7 @@ import 'package:masjidhub/provider/tesbihProvider.dart';
 import 'package:masjidhub/constants/settingsList/locationSettingsListData.dart';
 import 'package:masjidhub/screens/dashboard/sidebar/subSettingScreens/subSettingLayout.dart';
 
-class CustomAppBar extends StatelessWidget {
+class CustomAppBar extends StatefulWidget {
   final Function openDrawer;
   final AppBarState state;
 
@@ -27,55 +27,56 @@ class CustomAppBar extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<CustomAppBar> createState() => _CustomAppBarState();
+}
+
+class _CustomAppBarState extends State<CustomAppBar> {
+// When user clicks on location icon on prayer times dashboard
+  void fetchAddress() {
+    Provider.of<LocationProvider>(context, listen: false).setAutomatic(true);
+    Provider.of<LocationProvider>(context, listen: false)
+        .fetchAddress(onError: (err) => _showOfflinePopup(context, err));
+  }
+
+  void onQuranSearchToggle() =>
+      Provider.of<QuranProvider>(context, listen: false).toggleSearchActive();
+
+  Future<void> onFailure() async {
+    await Provider.of<BleProvider>(context, listen: false).toggleRemote(false);
+  }
+
+  // Popup to show already connected Home masjid devices
+  Future<void> switchToA2dpMode() async {
+    try {
+      await Provider.of<BleProvider>(context, listen: false).setAdpMode();
+    } catch (e) {
+      AppSnackBar().showSnackBar(context, e, onTap: onFailure);
+    }
+  }
+
+  Future<void> switchSearchOff() async {
+    await Provider.of<QuranProvider>(context, listen: false)
+        .toggleSearchActive();
+  }
+
+  void resetTesbih() =>
+      Provider.of<TesbihProvider>(context, listen: false).resetTesbih();
+
+  @override
   Widget build(BuildContext context) {
-    // When user clicks on location icon on prayer times dashboard
-    void fetchAddress() {
-      Provider.of<LocationProvider>(context, listen: false).setAutomatic(true);
-      Provider.of<LocationProvider>(context, listen: false)
-          .fetchAddress(onError: (err) => _showOfflinePopup(context, err));
-    }
-
-    void onQuranSearchToggle() =>
-        Provider.of<QuranProvider>(context, listen: false).toggleSearchActive();
-
-    Future<void> onFailure() async {
-      await Provider.of<BleProvider>(context, listen: false)
-          .toggleRemote(false);
-    }
-
-    // Popup to show already connected Home masjid devices
-    // Removing it as clicking on remote button takes them to A2DP mode
-    // void showRemotePopup() => _showSwitchQuranBoxPopup(context);
-
-    Future<void> switchToA2dpMode() async {
-      try {
-        await Provider.of<BleProvider>(context, listen: false).setAdpMode();
-      } catch (e) {
-        AppSnackBar().showSnackBar(context, e, onTap: onFailure);
-      }
-    }
-
-    Future<void> switchSearchOff() async {
-      await Provider.of<QuranProvider>(context, listen: false)
-          .toggleSearchActive();
-    }
-
-    void resetTesbih() =>
-        Provider.of<TesbihProvider>(context, listen: false).resetTesbih();
-
     return Consumer<QuranProvider>(
       builder: (ctx, quran, _) => AppBar(
         backgroundColor: Theme.of(context).colorScheme.background,
         automaticallyImplyLeading: false,
         elevation: 0,
         toolbarHeight: 100,
-        centerTitle: AppBarUtils().isCenter(state),
+        centerTitle: AppBarUtils().isCenter(widget.state),
         title: Padding(
-          padding: AppBarUtils().getTitlePadding(state),
+          padding: AppBarUtils().getTitlePadding(widget.state),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (state == AppBarState.quranSearch)
+              if (widget.state == AppBarState.quranSearch)
                 GestureDetector(
                   behavior: HitTestBehavior.translucent,
                   onTap: switchSearchOff,
@@ -103,14 +104,14 @@ class CustomAppBar extends StatelessWidget {
                     ],
                   ),
                 ),
-              if (state != AppBarState.quranSearch)
+              if (widget.state != AppBarState.quranSearch)
                 Row(
                   children: [
                     Expanded(
                       child: GestureDetector(
                         behavior: HitTestBehavior.translucent,
                         onTap: () {
-                          if (state == AppBarState.address) {
+                          if (widget.state == AppBarState.address) {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -125,16 +126,18 @@ class CustomAppBar extends StatelessWidget {
                         child: Consumer<LocationProvider>(
                           builder: (ctx, locationProvider, _) {
                             return AutoSizeText(
-                              AppBarUtils().getTitle(state),
+                              AppBarUtils().getTitle(widget.state),
                               style: TextStyle(
-                                fontSize: AppBarUtils().titleFontSize(state),
+                                fontSize:
+                                    AppBarUtils().titleFontSize(widget.state),
                                 height: 1.3,
                                 color: CustomColors.blackPearl,
                               ),
                               minFontSize: 16,
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
-                              textAlign: AppBarUtils().titleAlignment(state),
+                              textAlign:
+                                  AppBarUtils().titleAlignment(widget.state),
                             );
                           },
                         ),
@@ -142,11 +145,11 @@ class CustomAppBar extends StatelessWidget {
                     ),
                   ],
                 ),
-              if (state == AppBarState.remote)
+              if (widget.state == AppBarState.remote)
                 Padding(
                   padding: const EdgeInsets.only(top: 3),
                   child: Text(
-                    AppBarUtils().getSubTitle(state),
+                    AppBarUtils().getSubTitle(widget.state),
                     style: TextStyle(
                       fontSize: 15,
                       height: 1.3,
@@ -158,14 +161,14 @@ class CustomAppBar extends StatelessWidget {
           ),
         ),
         actions: AppBarUtils().getActionWidgets(
-          state,
+          widget.state,
           onQuranSearchToggle: onQuranSearchToggle,
           showRemotePopup: switchToA2dpMode,
-          openDrawer: openDrawer,
+          openDrawer: widget.openDrawer,
           resetTesbih: resetTesbih,
         ),
-        leading:
-            AppBarUtils().getLeadingWidgets(state, fetchLocation: fetchAddress),
+        leading: AppBarUtils()
+            .getLeadingWidgets(widget.state, fetchLocation: fetchAddress),
       ),
     );
   }

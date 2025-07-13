@@ -40,16 +40,16 @@ class _SearchLocationState extends State<SearchLocation> {
     });
   }
 
-  _onLocatioSelected(id, title) async {
+  _onLocationSelected(id, title) async {
     widget.controller.text = title;
     controller.text = title;
     _debounce?.cancel();
     var locationProvider =
         Provider.of<LocationProvider>(context, listen: false);
+    locationProvider.setAutomatic(false);
     await setLastSelectedLocation(id, title);
     await locationProvider.getPlacesCords(id);
     locationProvider.resetPlaces();
-    locationProvider.setAutomatic(false);
     setState(() {
       lastSelectedLocation = null;
     });
@@ -115,7 +115,7 @@ class _SearchLocationState extends State<SearchLocation> {
                       child: Dropdown(
                         width: _buttonWidth,
                         list: location.places,
-                        onItemPressed: _onLocatioSelected,
+                        onItemPressed: _onLocationSelected,
                       ),
                     ),
                   ),
@@ -131,7 +131,7 @@ class _SearchLocationState extends State<SearchLocation> {
                               left: 30,
                               right: 30,
                             ),
-                            onPressed: _onLocatioSelected,
+                            onPressed: _onLocationSelected,
                           ),
                         ),
                       ],

@@ -161,7 +161,7 @@ class _ChooseLocationState extends State<ChooseLocation> {
     if (!locationProvider.isAutomatic) {
       locationProvider = Provider.of<LocationProvider>(context, listen: false);
       try {
-        await locationProvider.locateUser();
+        await locationProvider.locateUser(isFirstTime: true);
         _controller.text =
             locationProvider.getAddress ?? tr('could not fetch location');
         locationProvider.setAutomatic(true);

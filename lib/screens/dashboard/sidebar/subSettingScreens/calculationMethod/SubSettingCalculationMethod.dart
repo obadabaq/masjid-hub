@@ -11,10 +11,23 @@ import 'package:provider/provider.dart';
 import '../../../../../common/buttons/primaryButton.dart';
 import '../../../../../common/popup/popup.dart';
 
-class SubSettingCalculationMethod extends StatelessWidget {
+class SubSettingCalculationMethod extends StatefulWidget {
   const SubSettingCalculationMethod({
     Key? key,
   }) : super(key: key);
+
+  @override
+  State<SubSettingCalculationMethod> createState() =>
+      _SubSettingCalculationMethodState();
+}
+
+class _SubSettingCalculationMethodState
+    extends State<SubSettingCalculationMethod> {
+  @override
+  void initState() {
+    Provider.of<PrayerTimingsProvider>(context, listen: false).getOrgId;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -42,8 +42,8 @@ class LocationProvider extends ChangeNotifier {
     return _address;
   }
 
-  set setAddress(String addr) {
-    // SharedPrefs().setAddress(addr);
+  set setAddress(String? addr) {
+    SharedPrefs().setAddress(addr);
     _address = addr;
   }
 
@@ -109,7 +109,6 @@ class LocationProvider extends ChangeNotifier {
       }
 
       String address = "${city['short_name']}, ${country['short_name']}";
-      String addressMobile = address;
 
       if (address.contains("tanbul")) {
         address = "I" + address.substring(1);
@@ -124,14 +123,12 @@ class LocationProvider extends ChangeNotifier {
         userCords.lat,
         userCords.lon,
         address,
-        addressMobile,
       );
 
       PrayerUtils().getAltitude();
       await fetchAddressAndSaveOrgId(
         userCords.lat,
         userCords.lon,
-        saveAddress: false,
       );
       getBearingFromMecca(userCords);
 
@@ -221,7 +218,6 @@ class LocationProvider extends ChangeNotifier {
       }
 
       String address = "${city['short_name']}, ${country['short_name']}";
-      String addressMobile = address;
 
       if (address.contains("tanbul")) {
         address = "I" + address.substring(1);
@@ -230,30 +226,32 @@ class LocationProvider extends ChangeNotifier {
       if (address.length >= 15) {
         address = address.split(',')[0];
       }
-      SharedPrefs().setLocation(lat, lng, address, addressMobile);
-      return [address, addressMobile];
+      SharedPrefs().setLocation(lat, lng, address);
+      return [address];
     } catch (e) {
       return ["Error: $e"];
     }
   }
 
-  Future<void> locateUser() async {
+  Future<void> locateUser({bool isFirstTime = false}) async {
     try {
-      locationLoading = true;
-      notifyListeners();
-      // final locationCords = await checkLocationPermissionAndLocate();
-      await Geolocator.requestPermission();
-      Position position = await Geolocator.getCurrentPosition();
-      log(position.toString());
-      final double lat = position.latitude;
-      final double lon = position.longitude;
-      final userCords = Cords(lat: lat, lon: lon);
-      await getPlaceFromCoordinates(lat, lon);
-      locationLoading = false;
-      notifyListeners();
-      setupProvider.setUserCords(userCords);
-      PrayerUtils().getAltitude();
-      getBearingFromMecca(userCords);
+      if (isAutomatic || isFirstTime) {
+        locationLoading = true;
+        notifyListeners();
+        await Geolocator.requestPermission();
+        Position position = await Geolocator.getCurrentPosition();
+        log(position.toString());
+        final double lat = position.latitude;
+        final double lon = position.longitude;
+        final userCords = Cords(lat: lat, lon: lon);
+        await getPlaceFromCoordinates(lat, lon);
+
+        locationLoading = false;
+        notifyListeners();
+        setupProvider.setUserCords(userCords);
+        PrayerUtils().getAltitude();
+        getBearingFromMecca(userCords);
+      }
       final watchProvider = WatchProvider();
       if (watchProvider.isConnected) {
         try {
@@ -295,18 +293,18 @@ class LocationProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> fetchAddressAndSaveOrgId(double lat, double lon,
-      {bool saveAddress = true}) async {
+  Future<void> fetchAddressAndSaveOrgId(double lat, double lon) async {
     try {
       _placemarks = await placemarkFromCoordinates(lat, lon);
 
       String? _countryIsoCode = _placemarks[0].isoCountryCode;
       setOrgId(_countryIsoCode);
 
-      if (saveAddress) {
+      if (!isAutomatic) {
         setAddress = LocationUtils().getAddressFromPlacemark(_placemarks[0]);
-        print(getAddress);
         notifyListeners();
+      } else {
+        setAddress = null;
       }
     } catch (e) {
       setErrorText(e.toString());
@@ -421,7 +419,8 @@ class LocationProvider extends ChangeNotifier {
     bool isOnline = await InternetConnectionChecker().hasConnection;
     if (!isOnline) onError(AppError.noInternet);
     try {
-      setAutomatic(true);
+      getAutomatic;
+      getAddress;
       await saveAddress();
     } catch (e) {
       setErrorText(e.toString());

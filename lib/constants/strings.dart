@@ -10,7 +10,6 @@ const String keySyncWhatsapp = "syncWhatsapp";
 const String keySyncTime = "syncTime";
 const String keySyncCalender = "syncCalender";
 const String keyAutomaticLocation = "automaticLocation";
-const String keyAddressForMobile = "addressMobile";
 const String keyPrayerListSettings = "prayerListSettings";
 const String keySelectedAdhanId = "selectedAdhanId";
 const String keyCountdownTimer = "countdownTimer";

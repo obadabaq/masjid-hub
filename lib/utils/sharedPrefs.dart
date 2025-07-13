@@ -80,16 +80,16 @@ class SharedPrefs {
       _sharedPrefs?.setBool(keyIsSetupCompleted, isSetupCompleted);
 
   Future<void> setLocation(
-      double lat, double lon, String address, String addressMobile) async {
+    double lat,
+    double lon,
+    String address,
+  ) async {
     _sharedPrefs?.setDouble(keyLattitude, lat);
     _sharedPrefs?.setDouble(keyLongitude, lon);
     _sharedPrefs?.setString(keyAddress, address);
-    _sharedPrefs?.setString(keyAddressForMobile, addressMobile);
   }
 
   String? _address = _sharedPrefs?.getString(keyAddress);
-
-  String? _addressMobile = _sharedPrefs?.getString(keyAddressForMobile);
 
   bool? _automaticLocation = _sharedPrefs?.getBool(keyAutomaticLocation);
 
@@ -122,10 +122,11 @@ class SharedPrefs {
 
   bool get getSyncCalender => _syncCalender ?? false;
 
-  String get getAddressMobile =>
-      _addressMobile ?? 'Unable to locate, Please refresh location';
-
-  Future<void> setAddress(String address) async {
+  Future<void> setAddress(String? address) async {
+    if (address == null) {
+      _sharedPrefs?.remove(keyAddress);
+      return;
+    }
     _sharedPrefs?.setString(keyAddress, address);
   }
 
@@ -235,7 +236,7 @@ class SharedPrefs {
   Future<void> setSelectedMadhabId(int? madhabId) async =>
       _sharedPrefs?.setInt(keyMadhabId, madhabId ?? defaultMadhabId);
 
-  final int defaultOrgId = -1;
+  final int defaultOrgId = 0;
   int? _selectedOrgId = _sharedPrefs?.getInt(keyOrgId);
 
   int get getSelectedOrgId => _selectedOrgId ?? defaultOrgId;

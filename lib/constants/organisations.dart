@@ -12,13 +12,13 @@ final List<OrganisationModel> organisationList = [
     id: 1,
     title: 'Egyptian General Authority of Survey',
     param: CalculationMethod.egyptian,
-    supportedCountries: [],
+    supportedCountries: ['SD', 'EG'],
   ),
   OrganisationModel(
     id: 2,
     title: 'University of Islamic Sciences, Karachi',
     param: CalculationMethod.karachi,
-    supportedCountries: ['PK', 'IN'],
+    supportedCountries: ['PK', 'IN', 'AF'],
   ),
   OrganisationModel(
     id: 3,
@@ -36,7 +36,7 @@ final List<OrganisationModel> organisationList = [
     id: 5,
     title: 'Moon Sighting Committee',
     param: CalculationMethod.moon_sighting_committee,
-    supportedCountries: [],
+    supportedCountries: ['GB', 'CA'],
   ),
   OrganisationModel(
     id: 6,
@@ -78,6 +78,6 @@ final List<OrganisationModel> organisationList = [
     id: 12,
     title: 'University of Tehran',
     param: CalculationMethod.tehran,
-    supportedCountries: [],
+    supportedCountries: ['IR'],
   ),
 ];

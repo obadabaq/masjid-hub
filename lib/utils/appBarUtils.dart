@@ -37,7 +37,7 @@ class AppBarUtils {
   String getTitle(AppBarState state) {
     switch (state) {
       case AppBarState.address:
-        return SharedPrefs().getAddressMobile;
+        return SharedPrefs().getAddress;
       case AppBarState.quranSearch:
       case AppBarState.remote:
       case AppBarState.quran:
