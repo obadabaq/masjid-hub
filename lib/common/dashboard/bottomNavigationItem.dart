@@ -52,8 +52,8 @@ class BottomNavigationItem extends StatelessWidget {
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20)),
                             colors: innerConcaveShadow,
-                            size: Size(
-                                _iconContainerLength, _iconContainerLength),
+                            size: Size(_iconContainerLength,
+                                _iconContainerLength - 10),
                           )
                         : BoxDecoration(
                             boxShadow: tertiaryShadow,
