@@ -46,7 +46,7 @@ class _ChooseDeviceComponentState extends State<ChooseDeviceComponent> {
                 DevicesButton(
                   onClick: () => _showRemoteConnectPopup(context),
                   text: 'Home Masjid',
-                  icon: AppIcons.ishaIcon,
+                  icon: "assets/images/home-masjid-icon.png",
                   width: boxWidth,
                   buttonSelected: false,
                 ),
@@ -55,7 +55,7 @@ class _ChooseDeviceComponentState extends State<ChooseDeviceComponent> {
                     return DevicesButton(
                       onClick: () => toggleWatchConnect(),
                       text: 'Qibla Watch',
-                      icon: Icons.watch_outlined,
+                      icon: "assets/images/qibla-watch-icon.png",
                       width: boxWidth,
                       buttonSelected: isWatchConnects,
                     );

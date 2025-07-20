@@ -21,7 +21,7 @@ class DevicesButton extends StatefulWidget {
   final String text;
   final double height;
   final double width;
-  final IconData icon;
+  final String icon;
   final bool buttonSelected;
 
   @override
@@ -63,9 +63,10 @@ class _DevicesButtonState extends State<DevicesButton> {
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
+                  Image.asset(
                     widget.icon,
-                    size: 33.sp,
+                    width: 12.w,
+                    height: 10.h,
                     color: widget.buttonSelected
                         ? Colors.white
                         : CustomColors.blackPearl,
