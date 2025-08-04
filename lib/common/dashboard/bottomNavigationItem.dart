@@ -38,13 +38,13 @@ class BottomNavigationItem extends StatelessWidget {
         children: [
           Container(
             width: 120,
-            height: state.isNavBarVisible ? _iconContainerLength + 20 : 0,
+            height: state.isNavBarVisible ? _iconContainerLength + 25 : 0,
             child: Column(
               children: [
                 Expanded(
                   child: Container(
-                    width: _iconContainerLength,
-                    height: _iconContainerLength,
+                    width: _iconContainerLength - 2,
+                    height: _iconContainerLength + 25,
                     margin: EdgeInsets.only(bottom: 10),
                     decoration: _isSelected
                         ? ConcaveDecoration(
@@ -53,7 +53,7 @@ class BottomNavigationItem extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(20)),
                             colors: innerConcaveShadow,
                             size: Size(_iconContainerLength,
-                                _iconContainerLength - 10),
+                                _iconContainerLength - 5),
                           )
                         : BoxDecoration(
                             boxShadow: tertiaryShadow,

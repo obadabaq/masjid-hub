@@ -80,7 +80,7 @@ class _CustomSwitchState extends State<CustomSwitch> {
                       ? Colors.black.withValues(alpha: 0.3)
                       : Colors.black.withValues(alpha: 0.2),
                   blurRadius: widget.value ? 10 : 5,
-                  offset: widget.value ? Offset(0, 4) : Offset(0, 5),
+                  offset: widget.value ? Offset(0, 4) : Offset(0, 3),
                 )
               ],
               child: Container(

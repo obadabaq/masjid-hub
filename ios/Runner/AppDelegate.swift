@@ -44,7 +44,7 @@ import RTKLEFoundation
         centralManager = CBCentralManager(delegate: self, queue: nil)
         centralManager.delegate = self
 
-        GMSServices.provideAPIKey("YOUR_GOOGLE_MAPS_API_KEY")
+        GMSServices.provideAPIKey("AIzaSyC-Hyouv1ilFTHXb_08xW5bqmBMfS4GGwc")
 
         FlutterDownloaderPlugin.setPluginRegistrantCallback(registerPlugins)
 
