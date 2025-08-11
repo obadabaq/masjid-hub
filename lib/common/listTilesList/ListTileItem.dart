@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_inner_shadow/flutter_inner_shadow.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../theme/colors.dart';
+
 class ListTileItem extends StatelessWidget {
   const ListTileItem({
     Key? key,
@@ -77,9 +79,10 @@ class _CustomSwitchState extends State<CustomSwitch> {
               shadows: [
                 Shadow(
                   color: widget.value
-                      ? Colors.black.withValues(alpha: 0.3)
+                      ? CustomColors.primary[900]?.withValues(alpha: 0.7) ??
+                          Colors.black26
                       : Colors.black.withValues(alpha: 0.2),
-                  blurRadius: widget.value ? 10 : 5,
+                  blurRadius: widget.value ? 5 : 5,
                   offset: widget.value ? Offset(0, 4) : Offset(0, 3),
                 )
               ],
@@ -88,7 +91,8 @@ class _CustomSwitchState extends State<CustomSwitch> {
                 height: 2.5.h,
                 padding: EdgeInsets.symmetric(horizontal: 4.0),
                 decoration: BoxDecoration(
-                  color: widget.value ? Color(0xFF00ACC1) : Colors.white,
+                  color:
+                      widget.value ? CustomColors.primary[400] : Colors.white,
                   borderRadius: BorderRadius.circular(20.0),
                 ),
               ),
@@ -101,11 +105,27 @@ class _CustomSwitchState extends State<CustomSwitch> {
                 color: Colors.white,
                 shape: BoxShape.circle,
                 boxShadow: [
+                  // Top-left shadow
                   BoxShadow(
-                    color: Color(0xFF00ACC1).withValues(alpha: 0.2),
+                    color: Colors.white.withValues(alpha: .5),
+                    offset: const Offset(-2, -2),
                     blurRadius: 2.0,
                     spreadRadius: 2.0,
-                    offset: Offset(1, 2),
+                  ),
+                  // Bottom-right shadow
+                  BoxShadow(
+                    color: CustomColors.primary[400]?.withValues(alpha: 0.2) ??
+                        Colors.white,
+                    blurRadius: 2.0,
+                    spreadRadius: 2.0,
+                    offset: const Offset(3, 3),
+                  ),
+                  // Bottom-right shadow
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: .1),
+                    blurRadius: 1.0,
+                    spreadRadius: 1.0,
+                    offset: const Offset(2, 2),
                   ),
                 ],
               ),
