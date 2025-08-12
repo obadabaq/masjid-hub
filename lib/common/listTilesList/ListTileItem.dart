@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_inner_shadow/flutter_inner_shadow.dart';
+import 'package:inner_shadow_container/inner_shadow_container.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../theme/colors.dart';
@@ -75,20 +75,16 @@ class _CustomSwitchState extends State<CustomSwitch> {
           alignment:
               widget.value ? Alignment.centerRight : Alignment.centerLeft,
           children: [
-            InnerShadow(
-              shadows: [
-                Shadow(
-                  color: widget.value
-                      ? CustomColors.primary[900]?.withValues(alpha: 0.7) ??
-                          Colors.black26
-                      : Colors.black.withValues(alpha: 0.2),
-                  blurRadius: widget.value ? 5 : 5,
-                  offset: widget.value ? Offset(0, 4) : Offset(0, 3),
-                )
-              ],
+            InnerShadowContainer(
+              width: 12.w,
+              height: 2.5.h,
+              shadowColor: widget.value
+                  ? CustomColors.primary[900]?.withValues(alpha: 0.4) ??
+                      Colors.black26
+                  : Colors.black.withValues(alpha: 0.1),
+              isShadowTopLeft: true,
+              isShadowTopRight: true,
               child: Container(
-                width: 12.w,
-                height: 2.5.h,
                 padding: EdgeInsets.symmetric(horizontal: 4.0),
                 decoration: BoxDecoration(
                   color:
