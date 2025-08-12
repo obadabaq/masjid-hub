@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
@@ -50,6 +52,10 @@ class _MapWidgetState extends State<MapWidget> {
               zoom: 15,
             ),
             markers: snapshot.data,
+            gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>{
+              Factory<OneSequenceGestureRecognizer>(
+                  () => EagerGestureRecognizer()),
+            },
             polylines: <Polyline>{
               Polyline(
                 polylineId: PolylineId("line"),
