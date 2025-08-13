@@ -383,8 +383,11 @@ class LocationProvider extends ChangeNotifier {
     final sessionToken = Uuid().v4();
     final client = http.Client();
     final headers = LocationUtils().gMapsHeaders;
+    Position position = await checkLocationPermissionAndLocate();
+    final String lat = position.latitude.toString();
+    final String lng = position.longitude.toString();
     final Uri request = Uri.parse(
-        'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$input&types=geocode&language=$lang&key=$apiKey&sessiontoken=$sessionToken');
+        'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$input&location=$lat,$lng&radius=5000&types=geocode&language=$lang&key=$apiKey&sessiontoken=$sessionToken');
     final response = await client.get(request, headers: headers);
 
     final result = json.decode(response.body);
