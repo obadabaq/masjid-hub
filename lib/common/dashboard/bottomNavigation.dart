@@ -37,8 +37,8 @@ class _CustomBottonNavigationState extends State<CustomBottonNavigation> {
 
     return AnimatedContainer(
       duration: const Duration(milliseconds: 500),
-      height: state.isNavBarVisible ? 122 : 50,
-      padding: EdgeInsets.only(top: 15, bottom: 5),
+      height: state.isNavBarVisible ? 142 : 70,
+      padding: EdgeInsets.symmetric(vertical: 20),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.background,
         boxShadow: !state.isNavBarVisible
