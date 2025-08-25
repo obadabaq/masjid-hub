@@ -184,9 +184,9 @@ class WatchProvider with ChangeNotifier {
           day['day']['condition']['code'], day['day']['maxwind_kph']);
 
       // parse temp
-      String tempHex = int.parse(day['day']['avgtemp_c'].toString())
-          .toRadixString(16)
-          .padLeft(2, '0');
+      double temp = day['day']['avgtemp_c'];
+      int tempI = temp.toInt();
+      String tempHex = tempI.toRadixString(16).padLeft(2, '0');
 
       // parse chance of rain
       String chanceOfRainHex =
@@ -194,13 +194,13 @@ class WatchProvider with ChangeNotifier {
               .toRadixString(16)
               .padLeft(2, '0');
       // parse wind
-      String windSpeedHex = int.parse(day['day']['maxwind_kph'].toString())
-          .toRadixString(16)
-          .padLeft(2, '0');
+      double wind = day['day']['maxwind_kph'];
+      int windI = wind.toInt();
+      String windSpeedHex = windI.toRadixString(16).padLeft(2, '0');
       // parse uv index
-      String uvIndexHex = int.parse(day['day']['uv'].toString())
-          .toRadixString(16)
-          .padLeft(2, '0');
+      double uvd = day['day']['uv'];
+      int uvI = uvd.toInt();
+      String uvIndexHex = uvI.toRadixString(16).padLeft(2, '0');
 
       // parse humidity
       String humidityHex = int.parse(day['day']['avghumidity'].toString())
