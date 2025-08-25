@@ -173,25 +173,87 @@ class WatchProvider with ChangeNotifier {
     assert(weatherData.length == 7);
 
     for (var day in weatherData) {
-      DateTime date = day['date'];
-      int chanceOfRain = day['chanceOfRain'];
-      int windSpeed = day['windSpeed'];
-      int uvIndex = day['uvIndex'];
-      int humidity = day['humidity'];
-
-      String chanceOfRainHex = chanceOfRain.toRadixString(16).padLeft(2, '0');
-      String windSpeedHex = windSpeed.toRadixString(16).padLeft(2, '0');
-      String uvIndexHex = uvIndex.toRadixString(16).padLeft(2, '0');
-      String humidityHex = humidity.toRadixString(16).padLeft(2, '0');
-
+      //parse date
+      DateTime date = DateTime.parse(day['date']);
       String dayHex = date.day.toRadixString(16).padLeft(2, '0');
       String monthHex = date.month.toRadixString(16).padLeft(2, '0');
       String yearHex = (date.year % 100).toRadixString(16).padLeft(2, '0');
 
+      // parse condition
+      String conditionHex = _weatherConditionHex(
+          day['day']['condition']['code'], day['day']['maxwind_kph']);
+
+      // parse temp
+      String tempHex = int.parse(day['day']['avgtemp_c'].toString())
+          .toRadixString(16)
+          .padLeft(2, '0');
+
+      // parse chance of rain
+      String chanceOfRainHex =
+          int.parse(day['day']['daily_chance_of_rain'].toString())
+              .toRadixString(16)
+              .padLeft(2, '0');
+      // parse wind
+      String windSpeedHex = int.parse(day['day']['maxwind_kph'].toString())
+          .toRadixString(16)
+          .padLeft(2, '0');
+      // parse uv index
+      String uvIndexHex = int.parse(day['day']['uv'].toString())
+          .toRadixString(16)
+          .padLeft(2, '0');
+
+      // parse humidity
+      String humidityHex = int.parse(day['day']['avghumidity'].toString())
+          .toRadixString(16)
+          .padLeft(2, '0');
+
       String hexCommand =
-          '1A01F1$chanceOfRainHex$windSpeedHex$uvIndexHex$humidityHex$dayHex$monthHex$yearHex';
+          '1A01F1$conditionHex$tempHex$chanceOfRainHex$windSpeedHex$uvIndexHex$humidityHex$dayHex$monthHex$yearHex';
       sendCommand(hexCommand);
     }
+  }
+
+  String _weatherConditionHex(int code, double windSpeed) {
+    switch (code) {
+      // sunny
+      case 1000:
+        return '01';
+      // cloudy
+      case 1006:
+        return '02';
+      // raining
+      case 1063:
+      case 1180:
+      case 1183:
+      case 1186:
+      case 1189:
+      case 1192:
+      case 1195:
+      case 1201:
+      case 1240:
+      case 1243:
+      case 1246:
+      case 1273:
+      case 1276:
+        return '03';
+      // snowing
+      case 1066:
+      case 1114:
+      case 1210:
+      case 1213:
+      case 1216:
+      case 1219:
+      case 1222:
+      case 1225:
+      case 1255:
+      case 1258:
+      case 1279:
+      case 1282:
+        return '04';
+    }
+    //windy
+    if (windSpeed > 30) return '05';
+    return '00';
   }
 
   Future<void> checkFirmwareUpdate() async {

@@ -18,6 +18,7 @@ import 'package:masjidhub/models/placesModel.dart';
 import 'package:masjidhub/models/coordinateModel.dart';
 import 'package:masjidhub/constants/coordinates.dart';
 import '../helper_qibla.dart';
+import '../services/weather_service.dart';
 
 class LocationProvider extends ChangeNotifier {
   LocationProvider._privateConstructor();
@@ -146,27 +147,27 @@ class LocationProvider extends ChangeNotifier {
           watchProvider.updateDateTime();
           watchProvider.updateLocation(await SharedPrefs().getAddress);
 
-          Future.delayed(Duration(seconds: 4), () async {
-            watchProvider.updateLocation(await SharedPrefs().getAddress);
-
-            final prayerProvider = PrayerTimingsProvider();
-            try {
-              final next30DaysPrayerTimes =
-                  await prayerProvider.getNext30DaysPrayerTimes();
-
-              next30DaysPrayerTimes.forEach((element) {
-                final date = element['date'];
-                final prayers = (element['prayers'] as List)
-                    .map((p) => p as DateTime)
-                    .toList();
-                print('Date: $date, Prayers: $prayers');
-              });
-
-              watchProvider.updatePrayerTimes(next30DaysPrayerTimes);
-            } catch (e) {
-              print('Error fetching or sending prayer times: $e');
-            }
-          });
+          // Future.delayed(Duration(seconds: 4), () async {
+          //   watchProvider.updateLocation(await SharedPrefs().getAddress);
+          //
+          //   final prayerProvider = PrayerTimingsProvider();
+          //   try {
+          //     final next30DaysPrayerTimes =
+          //         await prayerProvider.getNext30DaysPrayerTimes();
+          //
+          //     next30DaysPrayerTimes.forEach((element) {
+          //       final date = element['date'];
+          //       final prayers = (element['prayers'] as List)
+          //           .map((p) => p as DateTime)
+          //           .toList();
+          //       print('Date: $date, Prayers: $prayers');
+          //     });
+          //
+          //     watchProvider.updatePrayerTimes(next30DaysPrayerTimes);
+          //   } catch (e) {
+          //     print('Error fetching or sending prayer times: $e');
+          //   }
+          // });
         }
       } catch (e) {
         log('WatchProvider error: $e');
@@ -277,6 +278,13 @@ class LocationProvider extends ChangeNotifier {
               });
               // Send the prayer times to the device
               watchProvider.updatePrayerTimes(next30DaysPrayerTimes);
+
+              // Send the weather to the device
+              final weatherMap = await WeatherService.getWeather(
+                lat: position.latitude.toString(),
+                lon: position.longitude.toString(),
+              );
+              watchProvider.updateWeatherForNext7Days(weatherMap);
             } catch (e) {
               print('Error fetching or sending prayer times: $e');
             }
